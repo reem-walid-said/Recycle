@@ -213,7 +213,13 @@ class Login_EState extends State<Login_E> {
                 ),
                 SizedBox(height: 20.sp),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      App_Routes.home_E,
+                      (route) => false,
+                    );
+                  },
                   child: Container(
                     width: 90.w,
                     height: 6.h,

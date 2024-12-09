@@ -8,6 +8,8 @@ import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%2
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/forget%20pass/components/newpass_U.dart';
 import 'package:project/screens/-----For%20All%20Users-----/splash/splashscreen.dart';
 import 'package:project/screens/-----For%20All%20Users-----/choose%20user/chooseuser.dart';
+import 'package:project/screens/-----For%20employe-----/home/components/scan/scan_u.dart';
+import 'package:project/screens/-----For%20employe-----/home/home_e.dart';
 import 'package:project/screens/-----For%20employe-----/user%20handle/forget%20pass/components/code_E.dart';
 import 'package:project/screens/-----For%20employe-----/user%20handle/forget%20pass/components/congrats_E.dart';
 import 'package:project/screens/-----For%20employe-----/user%20handle/forget%20pass/components/newpass_E.dart';
@@ -52,6 +54,8 @@ class App_Routes {
   static const String codepage_E = "codepage_E";
   static const String createpassword_E = "createpassword_E";
   static const String congrats_E = "congrats_E";
+  static const String home_E = "home_E";
+  static const String scan_E = "scan_E";
 
   static Route<dynamic> onGenerateRoute(RouteSettings setting) {
     switch (setting.name) {
@@ -174,6 +178,18 @@ class App_Routes {
         return MaterialPageRoute(
           builder: (context) {
             return Scan_U();
+          },
+        );
+      case home_E:
+        return MaterialPageRoute(
+          builder: (context) {
+            return Home_E();
+          },
+        );
+      case scan_E:
+        return MaterialPageRoute(
+          builder: (context) {
+            return Scan_E();
           },
         );
       default:
