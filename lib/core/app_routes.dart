@@ -8,7 +8,7 @@ import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%2
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/forget%20pass/components/newpass_U.dart';
 import 'package:project/screens/-----For%20All%20Users-----/splash/splashscreen.dart';
 import 'package:project/screens/-----For%20All%20Users-----/choose%20user/chooseuser.dart';
-import 'package:project/screens/-----For%20employe-----/home/components/scan/scan_u.dart';
+import 'package:project/screens/-----For%20employe-----/home/components/scan/scan_e.dart';
 import 'package:project/screens/-----For%20employe-----/home/home_e.dart';
 import 'package:project/screens/-----For%20employe-----/user%20handle/forget%20pass/components/code_E.dart';
 import 'package:project/screens/-----For%20employe-----/user%20handle/forget%20pass/components/congrats_E.dart';
@@ -43,8 +43,8 @@ class App_Routes {
   static const String codepage_U = "codepage_U";
   static const String createpassword_U = "createpassword_U";
   static const String congrats_U = "congrats_U";
-  static const String home_u = "home_u";
-  static const String scan_u = "scan_u";
+  static const String home_U = "home_U";
+  static const String scan_U = "scan_U";
 
   /////////////////////////For  Employes///////////////////////
 
@@ -168,13 +168,13 @@ class App_Routes {
             return Congrats_U();
           },
         );
-      case home_u:
+      case home_U:
         return MaterialPageRoute(
           builder: (context) {
-            return Home();
+            return Home_U();
           },
         );
-      case scan_u:
+      case scan_U:
         return MaterialPageRoute(
           builder: (context) {
             return Scan_U();

@@ -1,5 +1,6 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/homeprovider.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/forget%20pass/provider/forget_U_provider.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/login/provider/login_U_provider.dart';
@@ -14,10 +15,13 @@ import 'package:sizer/sizer.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(DevicePreview(
-    builder: (context) => const MyApp(),
-    enabled: true,
-  ));
+  // runApp(DevicePreview(
+  //   builder: (context) => const MyApp(),
+  //   enabled: true,
+  // ));
+
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

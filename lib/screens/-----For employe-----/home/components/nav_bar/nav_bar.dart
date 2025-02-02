@@ -1,32 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:project/core/app_routes.dart';
+import 'package:project/core/styles.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/homeprovider.dart';
+import 'package:project/screens/-----For%20employe-----/home/provider/homeprovider.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({super.key});
+class BottomNavBar_E extends StatefulWidget {
+  const BottomNavBar_E({super.key});
 
   @override
-  State<BottomNavBar> createState() => _BottomNavBar();
+  State<BottomNavBar_E> createState() => _BottomNavBar_E();
 }
 
-class _BottomNavBar extends State<BottomNavBar> {
+class _BottomNavBar_E extends State<BottomNavBar_E> {
   int _currIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: context.watch<HomeProvider_U>().chosenPage(),
+      body: context.watch<HomeProvider_E>().chosenPage(),
       floatingActionButton: Container(
         height: 65, // Adjust height as needed
         width: 65, // Adjust width as needed
         child: FloatingActionButton(
           onPressed: () {
-            Navigator.pushNamed(context, App_Routes.scan_u);
+            Navigator.pushNamed(context, App_Routes.scan_E);
           },
-          backgroundColor: Colors.green,
+          backgroundColor: AppColor.main,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25), // Rounded rectangle
           ),
@@ -50,8 +52,8 @@ class _BottomNavBar extends State<BottomNavBar> {
         iconSize: 20,
         selectedFontSize: 9.5,
         unselectedFontSize: 9.5,
-        selectedIconTheme: IconThemeData(color: Colors.green),
-        selectedItemColor: Colors.grey,
+        selectedIconTheme: IconThemeData(color: AppColor.main),
+        selectedItemColor: AppColor.main,
         showSelectedLabels: true,
         showUnselectedLabels: true,
         unselectedIconTheme: IconThemeData(color: Colors.grey),
@@ -66,11 +68,11 @@ class _BottomNavBar extends State<BottomNavBar> {
               label: "Home"),
           BottomNavigationBarItem(
               icon: Icon(Icons.sync_alt),
-              activeIcon: Icon(Icons.sync_alt),
+              activeIcon: Icon(Icons.sync_alt_outlined),
               label: "Recycling Process"),
           BottomNavigationBarItem(
               icon: Icon(Iconsax.category),
-              activeIcon: Icon(Iconsax.category),
+              activeIcon: Icon(Iconsax.category_25),
               label: "Categories"),
           BottomNavigationBarItem(
               icon: Icon(Iconsax.frame_1),
@@ -80,7 +82,7 @@ class _BottomNavBar extends State<BottomNavBar> {
         onTap: (value) {
           setState(() {
             _currIndex = value;
-            context.read<HomeProvider_U>().onNavigationTap(value);
+            context.read<HomeProvider_E>().onNavigationTap(value);
           });
         },
       ),

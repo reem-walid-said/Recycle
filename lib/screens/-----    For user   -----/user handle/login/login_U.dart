@@ -213,7 +213,7 @@ class Login_UState extends State<Login_U> {
                 InkWell(
                   onTap: () {
                     Navigator.pushNamedAndRemoveUntil(
-                        context, App_Routes.home_u, (route) => false);
+                        context, App_Routes.home_U, (route) => false);
                   },
                   child: Container(
                     width: 90.w,
