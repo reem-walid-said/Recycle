@@ -4,6 +4,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:project/core/app_routes.dart';
 import 'package:project/core/assets.dart';
+import 'package:project/core/components.dart';
+import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/user_provider.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/login/provider/login_U_provider.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/register/register_U.dart';
 import 'package:provider/provider.dart';
@@ -66,7 +68,7 @@ class Login_UState extends State<Login_U> {
                 SizedBox(height: 5),
                 Container(
                   alignment: Alignment.center,
-                  height: 6.h,
+                  //height: 6.h,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(
@@ -78,7 +80,7 @@ class Login_UState extends State<Login_U> {
                                   : context
                                               .watch<Login_U_Provider>()
                                               .state
-                                              .usernameErrorMessage !=
+                                              .emailErrorMessage !=
                                           null
                                       ? Colors.red
                                       : Colors.green)),
@@ -86,9 +88,9 @@ class Login_UState extends State<Login_U> {
                     controller:
                         context.read<Login_U_Provider>().state.emailController,
                     onChanged:
-                        context.read<Login_U_Provider>().onUsernameChange,
+                        context.read<Login_U_Provider>().onEmailChange,
                     onSubmitted:
-                        context.read<Login_U_Provider>().onUsernameChange,
+                        context.read<Login_U_Provider>().onEmailChange,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Iconsax.sms),
                       prefixIconColor:
@@ -97,11 +99,12 @@ class Login_UState extends State<Login_U> {
                               : context
                                           .watch<Login_U_Provider>()
                                           .state
-                                          .usernameErrorMessage !=
+                                          .emailErrorMessage !=
                                       null
                                   ? Colors.red
                                   : Colors.green,
                       border: OutlineInputBorder().scale(3),
+                      errorText: context.watch<Login_U_Provider>().state.emailErrorMessage
                     ),
                   ),
                 ),
@@ -114,7 +117,7 @@ class Login_UState extends State<Login_U> {
                 SizedBox(height: 5),
                 Container(
                   alignment: Alignment.center,
-                  height: 6.h,
+                  //height: 6.h,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
@@ -170,7 +173,9 @@ class Login_UState extends State<Login_U> {
                                   true
                               ? const Icon(Iconsax.eye_slash4)
                               : const Icon(Iconsax.eye3),
-                        )),
+                        ),
+                        errorText: context.watch<Login_U_Provider>().state.passwordErrorMessage
+                    ),
                   ),
                 ),
                 SizedBox(height: 20.sp),
@@ -211,9 +216,35 @@ class Login_UState extends State<Login_U> {
                 ),
                 SizedBox(height: 20.sp),
                 InkWell(
-                  onTap: () {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, App_Routes.home_U, (route) => false);
+                  onTap: () async {
+
+                    if(context.read<Login_U_Provider>().validate()){
+                      print("VALID");
+                      dynamic LoginResult = await context.read<Login_U_Provider>().Login(context);
+                      if(LoginResult is String){
+
+                        bool getDataResult = await context.read<UserProvider>().GetUserData(id: LoginResult);
+
+                        if(getDataResult == true){
+                          await myToast(
+                            message: "Logged In Successfully",
+                            backgroundColor: Colors.green,
+                          );
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            App_Routes.home_U,
+                                (route) => false,
+                          );
+                        }
+                      }
+                    }
+                    else{
+                      print("NOT VALID");
+                    }
+
+
+                    // Navigator.pushNamedAndRemoveUntil(
+                    //     context, App_Routes.home_U, (route) => false);
                   },
                   child: Container(
                     width: 90.w,

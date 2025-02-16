@@ -66,7 +66,7 @@ class login_E extends State<Register_U> {
 
               Container(
                 alignment: Alignment.center,
-                height: 8.h,
+                //height: 8.h,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
@@ -110,6 +110,7 @@ class login_E extends State<Register_U> {
                                     null
                                 ? Colors.red
                                 : Colors.green,
+                    errorText: context.watch<CreateAccountProvider_U>().state.usernameErrorMessage
                   ),
                 ),
               ),
@@ -167,6 +168,7 @@ class login_E extends State<Register_U> {
                                     null
                                 ? Colors.red
                                 : Colors.green,
+                    errorText: context.watch<CreateAccountProvider_U>().state.emailErrorMessage
                   ),
                 ),
               ),
@@ -198,6 +200,7 @@ class login_E extends State<Register_U> {
                       .read<CreateAccountProvider_U>()
                       .onPhoneNumberChange,
                   inputBorder: InputBorder.none,
+                  errorMessage: context.watch<CreateAccountProvider_U>().state.phoneErrorMessage,
                 ),
               ),
               Divider(
@@ -212,7 +215,7 @@ class login_E extends State<Register_U> {
               SizedBox(height: 5),
               Container(
                 alignment: Alignment.center,
-                height: 8.h,
+                //height: 8.h,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
@@ -272,31 +275,34 @@ class login_E extends State<Register_U> {
                                 true
                             ? const Icon(Iconsax.eye_slash4)
                             : const Icon(Iconsax.eye3),
-                      )),
+                      ),
+                    errorText: context.watch<CreateAccountProvider_U>().state.passwordErrorMessage
+
+                  ),
                 ),
               ),
               Divider(
                 height: 1.h,
                 color: Colors.transparent,
               ),
-              Text("Password must be at least 8 characters",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: context
-                                .watch<CreateAccountProvider_U>()
-                                .state
-                                .password ==
-                            null
-                        ? Colors.grey
-                        : context
-                                    .watch<CreateAccountProvider_U>()
-                                    .state
-                                    .passwordErrorMessage !=
-                                null
-                            ? Colors.red
-                            : Colors.green,
-                  )),
+              // Text("Password must be at least 8 characters",
+              //     style: TextStyle(
+              //       fontSize: 14,
+              //       fontWeight: FontWeight.w400,
+              //       color: context
+              //                   .watch<CreateAccountProvider_U>()
+              //                   .state
+              //                   .password ==
+              //               null
+              //           ? Colors.grey
+              //           : context
+              //                       .watch<CreateAccountProvider_U>()
+              //                       .state
+              //                       .passwordErrorMessage !=
+              //                   null
+              //               ? Colors.red
+              //               : Colors.green,
+              //     )),
 
               Divider(
                 height: 1.h,
@@ -313,7 +319,7 @@ class login_E extends State<Register_U> {
               ),
               Container(
                 alignment: Alignment.center,
-                height: 8.h,
+                //height: 8.h,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
@@ -375,31 +381,33 @@ class login_E extends State<Register_U> {
                                 true
                             ? const Icon(Iconsax.eye_slash4)
                             : const Icon(Iconsax.eye3),
-                      )),
+                      ),
+                      errorText: context.watch<CreateAccountProvider_U>().state.RetypepasswordErrorMessage
+                  ),
                 ),
               ),
               //! password error message
-              Text("Password must be same as the first password",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: context
-                                .watch<CreateAccountProvider_U>()
-                                .state
-                                .password ==
-                            context
-                                .watch<CreateAccountProvider_U>()
-                                .state
-                                .Retypepassword
-                        ? Colors.green
-                        : context
-                                    .watch<CreateAccountProvider_U>()
-                                    .state
-                                    .RetypepasswordErrorMessage !=
-                                null
-                            ? Colors.red
-                            : Colors.green,
-                  )),
+              // Text("Password must be same as the first password",
+              //     style: TextStyle(
+              //       fontSize: 14,
+              //       fontWeight: FontWeight.w400,
+              //       color: context
+              //                   .watch<CreateAccountProvider_U>()
+              //                   .state
+              //                   .password ==
+              //               context
+              //                   .watch<CreateAccountProvider_U>()
+              //                   .state
+              //                   .Retypepassword
+              //           ? Colors.green
+              //           : context
+              //                       .watch<CreateAccountProvider_U>()
+              //                       .state
+              //                       .RetypepasswordErrorMessage !=
+              //                   null
+              //               ? Colors.red
+              //               : Colors.green,
+              //     )),w
               Divider(
                 height: 1.h,
                 color: Colors.transparent,
@@ -436,23 +444,39 @@ class login_E extends State<Register_U> {
                   ),
                 ],
               ),
-              Container(
-                width: 90.w,
-                height: 6.h,
-                decoration: BoxDecoration(
-                  color: Color(0xff649014),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Center(
-                  child: Text(
-                    "Sign Up",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600),
+
+              InkWell(
+                onTap: () async {
+                  if(context.read<CreateAccountProvider_U>().validate()){
+                    print("VALID");
+                    dynamic result = await context.read<CreateAccountProvider_U>().SignUp();
+                    if(result){
+                      Navigator.pop(context);
+                    }
+                  }
+                  else{
+                    print("INVALID");
+                  }
+                },
+                child: Container(
+                  width: 90.w,
+                  height: 6.h,
+                  decoration: BoxDecoration(
+                    color: Color(0xff649014),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Sign Up",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
               ),
+
               SizedBox(height: 20),
               // OR divider
               Row(

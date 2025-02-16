@@ -1,9 +1,13 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:project/core/components.dart';
 import 'package:project/screens/-----For%20employe-----/user%20handle/register/provider/register_state.dart';
+import 'package:project/services/network/authentication.dart';
+import 'package:project/services/network/database.dart';
 
 class CreateAccountProvider_U extends ChangeNotifier {
   // ignore: unused_field
@@ -56,7 +60,13 @@ class CreateAccountProvider_U extends ChangeNotifier {
   }
 
   void onPhoneNumberChange(PhoneNumber value) {
-    state.phoneNumber = value;
+    if (value.phoneNumber != null && value.phoneNumber!.length > 12) {
+      state.phoneNumber = value;
+      state.phoneErrorMessage = null;
+    } else {
+      state.phoneNumber = null;
+      state.phoneErrorMessage = "Invalid Phone Number";
+    }
     notifyListeners();
   }
 
@@ -110,19 +120,49 @@ class CreateAccountProvider_U extends ChangeNotifier {
   // }
 
   bool validate() {
+    print(state.phoneNumber);
+
     if (state.emailErrorMessage == null &&
+        state.usernameErrorMessage == null &&
         state.passwordErrorMessage == null &&
-        state.EducationalcodeErrorMessage == null &&
+        //state.EducationalcodeErrorMessage == null &&
         state.RetypepasswordErrorMessage == null &&
+        state.name != null &&
+        //state.name!.isNotEmpty &&
         state.email != null &&
-        state.password != null &&
-        state.Educationalcode != null &&
+        state.phoneNumber != null &&
+        //state.Educationalcode != null &&
         // state.address != null &&
         // state.gender != null &&
+        state.password != null &&
         state.Retypepassword != null &&
         state.password == state.Retypepassword) {
       return true;
     } else {
+      return false;
+    }
+  }
+
+  Future SignUp() async {
+    dynamic result = await AuthServices().signUpWithEmailAndPassword(
+        email: state.email, password: state.password);
+
+    //print(result);
+
+    if (result is UserCredential) {
+      await DatabaseServices(id: result.user!.uid).createUser(
+          username: state.name,
+          email: state.email,
+          phone: state.phoneNumber!.phoneNumber);
+
+      await myToast(
+        message: "Signed Up Successfully",
+        backgroundColor: Colors.green,
+      );
+
+      return true;
+    } else {
+      await myToast(message: result, backgroundColor: Colors.red);
       return false;
     }
   }

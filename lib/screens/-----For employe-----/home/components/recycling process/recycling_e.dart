@@ -18,8 +18,8 @@ class _Recycling_EState extends State<Recycling_E> {
   var SearchController = TextEditingController();
 
   List<RecycleProcessItem> myList = [
-    RecycleProcessItem(dateTime: DateTime(2024, 12, 16, 3, 36), status: true, points: 1000, user: "Zyad1226"),
-    RecycleProcessItem(dateTime: DateTime(2024, 12, 16, 3, 36), status: false, points: 1000, user: "Samy1226"),
+    // RecycleProcessItem(dateTime: DateTime(2024, 12, 16, 3, 36), status: true, points: 1000, user: "Zyad1226"),
+    // RecycleProcessItem(dateTime: DateTime(2024, 12, 16, 3, 36), status: false, points: 1000, user: "Samy1226"),
   ];
 
   @override

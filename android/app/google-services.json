@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "249806258485",
+    "project_id": "greenbin1-4d171",
+    "storage_bucket": "greenbin1-4d171.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249806258485:android:aa19b193af48d712880c7c",
+        "android_client_info": {
+          "package_name": "com.example.project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "249806258485-1tirkd6l4ettgs34s9ml0i5lj4p4q3p8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEXw31QI46VSBqS6c13Z2uzI3fKKZkQ6g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "249806258485-1tirkd6l4ettgs34s9ml0i5lj4p4q3p8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

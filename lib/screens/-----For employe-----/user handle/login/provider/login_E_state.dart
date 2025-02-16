@@ -12,9 +12,12 @@ class Login_E_State {
 
   //! errors
   String? usernameErrorMessage;
+  String? emailErrorMessage;
   String? passwordErrorMessage;
 
   //! bools
   bool hidePass = true;
   bool rememberMe = false;
+
+  dynamic loginState;
 }

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:project/core/assets.dart';
 import 'package:project/core/styles.dart';
+import 'package:project/models/recycle_item.dart';
 import 'package:project/models/recycle_process_item.dart';
+import 'package:project/screens/-----For%20employe-----/home/provider/scan_provider.dart';
+import 'package:provider/provider.dart';
 // Here will be all the Shared Components like (Buttons, Item's Designs, etc...)
 
 Widget myElevatedButton({
@@ -131,3 +135,58 @@ Widget myRecyclingProcessItem({
         ),
       ),
     );
+
+
+Widget RecycleItemBuilder(BuildContext context, RecycleItem item) => Container(
+  decoration: BoxDecoration(
+    border: Border.all(color: Colors.grey, width: 2),
+    borderRadius: BorderRadius.circular(8),
+  ),
+  child: Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("${item.name}", style: TextStyle(fontSize: 22),),
+        Row(
+          children: [
+            Text("Category: ${item.category.type}"),
+            Spacer(),
+            Text("Count: ${item.count}"),
+            Spacer(),
+            Text("Points: ${item.totalPoints} pts", style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),),
+          ],
+        ),
+        SizedBox(height: 10,),
+        Align(
+            alignment: Alignment.centerRight,
+            child: ElevatedButton(
+                onPressed: (){
+                  context.read<ScanProvider>().onDeleteItem(item);
+                },
+                child: Icon(Icons.delete_forever_outlined, color: Colors.white, size: 30,),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                ),
+            )
+        )
+      ],
+    ),
+  ),
+);
+
+
+Future myToast({
+  String message = "",
+  Color backgroundColor = Colors.red,
+  int timeInSec = 3,
+}) {
+  return Fluttertoast.showToast(
+    msg: message,
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.BOTTOM,
+    backgroundColor: backgroundColor,
+    timeInSecForIosWeb: timeInSec,
+    fontSize: 16,
+  );
+}

@@ -12,6 +12,7 @@ class Home_E extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: context.watch<HomeProvider_E>().chosenPage(),
-        bottomNavigationBar: const BottomNavBar_E());
+        bottomNavigationBar: const BottomNavBar_E()
+    );
   }
 }
