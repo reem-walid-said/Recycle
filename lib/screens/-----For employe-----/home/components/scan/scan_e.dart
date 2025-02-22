@@ -56,7 +56,7 @@ class _Scan_EState extends State<Scan_E> {
 
                     Row(
                       children: [
-                        Text("Choose the category of the item"),
+                        Text("Choose the category"),
                         Spacer(),
                         DropdownMenu(
                           dropdownMenuEntries: context.watch<ScanProvider>().state.myCategories,
@@ -70,7 +70,7 @@ class _Scan_EState extends State<Scan_E> {
 
                     Row(
                       children: [
-                        Text("Choose the number of the item"),
+                        Text("Choose the number"),
                         Spacer(),
 
                         Container(

@@ -5,6 +5,8 @@ import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/p
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../core/styles.dart';
+
 class BottomNavBar_U extends StatefulWidget {
   const BottomNavBar_U({super.key});
 
@@ -26,17 +28,17 @@ class _BottomNavBar_U extends State<BottomNavBar_U> {
           onPressed: () {
             Navigator.pushNamed(context, App_Routes.scan_U);
           },
-          backgroundColor: Colors.green,
+          backgroundColor: AppColor.main,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25), // Rounded rectangle
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center, // Center the content
             children: [
-              Icon(Icons.qr_code_scanner, size: 24, color: Colors.white),
+              Icon(Icons.qr_code, size: 24, color: Colors.white),
               SizedBox(height: 4), // Space between icon and text
               Text(
-                "Scan",
+                "Generate",
                 style: TextStyle(
                     fontSize: 12, color: Colors.white), // Adjust size and color
               ),

@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:project/core/components.dart';
 import 'package:project/models/recycle_item.dart';
 import 'package:project/screens/-----For%20employe-----/home/provider/scan_state.dart';
+import 'package:project/services/network/database.dart';
+
+import '../../../../models/user.dart';
 
 class ScanProvider extends ChangeNotifier{
   ScanStates state = ScanStates();
@@ -74,12 +77,42 @@ class ScanProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  void onConfirmOrder(){
-    myToast(
+  Future onConfirmOrder() async {
+
+    dynamic result = await DatabaseServices(id: state.scannedUser!.id).updateUserPoints(points: state.totalScannedItemsPoints);
+
+    if(result == false) return;
+
+    await myToast(
       message: "Order has Confirmed",
       backgroundColor: Colors.green,
     );
     Reset();
+    notifyListeners();
+  }
+
+  void ResetScannedId(){
+    state.scannedId = null;
+    state.cameraController.stop();
+    state.cameraController.start();
+    notifyListeners();
+  }
+
+  Future onScanID(scannedId) async {
+    state.cameraController.stop(); // Stop the Camera
+    state.scannedId = scannedId;
+
+    dynamic result = await DatabaseServices(id: scannedId).getUserData();
+    if(result == null) return false;
+
+    state.scannedUser = User.fromJson(result);
+
+    //state.cameraController.start(); // Start the Camera
+    notifyListeners();
+  }
+
+  void onConfirmScan(){
+    state.cameraController.start();
     notifyListeners();
   }
 }

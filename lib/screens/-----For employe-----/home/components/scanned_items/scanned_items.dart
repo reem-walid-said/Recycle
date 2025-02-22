@@ -52,7 +52,8 @@ class ScannedItemsScreen extends StatelessWidget {
                       label: "Confirm",
                       onPressed: (){
                         context.read<ScanProvider>().onConfirmOrder();
-                        Navigator.pop(context); // back to scan screen
+                        Navigator.pop(context); // back to scan items screen
+                        Navigator.pop(context); // back to scan profile screen
                         Navigator.pop(context); // back to home screen
                       }
                   ),

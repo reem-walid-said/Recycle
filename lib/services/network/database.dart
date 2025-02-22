@@ -34,12 +34,25 @@ class DatabaseServices {
     }
   }
 
+  Future updateUserPoints({
+    required int points,
+}) async {
+    try{
+      await UserCollection.doc(id).update({
+        "points": FieldValue.increment(points),
+      });
+    }
+    catch(e){
+      print(e);
+      return false;
+    }
+  }
+
   Future createEmployee() async {}
 
   ///ToDo
   ///{
   ///   CreateEmployee()
-  ///   GetUserData()
   ///   GetEmployeeData()
   ///   UpdateUserData()
   ///   UpdateEmployeeData()

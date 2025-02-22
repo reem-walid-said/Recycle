@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:project/models/category.dart';
 import 'package:project/models/recycle_item.dart';
+import 'package:project/models/user.dart';
 
 class ScanStates{
 
@@ -17,5 +19,10 @@ class ScanStates{
 
   List<RecycleItem>myScannedItem = [];
   int totalScannedItemsPoints = 0;
+
+  MobileScannerController cameraController = MobileScannerController();
+  String? scannedId;
+
+  User? scannedUser;
 
 }
