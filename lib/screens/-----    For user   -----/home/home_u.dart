@@ -3,13 +3,13 @@ import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/c
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/homeprovider.dart';
 import 'package:provider/provider.dart';
 
-class Home extends StatelessWidget {
-  const Home({super.key});
+class Home_U extends StatelessWidget {
+  const Home_U({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: context.watch<HomeProvider_U>().chosenPage(),
-        bottomNavigationBar: const BottomNavBar());
+        bottomNavigationBar: const BottomNavBar_U());
   }
 }

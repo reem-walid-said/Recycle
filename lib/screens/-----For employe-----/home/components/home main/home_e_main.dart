@@ -36,6 +36,7 @@ class _Home_E_MainState extends State<Home_E_Main> {
                     ],
                   ),
                   Divider(height: 3.h, color: Colors.transparent),
+
                   Row(
                     children: [
                       Text("End of Day Work",

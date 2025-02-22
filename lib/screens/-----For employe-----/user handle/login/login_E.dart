@@ -68,7 +68,7 @@ class Login_EState extends State<Login_E> {
                 SizedBox(height: 5),
                 Container(
                   alignment: Alignment.center,
-                  height: 6.h,
+                  //height: 6.h,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(
@@ -80,7 +80,7 @@ class Login_EState extends State<Login_E> {
                                   : context
                                               .watch<Login_E_Provider>()
                                               .state
-                                              .usernameErrorMessage !=
+                                              .emailErrorMessage !=
                                           null
                                       ? Colors.red
                                       : Colors.green)),
@@ -88,9 +88,9 @@ class Login_EState extends State<Login_E> {
                     controller:
                         context.read<Login_E_Provider>().state.emailController,
                     onChanged:
-                        context.read<Login_E_Provider>().onUsernameChange,
+                        context.read<Login_E_Provider>().onEmailChange,
                     onSubmitted:
-                        context.read<Login_E_Provider>().onUsernameChange,
+                        context.read<Login_E_Provider>().onEmailChange,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Iconsax.sms),
                       prefixIconColor:
@@ -99,11 +99,12 @@ class Login_EState extends State<Login_E> {
                               : context
                                           .watch<Login_E_Provider>()
                                           .state
-                                          .usernameErrorMessage !=
+                                          .emailErrorMessage !=
                                       null
                                   ? Colors.red
                                   : Colors.green,
                       border: OutlineInputBorder().scale(3),
+                      errorText: context.watch<Login_E_Provider>().state.emailErrorMessage,
                     ),
                   ),
                 ),
@@ -116,7 +117,7 @@ class Login_EState extends State<Login_E> {
                 SizedBox(height: 5),
                 Container(
                   alignment: Alignment.center,
-                  height: 6.h,
+                  //height: 6.h,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
@@ -172,7 +173,10 @@ class Login_EState extends State<Login_E> {
                                   true
                               ? const Icon(Iconsax.eye_slash4)
                               : const Icon(Iconsax.eye3),
-                        )),
+                        ),
+                      errorText: context.watch<Login_E_Provider>().state.passwordErrorMessage,
+
+                    ),
                   ),
                 ),
                 SizedBox(height: 20.sp),
@@ -213,12 +217,24 @@ class Login_EState extends State<Login_E> {
                 ),
                 SizedBox(height: 20.sp),
                 InkWell(
-                  onTap: () {
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      App_Routes.home_E,
-                      (route) => false,
-                    );
+                  onTap: () async {
+
+                    if(context.read<Login_E_Provider>().validate()){
+                      print("VALID");
+                      bool result = await context.read<Login_E_Provider>().Login();
+                      if(result){
+
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          App_Routes.home_E,
+                              (route) => false,
+                        );
+                      }
+                    }
+                    else{
+                      print("NOT VALID");
+                    }
+
                   },
                   child: Container(
                     width: 90.w,

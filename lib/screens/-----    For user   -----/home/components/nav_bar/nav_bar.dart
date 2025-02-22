@@ -5,14 +5,14 @@ import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/p
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({super.key});
+class BottomNavBar_U extends StatefulWidget {
+  const BottomNavBar_U({super.key});
 
   @override
-  State<BottomNavBar> createState() => _BottomNavBar();
+  State<BottomNavBar_U> createState() => _BottomNavBar_U();
 }
 
-class _BottomNavBar extends State<BottomNavBar> {
+class _BottomNavBar_U extends State<BottomNavBar_U> {
   int _currIndex = 0;
 
   @override
@@ -24,7 +24,7 @@ class _BottomNavBar extends State<BottomNavBar> {
         width: 65, // Adjust width as needed
         child: FloatingActionButton(
           onPressed: () {
-            Navigator.pushNamed(context, App_Routes.scan_u);
+            Navigator.pushNamed(context, App_Routes.scan_U);
           },
           backgroundColor: Colors.green,
           shape: RoundedRectangleBorder(

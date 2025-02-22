@@ -1,6 +1,9 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/homeprovider.dart';
+import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/user_provider.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/forget%20pass/provider/forget_U_provider.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/login/provider/login_U_provider.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/register/provider/register_U_provder.dart';
@@ -13,11 +16,18 @@ import 'package:project/screens/-----For%20All%20Users-----/onbourding/provider/
 import 'package:sizer/sizer.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-  runApp(DevicePreview(
-    builder: (context) => const MyApp(),
-    enabled: true,
-  ));
+import 'screens/-----For employe-----/home/provider/scan_provider.dart';
+
+void main() async {
+  // runApp(DevicePreview(
+  //   builder: (context) => const MyApp(),
+  //   enabled: true,
+  // ));
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -39,6 +49,9 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => ForgetPass_U_provider()),
           ChangeNotifierProvider(create: (context) => HomeProvider_U()),
           ChangeNotifierProvider(create: (context) => HomeProvider_E()),
+          ChangeNotifierProvider(create: (context) => UserProvider()),
+          ChangeNotifierProvider(create: (context) => ScanProvider()),
+
         ],
         child: MaterialApp(
           title: 'Flutter Demo',

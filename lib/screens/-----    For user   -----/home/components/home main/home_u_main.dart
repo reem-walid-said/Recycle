@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:project/core/assets.dart';
+import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/user_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class Home_U_Main extends StatefulWidget {
@@ -28,7 +30,7 @@ class _Home_U_MainState extends State<Home_U_Main> {
                         scale: 3,
                       ),
                       VerticalDivider(width: 2.w, color: Colors.transparent),
-                      Text("Welcome,Reem ",
+                      Text("Welcome, ${context.watch<UserProvider>().state.myUser?.username}",
                           style: TextStyle(
                               fontWeight: FontWeight.w700, fontSize: 18.sp)),
                       Spacer(),

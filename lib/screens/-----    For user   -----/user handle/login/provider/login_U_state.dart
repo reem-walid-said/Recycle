@@ -11,10 +11,13 @@ class Login_U_State {
   TextEditingController passwordController = TextEditingController();
 
   //! errors
-  String? usernameErrorMessage;
+  //String? usernameErrorMessage;
+  String? emailErrorMessage;
   String? passwordErrorMessage;
 
   //! bools
   bool hidePass = true;
   bool rememberMe = false;
+
+  dynamic loginState;
 }

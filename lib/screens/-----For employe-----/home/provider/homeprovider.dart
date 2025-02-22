@@ -7,6 +7,10 @@ import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/c
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/components/profile/profile_u.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/components/recycling%20process/recycling_u.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/components/scan/scan_u.dart';
+import 'package:project/screens/-----For%20employe-----/home/components/categories/categories_e.dart';
+import 'package:project/screens/-----For%20employe-----/home/components/home%20main/home_e_main.dart';
+import 'package:project/screens/-----For%20employe-----/home/components/profile/profile_e.dart';
+import 'package:project/screens/-----For%20employe-----/home/components/recycling%20process/recycling_e.dart';
 
 import 'homestate.dart';
 
@@ -40,14 +44,14 @@ class HomeProvider_E extends ChangeNotifier {
   Widget chosenPage() {
     switch (state.chosenNavigationItem) {
       case ParentsChosenNavigationItem.home:
-        return Home_U_Main();
+        return Home_E_Main();
       case ParentsChosenNavigationItem.recycling_process:
-        return Recycling_U();
+        return Recycling_E();
 
       case ParentsChosenNavigationItem.categories:
-        return Categories_U();
+        return Categories_E();
       case ParentsChosenNavigationItem.profile:
-        return Profile_U();
+        return Profile_E();
       default:
         return const SizedBox();
     }

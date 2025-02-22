@@ -17,4 +17,9 @@ class Assets {
   static String arrow = "assets/images/arrow.png";
   static String bottle = "assets/images/bottle.png";
   static String can = "assets/images/can.png";
+  static String FAQIcon = "assets/images/FAQ_icon.png";
+  static String filterIcon = "assets/images/filter-linear-icon.png";
+  static String sign_at = "assets/images/sign-at.png";
+  static String arrowDown = "assets/images/arrow_down.png";
+  static String recyclingProcessEmptyBackground = "assets/images/recycling_process_empty.png";
 }
