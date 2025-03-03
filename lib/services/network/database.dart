@@ -7,9 +7,13 @@ class DatabaseServices {
   final CollectionReference UserCollection =
       FirebaseFirestore.instance.collection("Costumer");
   final CollectionReference EmployeeCollection =
-      FirebaseFirestore.instance.collection("Employee");
+      FirebaseFirestore.instance.collection("employees");
   final CollectionReference WarehouseCollection =
       FirebaseFirestore.instance.collection("warehouses");
+  final CollectionReference RecycleProcessCollection =
+      FirebaseFirestore.instance.collection("recycle_process");
+  final CollectionReference ScannedItemsCount =
+      FirebaseFirestore.instance.collection("ScannedItemsCount");
 
   Future createUser({
     required username,
@@ -35,10 +39,11 @@ class DatabaseServices {
   }
 
   Future updateUserPoints({
+    required String userId,
     required int points,
 }) async {
     try{
-      await UserCollection.doc(id).update({
+      await UserCollection.doc(userId).update({
         "points": FieldValue.increment(points),
       });
     }
@@ -48,7 +53,59 @@ class DatabaseServices {
     }
   }
 
-  Future createEmployee() async {}
+  Future addRecyclingProcess({
+    required String uid,
+    required String username,
+    required int points,
+    required Map<String, dynamic> amount,
+    String status = "Done",
+}) async {
+    try{
+      //Getting the last document
+      QuerySnapshot querySnapshot = await RecycleProcessCollection.get();
+      int numberOfDocs = querySnapshot.docs.length;
+
+      String newID = "RP-${(numberOfDocs + 1).toString().padLeft(3, '0')}";
+
+      Map<String, dynamic> data = {
+        'id' : newID,
+        'uid': uid,
+        'username': username,
+        'eid': id,
+        'points': points,
+        'amount': amount,
+        'status': status,
+        'DateTime': DateTime.now(),
+      };
+
+      // Adding a new Recycle process
+      await RecycleProcessCollection.doc(newID).set(data);
+
+      // Updating the count for all scanned items
+      await ScannedItemsCount.doc("plastic").update({
+        "count": FieldValue.increment(amount["plastic"]),
+      });
+      await ScannedItemsCount.doc("can").update({
+        "count": FieldValue.increment(amount["can"]),
+      });
+      await ScannedItemsCount.doc("glass").update({
+        "count": FieldValue.increment(amount["glass"]),
+      });
+
+      return true;
+    }catch(e){
+      print(e);
+      return false;
+    }
+  }
+
+
+  Future getEmployeeData() async {
+    DocumentSnapshot document = await EmployeeCollection.doc(id).get();
+    if(document.exists){
+      return document;
+    }
+  }
 
   ///ToDo
   ///{
@@ -56,6 +113,5 @@ class DatabaseServices {
   ///   GetEmployeeData()
   ///   UpdateUserData()
   ///   UpdateEmployeeData()
-  ///
   ///}
 }

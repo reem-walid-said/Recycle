@@ -23,7 +23,7 @@ class ScanProvider extends ChangeNotifier{
     notifyListeners();
   }
   void onNumberDecrease(){
-    if(state.selectedNumber == 1)return;
+    if(state.selectedNumber == 0)return;
     state.selectedNumber--;
 
     notifyListeners();
@@ -34,8 +34,9 @@ class ScanProvider extends ChangeNotifier{
     print(state.selectedCategory?.type);
     print(state.selectedCategory?.points);
     print(state.selectedNumber);
+    print(state.dropDownMenuController.text);
 
-    if(state.itemNameController.text.isEmpty || state.selectedCategory == null){
+    if(state.itemNameController.text.isEmpty || state.selectedCategory == null || state.selectedNumber == 0){
       print("Invalid");
       myToast(
         message: "Invalid Data",
@@ -52,10 +53,22 @@ class ScanProvider extends ChangeNotifier{
     );
     state.totalScannedItemsPoints += state.selectedNumber * state.selectedCategory!.points;
 
+    if(state.selectedCategory?.type == "Plastic"){
+      state.totalScannedPlasticItems += state.selectedNumber;
+    }
+    if(state.selectedCategory?.type == "Can"){
+      state.totalScannedCanItems += state.selectedNumber;
+    }
+    if(state.selectedCategory?.type == "Glass"){
+      state.totalScannedGlassItems += state.selectedNumber;
+    }
+
     myToast(
       message: "Item Scanned Successfully",
       backgroundColor: Colors.green,
     );
+
+    ResetAfterAdd();
 
     notifyListeners();
   }
@@ -64,30 +77,79 @@ class ScanProvider extends ChangeNotifier{
   void onDeleteItem(RecycleItem item){
     state.myScannedItem.remove(item);
     state.totalScannedItemsPoints -= item.totalPoints;
+
+    if(item.category.type == "Plastic"){
+      state.totalScannedPlasticItems -= item.count;
+    }
+    if(item.category.type == "Can"){
+      state.totalScannedCanItems -= item.count;
+    }
+    if(item.category.type == "Glass"){
+      state.totalScannedGlassItems -= item.count;
+    }
+
     notifyListeners();
   }
 
-  void Reset(){
+  void ResetAfterAdd(){
+    state.selectedCategory = null;
+    state.selectedNumber = 0;
+    state.itemNameController.text = "";
+    state.dropDownMenuController.text = "";
+
+    notifyListeners();
+  }
+
+  void ResetAfterConfirm(){
     state.myScannedItem.clear();
     state.totalScannedItemsPoints = 0;
     state.selectedCategory = null;
-    state.selectedNumber = 1;
+    state.selectedNumber = 0;
     state.itemNameController.text = "";
+    state.onConfirming = false;
+    state.totalScannedGlassItems = 0;
+    state.totalScannedCanItems = 0;
+    state.totalScannedPlasticItems = 0;
+    state.scannedUser = null;
+    state.scannedId = null;
 
     notifyListeners();
   }
 
-  Future onConfirmOrder() async {
 
-    dynamic result = await DatabaseServices(id: state.scannedUser!.id).updateUserPoints(points: state.totalScannedItemsPoints);
 
-    if(result == false) return;
+  Future onConfirmOrder({
+    required String employeeId,
+}) async {
 
-    await myToast(
-      message: "Order has Confirmed",
-      backgroundColor: Colors.green,
-    );
-    Reset();
+    state.onConfirming = true;
+    notifyListeners();
+
+    try{
+      await DatabaseServices(id: employeeId).updateUserPoints(points: state.totalScannedItemsPoints, userId: state.scannedUser!.id);
+      await DatabaseServices(id: employeeId).addRecyclingProcess(
+        uid: state.scannedUser!.id,
+        username: state.scannedUser!.username,
+        points: state.totalScannedItemsPoints,
+        amount: {
+          "plastic": state.totalScannedPlasticItems,
+          "can": state.totalScannedCanItems,
+          "glass": state.totalScannedGlassItems,
+        }
+      );
+
+      await myToast(
+        message: "Order has Confirmed",
+        backgroundColor: Colors.green,
+      );
+
+
+    }catch(e){
+      print(e);
+    }
+    ResetAfterAdd();
+    ResetAfterConfirm();
+    state.onConfirming = false;
     notifyListeners();
   }
 

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:project/core/components.dart';
 import 'package:project/core/styles.dart';
+import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/user_provider.dart';
+import 'package:project/screens/-----For%20All%20Users-----/choose%20user/chooseuser.dart';
+import 'package:project/screens/-----For%20employe-----/user%20handle/login/login_E.dart';
 import 'package:project/screens/-----For%20employe-----/user%20handle/register/provider/register_provder.dart';
 import 'package:project/services/network/authentication.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +28,12 @@ class _Profile_EState extends State<Profile_E> {
       padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 12),
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            onPressed: () async {
+              await context.read<UserProvider>().GetEmployeeData(id: Provider.of<UserProvider>(context, listen: false).state.myUser.id);
+            },
+            icon: Icon(Icons.refresh),
+          ),
           title: const Text("Account"),
           centerTitle: true,
           actions: [
@@ -53,14 +62,14 @@ class _Profile_EState extends State<Profile_E> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Mohamed",
+                      context.watch<UserProvider>().state.myUser.username,
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.black,
                       ),
                     ),
                     Text(
-                        "Mohamedali24@gamil.com",
+                      context.watch<UserProvider>().state.myUser.email,
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey[600],
@@ -130,7 +139,10 @@ class _Profile_EState extends State<Profile_E> {
             SizedBox(height: 10,),
 
             GestureDetector(
-              onTap: (){},
+              onTap: () async {
+                await context.read<UserProvider>().LogOut();
+                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => ChooseUser()), (route) => false);
+              },
               child: Row(
                 children: [
                   Icon(

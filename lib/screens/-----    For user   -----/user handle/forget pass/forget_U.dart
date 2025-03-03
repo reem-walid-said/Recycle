@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:project/core/app_routes.dart';
 import 'package:project/core/assets.dart';
+import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/forget%20pass/components/check_your_email.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/forget%20pass/provider/forget_U_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -69,14 +70,14 @@ class _Forget_UState extends State<Forget_U> {
                 color: Colors.transparent,
               ),
               // Email field
-              Row(
-                children: [
-                  Text(
-                    'Email',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Text(
+              //       'Email',
+              //       style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              //     ),
+              //   ],
+              // ),
               SizedBox(height: 5),
               Container(
                 padding: EdgeInsets.all(1.w),
@@ -104,8 +105,11 @@ class _Forget_UState extends State<Forget_U> {
               ),
               SizedBox(height: 20),
               InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, App_Routes.codepage_U);
+                onTap: () async {
+                  dynamic result = await context.read<ForgetPass_U_provider>().onSendingEmail();
+                  if(result){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => CheckYourEmail()));
+                  }
                 },
                 child: Container(
                   width: 95.w,
@@ -116,7 +120,7 @@ class _Forget_UState extends State<Forget_U> {
                   ),
                   child: Center(
                     child: Text(
-                      "Name",
+                      "Send",
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 18.sp,

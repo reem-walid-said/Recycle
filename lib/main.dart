@@ -43,15 +43,13 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => Login_E_Provider()),
           ChangeNotifierProvider(create: (context) => CreateAccountProvider()),
           ChangeNotifierProvider(create: (context) => ForgetPass_E_provider()),
-          ChangeNotifierProvider(
-              create: (context) => CreateAccountProvider_U()),
+          ChangeNotifierProvider(create: (context) => CreateAccountProvider_U()),
           ChangeNotifierProvider(create: (context) => Login_U_Provider()),
           ChangeNotifierProvider(create: (context) => ForgetPass_U_provider()),
           ChangeNotifierProvider(create: (context) => HomeProvider_U()),
           ChangeNotifierProvider(create: (context) => HomeProvider_E()),
           ChangeNotifierProvider(create: (context) => UserProvider()),
           ChangeNotifierProvider(create: (context) => ScanProvider()),
-
         ],
         child: MaterialApp(
           title: 'Flutter Demo',

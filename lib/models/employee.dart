@@ -1,11 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Employee{
   String id;
   String username;
   String email;
   String phone;
-  String warehouseID;
+  String status;
+  DateTime dateTime;
+  String address;
 
-  String? address;
+  String? warehouseID;
   DateTime? departureTime;
   DateTime? attendanceTime;
 
@@ -15,10 +19,22 @@ class Employee{
     required this.username,
     required this.email,
     required this.phone,
-    required this.warehouseID,
+    required this.address,
+    required this.dateTime,
+    required this.status,
 
-    this.address,
+    this.warehouseID,
     this.attendanceTime,
     this.departureTime,
 });
+
+  static Employee fromJson(DocumentSnapshot snapshot) => Employee(
+    id: snapshot.get("id"),
+    username: snapshot.get("name"),
+    email: snapshot.get("email"),
+    phone: snapshot.get("phone"),
+    address: snapshot.get("address"),
+    dateTime: snapshot.get("date").toDate(),
+    status: snapshot.get("status"),
+  );
 }

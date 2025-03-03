@@ -15,16 +15,16 @@ class ChooseUser extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: SafeArea(
         child: Column(children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, App_Routes.onboardingmain);
-                  },
-                  child: Icon(Iconsax.arrow_left)),
-            ],
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     InkWell(
+          //         onTap: () {
+          //           Navigator.pushNamed(context, App_Routes.onboardingmain);
+          //         },
+          //         child: Icon(Iconsax.arrow_left)),
+          //   ],
+          // ),
           SizedBox(
             height: 7.h,
           ),

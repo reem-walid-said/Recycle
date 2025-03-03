@@ -236,6 +236,12 @@ class Login_UState extends State<Login_U> {
                                 (route) => false,
                           );
                         }
+                        else{
+                          await myToast(
+                            message: "This email is not a User",
+                            backgroundColor: Colors.red,
+                          );
+                        }
                       }
                     }
                     else{

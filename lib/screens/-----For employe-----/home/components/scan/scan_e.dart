@@ -59,6 +59,7 @@ class _Scan_EState extends State<Scan_E> {
                         Text("Choose the category"),
                         Spacer(),
                         DropdownMenu(
+                          controller: context.watch<ScanProvider>().state.dropDownMenuController,
                           dropdownMenuEntries: context.watch<ScanProvider>().state.myCategories,
                           onSelected: context.read<ScanProvider>().onCategoryChange,
                         ),

@@ -60,6 +60,14 @@ class AuthServices {
   }
 
   // Forget Password
+  forgetPasswordSendingEmail(email) async {
+    try{
+      await _auth.sendPasswordResetEmail(email: email);
+    }catch(e){
+      print("Error: $e");
+      return e.toString().split("] ")[1];
+    }
+  }
 
   // SignOut
   signOut() async {

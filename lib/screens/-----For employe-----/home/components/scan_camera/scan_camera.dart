@@ -72,7 +72,7 @@ class _ScanCameraState extends State<ScanCamera> {
                 children: [
                   CircleAvatar(
                     backgroundColor: AppColor.mainDark,
-                    radius: 60,
+                    radius: 40,
                   ),
                   SizedBox(
                     width: 10,

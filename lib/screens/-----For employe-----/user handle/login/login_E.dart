@@ -2,6 +2,8 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:project/core/components.dart';
+import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/user_provider.dart';
 import 'package:project/screens/-----For%20employe-----/user%20handle/login/provider/login_E_provider.dart';
 import 'package:project/screens/-----For%20employe-----/user%20handle/register/register_E.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/register/register_U.dart';
@@ -221,14 +223,32 @@ class Login_EState extends State<Login_E> {
 
                     if(context.read<Login_E_Provider>().validate()){
                       print("VALID");
-                      bool result = await context.read<Login_E_Provider>().Login();
-                      if(result){
+                      dynamic LoginResult = await context.read<Login_E_Provider>().Login();
+                      if(LoginResult is String){
 
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          App_Routes.home_E,
-                              (route) => false,
-                        );
+                        bool getDataResult = await context.read<UserProvider>().GetEmployeeData(id: LoginResult);
+
+                        if(getDataResult == true){
+
+                          await myToast(
+                            message: "Logged In Successfully",
+                            backgroundColor: Colors.green,
+                          );
+
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            App_Routes.home_E,
+                                (route) => false,
+                          );
+                        }
+                        else{
+                          await myToast(
+                            message: "This email is not an Employee",
+                            backgroundColor: Colors.red,
+                          );
+                        }
+
+
                       }
                     }
                     else{

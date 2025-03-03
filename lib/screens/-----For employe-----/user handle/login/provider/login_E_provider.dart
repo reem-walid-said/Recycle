@@ -66,11 +66,7 @@ class Login_E_Provider extends ChangeNotifier {
       /// ToDo
       /// Get 'Employee' Date from FireStore
 
-      await myToast(
-        message: "Logged In Successfully",
-        backgroundColor: Colors.green,
-      );
-      return true;
+      return state.loginState.user?.uid;
     } else {
       await myToast(
         message: state.loginState,

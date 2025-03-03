@@ -93,7 +93,7 @@ Widget myRecyclingProcessItem({
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "@${item.user}",
+                  "@${item.username}",
                   style: TextStyle(fontSize: 12, color: Colors.grey),
                 ),
               ],
@@ -107,16 +107,16 @@ Widget myRecyclingProcessItem({
                     Container(
                         width: 75,
                         decoration: BoxDecoration(
-                          color: item.status ? AppColor.mainDisabled : AppColor.error,
+                          color: item.status == "Done" ? AppColor.mainDisabled : AppColor.error,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Center(
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: Text(
-                                item.status ? "Successful" : "Faild",
+                                item.status,
                                 style: TextStyle(
-                                    color: item.status ? Colors.black : Colors.white, fontSize: 12)),
+                                    color: item.status == "Done" ? Colors.black : Colors.white, fontSize: 12)),
                           ),
                         )),
                     TextButton(
