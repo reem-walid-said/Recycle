@@ -54,65 +54,68 @@ class OnBourding_2 extends StatelessWidget {
                     color: Colors.transparent,
                   ),
                   Text(
-                    "Recycle In Different",
+                    "Recycle In Different Warehouses",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w700),
                   ),
-                  Text(
-                    "Wearehouses",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w700),
-                  ),
+
                   Divider(
                     height: 3.h,
                     color: Colors.transparent,
                   ),
-                  Container(
-                    width: 90.w,
-                    child: Column(
-                      children: [
-                        Text(
-                          "Find Nearby Recycling Warehouses With",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w300),
-                        ),
-                        Row(
-                          children: [
-                            VerticalDivider(
-                              width: 4.w,
-                            ),
-                            Text(
-                              "Ease. Explore Locations, Working Hours,",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 17.sp,
-                                  fontWeight: FontWeight.w300),
-                            )
-                          ],
-                        ),
-                        Text(
-                          "And Accepted Materials To Ensure Hassle-",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 17.sp,
-                              fontWeight: FontWeight.w300),
-                        ),
-                        Text(
-                          "Free Recycling.",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w300),
-                        ),
-                      ],
-                    ),
-                  )
+                  Text(
+                      "Find Nearby Recycling Warehouses With Ease.\nExplore Locations, Working Hours, And Accepted Materials To Ensure Hassle-Free Recycling.",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w300),
+                    textAlign: TextAlign.center,
+                    maxLines: null,
+                  ),
+                  // Container(
+                  //   width: 90.w,
+                  //   child: Column(
+                  //     children: [
+                  //       Text(
+                  //         "",
+                  //         style: TextStyle(
+                  //             color: Colors.black,
+                  //             fontSize: 18.sp,
+                  //             fontWeight: FontWeight.w300),
+                  //       ),
+                  //       Row(
+                  //         children: [
+                  //           VerticalDivider(
+                  //             width: 4.w,
+                  //           ),
+                  //           Text(
+                  //             "",
+                  //             style: TextStyle(
+                  //                 color: Colors.black,
+                  //                 fontSize: 17.sp,
+                  //                 fontWeight: FontWeight.w300),
+                  //           )
+                  //         ],
+                  //       ),
+                  //       Text(
+                  //         "",
+                  //         style: TextStyle(
+                  //             color: Colors.black,
+                  //             fontSize: 17.sp,
+                  //             fontWeight: FontWeight.w300),
+                  //       ),
+                  //       Text(
+                  //         "",
+                  //         style: TextStyle(
+                  //             color: Colors.black,
+                  //             fontSize: 18.sp,
+                  //             fontWeight: FontWeight.w300),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // )
                 ],
               ),
             ),

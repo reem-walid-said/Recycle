@@ -64,41 +64,51 @@ class OnBourding_4 extends StatelessWidget {
                     height: 3.h,
                     color: Colors.transparent,
                   ),
-                  Container(
-                    width: 90.w,
-                    child: Column(
-                      children: [
-                        Text(
-                          "Ensure Collected Materials Are",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w300),
-                        ),
-                        Text(
-                          "Transported To Recycling Factories. Close",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 17.sp,
-                              fontWeight: FontWeight.w300),
-                        ),
-                        Text(
-                          "The Loop And Help Create A",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 17.sp,
-                              fontWeight: FontWeight.w300),
-                        ),
-                        Text(
-                          "Sustainable Future.",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w300),
-                        ),
-                      ],
-                    ),
-                  )
+                  Text(
+                      "Ensure Collected Materials Are Transported To Recycling Factories.\nClose The Loop And Help Create A Sustainable Future.",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w300),
+                    textAlign: TextAlign.center,
+                    maxLines: null,
+                  ),
+
+                  // Container(
+                  //   width: 90.w,
+                  //   child: Column(
+                  //     children: [
+                  //       Text(
+                  //         "",
+                  //         style: TextStyle(
+                  //             color: Colors.black,
+                  //             fontSize: 18.sp,
+                  //             fontWeight: FontWeight.w300),
+                  //       ),
+                  //       Text(
+                  //         "",
+                  //         style: TextStyle(
+                  //             color: Colors.black,
+                  //             fontSize: 17.sp,
+                  //             fontWeight: FontWeight.w300),
+                  //       ),
+                  //       Text(
+                  //         "",
+                  //         style: TextStyle(
+                  //             color: Colors.black,
+                  //             fontSize: 17.sp,
+                  //             fontWeight: FontWeight.w300),
+                  //       ),
+                  //       Text(
+                  //         "",
+                  //         style: TextStyle(
+                  //             color: Colors.black,
+                  //             fontSize: 18.sp,
+                  //             fontWeight: FontWeight.w300),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // )
                 ],
               ),
             ),

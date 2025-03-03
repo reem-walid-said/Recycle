@@ -54,7 +54,7 @@ class OnBourding_3 extends StatelessWidget {
                     color: Colors.transparent,
                   ),
                   Text(
-                    "Collect Alot Of Materials",
+                    "Collect A lot Of Materials",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 20.sp,
@@ -64,48 +64,57 @@ class OnBourding_3 extends StatelessWidget {
                     height: 3.h,
                     color: Colors.transparent,
                   ),
-                  Container(
-                    width: 90.w,
-                    child: Column(
-                      children: [
-                        Text(
-                          "Track And Manage A Variety Of ",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w300),
-                        ),
-                        Row(
-                          children: [
-                            VerticalDivider(
-                              width: 4.w,
-                            ),
-                            Text(
-                              "Recyclable Materials In One Place. Stay",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 17.sp,
-                                  fontWeight: FontWeight.w300),
-                            )
-                          ],
-                        ),
-                        Text(
-                          "organized and maximize your",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 17.sp,
-                              fontWeight: FontWeight.w300),
-                        ),
-                        Text(
-                          "organized and maximize your ",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w300),
-                        ),
-                      ],
-                    ),
-                  )
+                  Text(
+                      "Track And Manage A Variety Of Recyclable Materials In One Place.\nStay Organized and Maximize",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w300),
+                      textAlign: TextAlign.center,
+                      maxLines: null,
+                  ),
+                  // Container(
+                  //   width: 90.w,
+                  //   child: Column(
+                  //     children: [
+                  //       Text(
+                  //         "",
+                  //         style: TextStyle(
+                  //             color: Colors.black,
+                  //             fontSize: 18.sp,
+                  //             fontWeight: FontWeight.w300),
+                  //       ),
+                  //       Row(
+                  //         children: [
+                  //           VerticalDivider(
+                  //             width: 4.w,
+                  //           ),
+                  //           Text(
+                  //             "",
+                  //             style: TextStyle(
+                  //                 color: Colors.black,
+                  //                 fontSize: 17.sp,
+                  //                 fontWeight: FontWeight.w300),
+                  //           )
+                  //         ],
+                  //       ),
+                  //       Text(
+                  //         "",
+                  //         style: TextStyle(
+                  //             color: Colors.black,
+                  //             fontSize: 17.sp,
+                  //             fontWeight: FontWeight.w300),
+                  //       ),
+                  //       Text(
+                  //         "organized and maximize your ",
+                  //         style: TextStyle(
+                  //             color: Colors.black,
+                  //             fontSize: 18.sp,
+                  //             fontWeight: FontWeight.w300),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // )
                 ],
               ),
             ),

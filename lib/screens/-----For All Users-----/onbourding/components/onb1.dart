@@ -65,55 +65,64 @@ class OnBourding_1 extends StatelessWidget {
                     color: Colors.transparent,
                   ),
                   ////////المربع اللي فيه الكلام اخر حاجه تحت //////////
-                  Container(
-                    width: 90.w,
-                    child: Column(
-                      children: [
-                        Text(
-                          "Scan Items With Camera And Let AI",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w300),
-                        ),
-                        Row(
-                          children: [
-                            VerticalDivider(
-                              width: 4.w,
-                            ),
-                            Text(
-                              "Identify Their Materials. Instantly Know",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 17.sp,
-                                  fontWeight: FontWeight.w300),
-                            )
-                          ],
-                        ),
-                        Text(
-                          "What Can Be Recycled. Making Eco-",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w300),
-                        ),
-                        Row(
-                          children: [
-                            VerticalDivider(
-                              width: 4.w,
-                            ),
-                            Text(
-                              "Friendly Choices Has Never Been Easier!",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 17.sp,
-                                  fontWeight: FontWeight.w300),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  )
+                  Text(
+                      "Scan Items With Camera And Let AI Identify Their Materials.\nInstantly Know What Can Be Recycled.\nMaking Eco-Friendly Choices Has Never Been Easier!",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w300),
+                    textAlign: TextAlign.center,
+                    maxLines: null,
+                  ),
+                  // Container(
+                  //   width: 90.w,
+                  //   child: Column(
+                  //     children: [
+                  //       Text(
+                  //         "Scan Items With Camera And Let AI",
+                  //         style: TextStyle(
+                  //             color: Colors.black,
+                  //             fontSize: 18.sp,
+                  //             fontWeight: FontWeight.w300),
+                  //       ),
+                  //       Row(
+                  //         children: [
+                  //           VerticalDivider(
+                  //             width: 4.w,
+                  //           ),
+                  //           Text(
+                  //             "Identify Their Materials. Instantly Know",
+                  //             style: TextStyle(
+                  //                 color: Colors.black,
+                  //                 fontSize: 17.sp,
+                  //                 fontWeight: FontWeight.w300),
+                  //           )
+                  //         ],
+                  //       ),
+                  //       Text(
+                  //         "What Can Be Recycled. Making Eco-",
+                  //         style: TextStyle(
+                  //             color: Colors.black,
+                  //             fontSize: 18.sp,
+                  //             fontWeight: FontWeight.w300),
+                  //       ),
+                  //       Row(
+                  //         children: [
+                  //           VerticalDivider(
+                  //             width: 4.w,
+                  //           ),
+                  //           Text(
+                  //             "Friendly Choices Has Never Been Easier!",
+                  //             style: TextStyle(
+                  //                 color: Colors.black,
+                  //                 fontSize: 17.sp,
+                  //                 fontWeight: FontWeight.w300),
+                  //           )
+                  //         ],
+                  //       ),
+                  //     ],
+                  //   ),
+                  // )
                 ],
               ),
             ),
