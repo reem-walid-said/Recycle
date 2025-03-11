@@ -44,7 +44,7 @@ class _Recycling_EState extends State<Recycling_E> {
           ],
         ),
         body: StreamBuilder(
-          stream: myRecycleProcess(context.watch<UserProvider>().state.myUser.id),
+          stream: myRecycleProcess(context.watch<UserProvider>().state.myUser.localID),
           builder: (context, snapshot){
 
             if (snapshot.connectionState == ConnectionState.waiting) {

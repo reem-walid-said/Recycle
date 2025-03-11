@@ -50,6 +50,9 @@ dependencies:
   fluttertoast: ^8.2.12
   mobile_scanner: ^6.0.6
   qr_flutter: ^4.1.0
+  firebase_ml_model_downloader: ^0.3.3+2
+  switcher_button: ^0.0.4
+  pair: ^0.1.2
 
 dev_dependencies:
   flutter_test:

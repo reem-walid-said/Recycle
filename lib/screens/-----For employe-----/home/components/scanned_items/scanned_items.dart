@@ -88,7 +88,7 @@ class ScannedItemsScreen extends StatelessWidget {
                           label: "Confirm",
                           onPressed: () async {
                             //print(Provider.of<UserProvider>(context, listen: false).state.myUser?.id);
-                            await context.read<ScanProvider>().onConfirmOrder(employeeId:Provider.of<UserProvider>(context, listen: false).state.myUser!.id);
+                            await context.read<ScanProvider>().onConfirmOrder(employeeId:Provider.of<UserProvider>(context, listen: false).state.myUser!.localID);
                             Navigator.pop(context); // back to scan items screen
                             Navigator.pop(context); // back to scan profile screen
                             Navigator.pop(context); // back to home screen

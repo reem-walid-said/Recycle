@@ -39,7 +39,7 @@ class _Recycling_UState extends State<Recycling_U> {
         ),
         body: StreamBuilder(
             stream:
-                myRecycleProcess(context.watch<UserProvider>().state.myUser.id),
+                myRecycleProcess(context.watch<UserProvider>().state.myUser.localID),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());

@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Employee{
-  String id;
+  String globalID;
+  String localID;
   String username;
   String email;
   String phone;
@@ -15,7 +16,8 @@ class Employee{
 
 
   Employee({
-    required this.id,
+    required this.globalID,
+    required this.localID,
     required this.username,
     required this.email,
     required this.phone,
@@ -29,7 +31,8 @@ class Employee{
 });
 
   static Employee fromJson(DocumentSnapshot snapshot) => Employee(
-    id: snapshot.get("id"),
+    globalID: snapshot.get("globalID"),
+    localID: snapshot.get("id"),
     username: snapshot.get("name"),
     email: snapshot.get("email"),
     phone: snapshot.get("phone"),

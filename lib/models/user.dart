@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User{
-  String id;
+  String globalID;
+  String localID;
   String username;
   String email;
   String phone;
@@ -10,7 +11,8 @@ class User{
   String? address;
 
   User({
-    required this.id,
+    required this.globalID,
+    required this.localID,
     required this.username,
     required this.email,
     required this.phone,
@@ -20,7 +22,8 @@ class User{
 });
 
   static User fromJson(DocumentSnapshot snapshot) => User(
-      id: snapshot.get("id"),
+      globalID: snapshot.get("globalID"),
+      localID: snapshot.get("localID"),
       username: snapshot.get("username"),
       email: snapshot.get("email"),
       phone: snapshot.get("phone"),

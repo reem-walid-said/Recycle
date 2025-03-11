@@ -88,10 +88,10 @@ class _Home_U_MainState extends State<Home_U_Main> {
                         width: 43.w,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.white.withOpacity(0.8),
+                          color: Color(0xCCFFFFFF),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey.withOpacity(0.1),
+                              color: Color(0x1A808080),
                               spreadRadius: 2,
                               blurRadius: 2,
                               offset:
@@ -128,10 +128,10 @@ class _Home_U_MainState extends State<Home_U_Main> {
                         width: 43.w,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.white.withOpacity(0.8),
+                          color: Color(0xCCFFFFFF),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey.withOpacity(0.1),
+                              color: Color(0x1A808080),
                               spreadRadius: 2,
                               blurRadius: 2,
                               offset:
@@ -211,7 +211,7 @@ class _Home_U_MainState extends State<Home_U_Main> {
                         width: 27.w,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Color(0xff649014).withOpacity(0.25),
+                          color: Color(0x40649014),
                         ),
                         child: Center(
                           child: Column(
@@ -232,7 +232,7 @@ class _Home_U_MainState extends State<Home_U_Main> {
                         width: 27.w,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Color(0xff649014).withOpacity(0.25),
+                          color: Color(0x40649014),
                         ),
                         child: Center(
                           child: Column(
@@ -253,15 +253,15 @@ class _Home_U_MainState extends State<Home_U_Main> {
                         width: 27.w,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Color(0xff649014).withOpacity(0.25),
+                          color: Color(0x40649014),
                         ),
                         child: Center(
                           child: Column(
                             children: [
                               Divider(height: 2.h, color: Colors.transparent),
-                              Image.asset(Assets.bottle, scale: 1),
+                              Image.asset(Assets.glass, scale: 2),
                               Divider(height: 1.h, color: Colors.transparent),
-                              Text("Bottle",
+                              Text("Glass",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 16.sp)),

@@ -274,90 +274,90 @@ class Login_EState extends State<Login_E> {
                     ),
                   ),
                 ),
-                SizedBox(height: 25.sp),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        color: Colors.white,
-                        thickness: 1,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text(
-                        'OR',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        color: Colors.white,
-                        thickness: 1,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20.sp),
-                InkWell(
-                  onTap: () {},
-                  child: Container(
-                    width: 90.w,
-                    height: 5.h,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.green, width: 1),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        VerticalDivider(
-                          width: 25.w,
-                          color: Colors.transparent,
-                        ),
-                        Image.asset(
-                          Assets.google,
-                          scale: 1,
-                        ),
-                        VerticalDivider(
-                          width: 1.w,
-                          color: Colors.transparent,
-                        ),
-                        Text("Sign in with Google ")
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: 30.sp),
-                Center(
-                  child: RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      text: "Don't Have An Account? ",
-                      style: TextStyle(color: Colors.black),
-                      children: [
-                        TextSpan(
-                          text: 'Sign Up',
-                          style: TextStyle(color: Colors.blue),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Register_E(),
-                                ),
-                              );
-                            },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                // SizedBox(height: 25.sp),
+                // Row(
+                //   children: [
+                //     Expanded(
+                //       child: Divider(
+                //         color: Colors.white,
+                //         thickness: 1,
+                //       ),
+                //     ),
+                //     Padding(
+                //       padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                //       child: Text(
+                //         'OR',
+                //         style: TextStyle(
+                //           fontSize: 18,
+                //           color: Colors.black,
+                //           fontWeight: FontWeight.bold,
+                //         ),
+                //       ),
+                //     ),
+                //     Expanded(
+                //       child: Divider(
+                //         color: Colors.white,
+                //         thickness: 1,
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                // SizedBox(height: 20.sp),
+                // InkWell(
+                //   onTap: () {},
+                //   child: Container(
+                //     width: 90.w,
+                //     height: 5.h,
+                //     decoration: BoxDecoration(
+                //       color: Colors.white,
+                //       borderRadius: BorderRadius.circular(10),
+                //       border: Border.all(color: Colors.green, width: 1),
+                //     ),
+                //     child: Row(
+                //       crossAxisAlignment: CrossAxisAlignment.center,
+                //       children: [
+                //         VerticalDivider(
+                //           width: 25.w,
+                //           color: Colors.transparent,
+                //         ),
+                //         Image.asset(
+                //           Assets.google,
+                //           scale: 1,
+                //         ),
+                //         VerticalDivider(
+                //           width: 1.w,
+                //           color: Colors.transparent,
+                //         ),
+                //         Text("Sign in with Google ")
+                //       ],
+                //     ),
+                //   ),
+                // ),
+                // SizedBox(height: 30.sp),
+                // Center(
+                //   child: RichText(
+                //     textAlign: TextAlign.center,
+                //     text: TextSpan(
+                //       text: "Don't Have An Account? ",
+                //       style: TextStyle(color: Colors.black),
+                //       children: [
+                //         TextSpan(
+                //           text: 'Sign Up',
+                //           style: TextStyle(color: Colors.blue),
+                //           recognizer: TapGestureRecognizer()
+                //             ..onTap = () {
+                //               Navigator.push(
+                //                 context,
+                //                 MaterialPageRoute(
+                //                   builder: (context) => Register_E(),
+                //                 ),
+                //               );
+                //             },
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),

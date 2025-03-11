@@ -23,10 +23,8 @@ void main() async {
   //   builder: (context) => const MyApp(),
   //   enabled: true,
   // ));
-
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
   runApp(const MyApp());
 }
 

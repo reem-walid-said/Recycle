@@ -7,6 +7,7 @@ import 'package:project/models/recycle_item.dart';
 import 'package:project/models/recycle_process_item.dart';
 import 'package:project/screens/-----For%20employe-----/home/provider/scan_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 // Here will be all the Shared Components like (Buttons, Item's Designs, etc...)
 
 Widget myElevatedButton({
@@ -69,7 +70,8 @@ Widget myTextFormField({
 
 Widget myRecyclingProcessItem({
   required RecycleProcessItem item,
-}) => Container(
+}) =>
+    Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey, width: 1),
         borderRadius: BorderRadius.circular(10),
@@ -107,16 +109,20 @@ Widget myRecyclingProcessItem({
                     Container(
                         width: 75,
                         decoration: BoxDecoration(
-                          color: item.status == "Done" ? AppColor.mainDisabled : AppColor.error,
+                          color: item.status == "Done"
+                              ? AppColor.mainDisabled
+                              : AppColor.error,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Center(
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
-                            child: Text(
-                                item.status,
+                            child: Text(item.status,
                                 style: TextStyle(
-                                    color: item.status == "Done" ? Colors.black : Colors.white, fontSize: 12)),
+                                    color: item.status == "Done"
+                                        ? Colors.black
+                                        : Colors.white,
+                                    fontSize: 12)),
                           ),
                         )),
                     TextButton(
@@ -136,45 +142,55 @@ Widget myRecyclingProcessItem({
       ),
     );
 
-
 Widget RecycleItemBuilder(BuildContext context, RecycleItem item) => Container(
-  decoration: BoxDecoration(
-    border: Border.all(color: Colors.grey, width: 2),
-    borderRadius: BorderRadius.circular(8),
-  ),
-  child: Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text("${item.name}", style: TextStyle(fontSize: 22),),
-        Row(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey, width: 2),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Category: ${item.category.type}"),
-            Spacer(),
-            Text("Count: ${item.count}"),
-            Spacer(),
-            Text("Points: ${item.totalPoints} pts", style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),),
+            Text(
+              "${item.name}",
+              style: TextStyle(fontSize: 22),
+            ),
+            Row(
+              children: [
+                Text("Category: ${item.category.type}"),
+                Spacer(),
+                Text("Count: ${item.count}"),
+                Spacer(),
+                Text(
+                  "Points: ${item.totalPoints} pts",
+                  style: TextStyle(
+                      color: Colors.green, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Align(
+                alignment: Alignment.centerRight,
+                child: ElevatedButton(
+                  onPressed: () {
+                    context.read<ScanProvider>().onDeleteItem(item);
+                  },
+                  child: Icon(
+                    Icons.delete_forever_outlined,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                  ),
+                ))
           ],
         ),
-        SizedBox(height: 10,),
-        Align(
-            alignment: Alignment.centerRight,
-            child: ElevatedButton(
-                onPressed: (){
-                  context.read<ScanProvider>().onDeleteItem(item);
-                },
-                child: Icon(Icons.delete_forever_outlined, color: Colors.white, size: 30,),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                ),
-            )
-        )
-      ],
-    ),
-  ),
-);
-
+      ),
+    );
 
 Future myToast({
   String message = "",
@@ -190,3 +206,47 @@ Future myToast({
     fontSize: 16,
   );
 }
+
+Widget BulletListBuilder({
+  required List<String> items,
+  double fontSize = 16,
+}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: items.map((item) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(' • ', style: TextStyle(fontSize: fontSize + 5)), // Bullet point
+          Expanded(
+            child: Text(item, style: TextStyle(fontSize: fontSize)),
+          ),
+        ],
+      );
+    }).toList(),
+  );
+}
+
+Widget CategoryItemBuilder({
+  required String assetImage,
+  required String label,
+}) =>
+    Container(
+      height: 15.h,
+      width: 27.w,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Color(0x40649014)
+      ),
+      child: Center(
+        child: Column(
+          children: [
+            Divider(height: 2.h, color: Colors.transparent),
+            Image.asset(assetImage, width: 64, height: 64),
+            Divider(height: 5.h, color: Colors.transparent),
+            Text(label,
+                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.sp)),
+          ],
+        ),
+      ),
+    );

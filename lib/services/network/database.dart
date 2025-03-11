@@ -21,8 +21,15 @@ class DatabaseServices {
     required phone,
     address,
   }) async {
+
+    QuerySnapshot querySnapshot = await UserCollection.get();
+    int numberOfDocs = querySnapshot.docs.length;
+
+    String localID = "U-${(numberOfDocs + 1).toString().padLeft(3, '0')}";
+
     return await UserCollection.doc(id).set({
-      'id': id,
+      'globalID': id,
+      'localID': localID,
       'username': username,
       'email': email,
       'phone': phone,
@@ -109,8 +116,6 @@ class DatabaseServices {
 
   ///ToDo
   ///{
-  ///   CreateEmployee()
-  ///   GetEmployeeData()
   ///   UpdateUserData()
   ///   UpdateEmployeeData()
   ///}

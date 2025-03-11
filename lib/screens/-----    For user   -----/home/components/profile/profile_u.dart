@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:project/core/components.dart';
 import 'package:project/core/styles.dart';
+import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/components/settings/settings_u.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/user_provider.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/login/login_U.dart';
+import 'package:project/screens/-----For%20All%20Users-----/FAQ/FAQ.dart';
 import 'package:project/screens/-----For%20All%20Users-----/choose%20user/chooseuser.dart';
 import 'package:project/screens/-----For%20employe-----/user%20handle/register/provider/register_provder.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +33,7 @@ class _Profile_UState extends State<Profile_U> {
           appBar: AppBar(
             leading: IconButton(
                 onPressed: () async {
-                  await context.read<UserProvider>().GetUserData(id: Provider.of<UserProvider>(context, listen: false).state.myUser.id);
+                  await context.read<UserProvider>().GetUserData(id: Provider.of<UserProvider>(context, listen: false).state.myUser.globalID);
                 },
                 icon: Icon(Icons.refresh),
             ),
@@ -110,7 +112,9 @@ class _Profile_UState extends State<Profile_U> {
               SizedBox(height: 10,),
 
               GestureDetector(
-                onTap: (){},
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Settings_U_Screen()));
+                },
                 child: Row(
                   children: [
                     Icon(
@@ -129,14 +133,18 @@ class _Profile_UState extends State<Profile_U> {
                       ),
                     ),
                     Spacer(),
-                    IconButton(onPressed: () {}, icon: Icon(Icons.arrow_forward_ios_rounded)),
+                    IconButton(onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Settings_U_Screen()));
+                    }, icon: Icon(Icons.arrow_forward_ios_rounded)),
                   ],
                 ),
               ),
               SizedBox(height: 10,),
 
               GestureDetector(
-                onTap: (){},
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => FAQScreen()));
+                },
                 child: Row(
                   children: [
                     Image(
@@ -155,7 +163,9 @@ class _Profile_UState extends State<Profile_U> {
                       ),
                     ),
                     Spacer(),
-                    IconButton(onPressed: () {}, icon: Icon(Icons.arrow_forward_ios_rounded)),
+                    IconButton(onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => FAQScreen()));
+                    }, icon: Icon(Icons.arrow_forward_ios_rounded)),
                   ],
                 ),
               ),

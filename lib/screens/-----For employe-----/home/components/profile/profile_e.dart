@@ -3,7 +3,9 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:project/core/components.dart';
 import 'package:project/core/styles.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/user_provider.dart';
+import 'package:project/screens/-----For%20All%20Users-----/FAQ/FAQ.dart';
 import 'package:project/screens/-----For%20All%20Users-----/choose%20user/chooseuser.dart';
+import 'package:project/screens/-----For%20employe-----/home/components/settings/settings_e.dart';
 import 'package:project/screens/-----For%20employe-----/user%20handle/login/login_E.dart';
 import 'package:project/screens/-----For%20employe-----/user%20handle/register/provider/register_provder.dart';
 import 'package:project/services/network/authentication.dart';
@@ -30,7 +32,7 @@ class _Profile_EState extends State<Profile_E> {
         appBar: AppBar(
           leading: IconButton(
             onPressed: () async {
-              await context.read<UserProvider>().GetEmployeeData(id: Provider.of<UserProvider>(context, listen: false).state.myUser.id);
+              await context.read<UserProvider>().GetEmployeeData(id: Provider.of<UserProvider>(context, listen: false).state.myUser.globalID);
             },
             icon: Icon(Icons.refresh),
           ),
@@ -87,7 +89,9 @@ class _Profile_EState extends State<Profile_E> {
             SizedBox(height: 50,),
 
             GestureDetector(
-              onTap: (){},
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Settings_E_Screen()));
+              },
               child: Row(
                 children: [
                   Icon(
@@ -99,21 +103,25 @@ class _Profile_EState extends State<Profile_E> {
                     width: 10,
                   ),
                   Text(
-                    "Setting",
+                    "Settings",
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.black,
                     ),
                   ),
                   Spacer(),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.arrow_forward_ios_rounded)),
+                  IconButton(onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Settings_E_Screen()));
+                  }, icon: Icon(Icons.arrow_forward_ios_rounded)),
                 ],
               ),
             ),
             SizedBox(height: 10,),
 
             GestureDetector(
-              onTap: (){},
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => FAQScreen()));
+              },
               child: Row(
                 children: [
                   Image(
@@ -125,14 +133,16 @@ class _Profile_EState extends State<Profile_E> {
                     width: 10,
                   ),
                   Text(
-                    "FAQ's",
+                    "FAQ'S",
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.black,
                     ),
                   ),
                   Spacer(),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.arrow_forward_ios_rounded)),
+                  IconButton(onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => FAQScreen()));
+                  }, icon: Icon(Icons.arrow_forward_ios_rounded)),
                 ],
               ),
             ),
@@ -161,7 +171,10 @@ class _Profile_EState extends State<Profile_E> {
                     ),
                   ),
                   Spacer(),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.arrow_forward_ios_rounded)),
+                  IconButton(onPressed: () async {
+                    await context.read<UserProvider>().LogOut();
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => ChooseUser()), (route) => false);
+                  }, icon: Icon(Icons.arrow_forward_ios_rounded)),
                 ],
               ),
             ),

@@ -126,9 +126,9 @@ class ScanProvider extends ChangeNotifier{
     notifyListeners();
 
     try{
-      await DatabaseServices(id: employeeId).updateUserPoints(points: state.totalScannedItemsPoints, userId: state.scannedUser!.id);
+      await DatabaseServices(id: employeeId).updateUserPoints(points: state.totalScannedItemsPoints, userId: state.scannedUser!.globalID);
       await DatabaseServices(id: employeeId).addRecyclingProcess(
-        uid: state.scannedUser!.id,
+        uid: state.scannedUser!.localID,
         username: state.scannedUser!.username,
         points: state.totalScannedItemsPoints,
         amount: {

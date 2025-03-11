@@ -1,3 +1,4 @@
+import 'package:firebase_ml_model_downloader/firebase_ml_model_downloader.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:project/core/app_routes.dart';
@@ -5,8 +6,62 @@ import 'package:project/core/assets.dart';
 
 import 'package:sizer/sizer.dart';
 
-class ChooseUser extends StatelessWidget {
+class ChooseUser extends StatefulWidget {
   const ChooseUser({super.key});
+
+  @override
+  State<ChooseUser> createState() => _ChooseUserState();
+}
+
+class _ChooseUserState extends State<ChooseUser> {
+
+  String? _localModelPath;
+
+  @override
+  void initState() {
+    super.initState();
+    _downloadModel();
+  }
+
+  Future<void> _downloadModel() async {
+    try {
+      final customModel = await FirebaseModelDownloader.instance.getModel(
+        "model.onnx",
+        FirebaseModelDownloadType.localModel,
+        FirebaseModelDownloadConditions(
+          iosAllowsCellularAccess: true,
+          iosAllowsBackgroundDownloading: false,
+          androidChargingRequired: false,
+          androidWifiRequired: false,
+          androidDeviceIdleRequired: false,
+        ),
+      );
+
+      setState(() {
+        _localModelPath = customModel.file.path;
+      });
+
+      // Now you can use the model with TensorFlow Lite
+      _initializeInterpreter();
+    } catch (e) {
+      print("Failed to download model: $e");
+    }
+  }
+
+  void _initializeInterpreter() {
+    if (_localModelPath != null) {
+      // Initialize TensorFlow Lite interpreter with the model
+      // Example:
+      // var interpreter = Interpreter.fromFile(File(_localModelPath!));
+      // Use the interpreter for inference
+    }
+  }
+
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +121,7 @@ class ChooseUser extends StatelessWidget {
                     height: 22.h,
                     width: 43.w,
                     decoration: BoxDecoration(
-                      color: Color(0xff649014).withOpacity(0.25),
+                      color: Color(0x40649014),
                       borderRadius: BorderRadius.circular(25),
                     ),
                     child: Column(
@@ -93,7 +148,7 @@ class ChooseUser extends StatelessWidget {
                     height: 22.h,
                     width: 43.w,
                     decoration: BoxDecoration(
-                      color: Color(0xff649014).withOpacity(0.25),
+                      color: Color(0x40649014),
                       borderRadius: BorderRadius.circular(25),
                     ),
                     child: Column(

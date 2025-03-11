@@ -26,7 +26,7 @@ class _Scan_UState extends State<Scan_U> {
         child: Column(
           children: [
             QrImageView(
-                data: context.watch<UserProvider>().state.myUser!.id,
+                data: context.watch<UserProvider>().state.myUser!.globalID,
                 version: QrVersions.auto,
             ),
             SizedBox(height: 30,),
