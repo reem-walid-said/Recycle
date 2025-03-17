@@ -29,62 +29,94 @@ class ScanProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  void onAddingItem(){
-    print(state.itemNameController.text);
-    print(state.selectedCategory?.type);
-    print(state.selectedCategory?.points);
-    print(state.selectedNumber);
-    print(state.dropDownMenuController.text);
+  //OLD Version (DropDownMenu)
+  // void onAddingItem(){
+  //   //print(state.itemNameController.text);
+  //   print(state.selectedCategory?.type);
+  //   print(state.selectedCategory?.points);
+  //   print(state.selectedNumber);
+  //   print(state.dropDownMenuController.text);
+  //
+  //   if(/*state.itemNameController.text.isEmpty || */state.selectedCategory == null || state.selectedNumber == 0){
+  //     print("Invalid");
+  //     myToast(
+  //       message: "Invalid Data",
+  //       backgroundColor: Colors.red,
+  //     );
+  //     return;
+  //   }
+  //
+  //   state.myScannedItem.add(RecycleItem(
+  //       category: state.selectedCategory!,
+  //       count: state.selectedNumber,
+  //       totalPoints: state.selectedNumber * state.selectedCategory!.points,)
+  //   );
+  //   state.totalScannedItemsPoints += state.selectedNumber * state.selectedCategory!.points;
+  //
+  //   if(state.selectedCategory?.type == "Plastic"){
+  //     state.totalScannedPlasticItems += state.selectedNumber;
+  //   }
+  //   if(state.selectedCategory?.type == "Metal"){
+  //     state.totalScannedMetalItems += state.selectedNumber;
+  //   }
+  //   if(state.selectedCategory?.type == "Glass"){
+  //     state.totalScannedGlassItems += state.selectedNumber;
+  //   }
+  //
+  //   myToast(
+  //     message: "Item Scanned Successfully",
+  //     backgroundColor: Colors.green,
+  //   );
+  //
+  //   ResetAfterAdd();
+  //
+  //   notifyListeners();
+  // }
 
-    if(state.itemNameController.text.isEmpty || state.selectedCategory == null || state.selectedNumber == 0){
-      print("Invalid");
-      myToast(
-        message: "Invalid Data",
-        backgroundColor: Colors.red,
-      );
-      return;
-    }
+  //NEW Version (AI Model)
 
+  void onAddingItemNew({
+    required String category,
+    required int count,
+}){
     state.myScannedItem.add(RecycleItem(
-        name: state.itemNameController.text,
-        category: state.selectedCategory!,
-        count: state.selectedNumber,
-        totalPoints: state.selectedNumber * state.selectedCategory!.points,)
-    );
-    state.totalScannedItemsPoints += state.selectedNumber * state.selectedCategory!.points;
-
-    if(state.selectedCategory?.type == "Plastic"){
-      state.totalScannedPlasticItems += state.selectedNumber;
-    }
-    if(state.selectedCategory?.type == "Can"){
-      state.totalScannedCanItems += state.selectedNumber;
-    }
-    if(state.selectedCategory?.type == "Glass"){
-      state.totalScannedGlassItems += state.selectedNumber;
-    }
-
-    myToast(
-      message: "Item Scanned Successfully",
-      backgroundColor: Colors.green,
+      category: category,
+      count: count,
+      totalPoints: count * state.myCategoriesMap[category]!),
     );
 
-    ResetAfterAdd();
+      state.totalScannedItemsPoints += count * state.myCategoriesMap[category]!;
 
-    notifyListeners();
+      if(category == "Plastic"){
+        state.totalScannedPlasticItems += count;
+      }
+      if(category == "Metal"){
+        state.totalScannedMetalItems += count;
+      }
+      if(category == "Glass"){
+        state.totalScannedGlassItems += count;
+      }
+
+      myToast(
+        message: "Item Added Successfully",
+        backgroundColor: Colors.green,
+      );
+
   }
 
+  void onDeleteItem(int index){
+    RecycleItem item = state.myScannedItem[index];
+    state.myScannedItem.removeAt(index);
 
-  void onDeleteItem(RecycleItem item){
-    state.myScannedItem.remove(item);
     state.totalScannedItemsPoints -= item.totalPoints;
 
-    if(item.category.type == "Plastic"){
+    if(item.category == "Plastic"){
       state.totalScannedPlasticItems -= item.count;
     }
-    if(item.category.type == "Can"){
-      state.totalScannedCanItems -= item.count;
+    if(item.category == "Metal"){
+      state.totalScannedMetalItems -= item.count;
     }
-    if(item.category.type == "Glass"){
+    if(item.category == "Glass"){
       state.totalScannedGlassItems -= item.count;
     }
 
@@ -94,7 +126,7 @@ class ScanProvider extends ChangeNotifier{
   void ResetAfterAdd(){
     state.selectedCategory = null;
     state.selectedNumber = 0;
-    state.itemNameController.text = "";
+    //state.itemNameController.text = "";
     state.dropDownMenuController.text = "";
 
     notifyListeners();
@@ -105,10 +137,10 @@ class ScanProvider extends ChangeNotifier{
     state.totalScannedItemsPoints = 0;
     state.selectedCategory = null;
     state.selectedNumber = 0;
-    state.itemNameController.text = "";
+    //state.itemNameController.text = "";
     state.onConfirming = false;
     state.totalScannedGlassItems = 0;
-    state.totalScannedCanItems = 0;
+    state.totalScannedMetalItems = 0;
     state.totalScannedPlasticItems = 0;
     state.scannedUser = null;
     state.scannedId = null;
@@ -133,7 +165,7 @@ class ScanProvider extends ChangeNotifier{
         points: state.totalScannedItemsPoints,
         amount: {
           "plastic": state.totalScannedPlasticItems,
-          "can": state.totalScannedCanItems,
+          "can": state.totalScannedMetalItems,
           "glass": state.totalScannedGlassItems,
         }
       );

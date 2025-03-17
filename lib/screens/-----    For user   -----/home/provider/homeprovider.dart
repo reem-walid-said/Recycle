@@ -48,8 +48,7 @@ class HomeProvider_U extends ChangeNotifier {
         return Categories_U();
       case ParentsChosenNavigationItem.profile:
         return Profile_U();
-      default:
-        return const SizedBox();
+
     }
   }
 

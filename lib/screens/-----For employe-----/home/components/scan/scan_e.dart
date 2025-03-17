@@ -22,10 +22,7 @@ class _Scan_EState extends State<Scan_E> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: Image.asset(
-          Assets.logo,
-          scale: 2,
-        ),
+
         title: Text("Scan",
             style: TextStyle(
                 fontWeight: FontWeight.w700, fontSize: 20.sp)),
@@ -46,21 +43,13 @@ class _Scan_EState extends State<Scan_E> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    myTextFormField(
-                        hintText: "Item's Name",
-                        controller: context.watch<ScanProvider>().state.itemNameController,
-                    ),
-
-
-                    SizedBox(height: 30,),
-
                     Row(
                       children: [
                         Text("Choose the category"),
                         Spacer(),
                         DropdownMenu(
                           controller: context.watch<ScanProvider>().state.dropDownMenuController,
-                          dropdownMenuEntries: context.watch<ScanProvider>().state.myCategories,
+                          dropdownMenuEntries: context.watch<ScanProvider>().state.myCategoriesDDM,
                           onSelected: context.read<ScanProvider>().onCategoryChange,
                         ),
                       ],
@@ -105,17 +94,9 @@ class _Scan_EState extends State<Scan_E> {
                       ],
                     ),
                     SizedBox(height: 50,),
-                    Center(
-                      child: ElevatedButton(
-                          onPressed: (){
-                            context.read<ScanProvider>().onAddingItem();
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColor.main
-                          ),
-                          child: Text("Add", style: TextStyle(color: Colors.white),),
-                      ),
-                    ),
+                    myElevatedButton(label: "Add", onPressed: (){
+                      //context.read<ScanProvider>().onAddingItem();
+                    }),
 
                   ],
                 ),

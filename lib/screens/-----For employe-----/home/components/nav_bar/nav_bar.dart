@@ -3,7 +3,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:project/core/app_routes.dart';
 import 'package:project/core/styles.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/homeprovider.dart';
-import 'package:project/screens/-----For%20employe-----/home/components/scan_camera/scan_camera.dart';
+import 'package:project/screens/-----For%20employe-----/home/components/scan_profile/scan_profile.dart';
 import 'package:project/screens/-----For%20employe-----/home/provider/homeprovider.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -27,7 +27,7 @@ class _BottomNavBar_E extends State<BottomNavBar_E> {
         width: 65, // Adjust width as needed
         child: FloatingActionButton(
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ScanCamera()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ScanProfile()));
             //Navigator.pushNamed(context, App_Routes.scan_E);
           },
           backgroundColor: AppColor.main,

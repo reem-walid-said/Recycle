@@ -8,6 +8,7 @@ import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%2
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/login/provider/login_U_provider.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/register/provider/register_U_provder.dart';
 import 'package:project/screens/-----For%20employe-----/home/provider/homeprovider.dart';
+import 'package:project/screens/-----For%20employe-----/home/provider/model_provider.dart';
 import 'package:project/screens/-----For%20employe-----/user%20handle/forget%20pass/provider/forget_E_provider.dart';
 import 'package:project/screens/-----For%20employe-----/user%20handle/login/provider/login_E_provider.dart';
 import 'package:project/screens/-----For%20employe-----/user%20handle/register/provider/register_provder.dart';
@@ -17,6 +18,7 @@ import 'package:sizer/sizer.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/-----For employe-----/home/provider/scan_provider.dart';
+import 'screens/test_screen.dart';
 
 void main() async {
   // runApp(DevicePreview(
@@ -48,7 +50,9 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => HomeProvider_E()),
           ChangeNotifierProvider(create: (context) => UserProvider()),
           ChangeNotifierProvider(create: (context) => ScanProvider()),
+          ChangeNotifierProvider(create: (context) => ModelProvider()),
         ],
+
         child: MaterialApp(
           title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,
@@ -56,6 +60,11 @@ class MyApp extends StatelessWidget {
           theme: ThemeData.light(),
           onGenerateRoute: App_Routes.onGenerateRoute,
         ),
+
+        // child: MaterialApp(
+        //   home: OnnxTestScreen(),
+        // ),
+
       );
     });
   }

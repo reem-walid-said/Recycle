@@ -6,23 +6,29 @@ import 'package:project/models/user.dart';
 
 class ScanStates{
 
-  List<DropdownMenuEntry> myCategories = [
-    DropdownMenuEntry(value: Category(points: 100, type: "Plastic"), label: "Plastic"),
-    DropdownMenuEntry(value: Category(points: 200, type: "Can"), label: "Can"),
-    DropdownMenuEntry(value: Category(points: 300, type: "Glass"), label: "Glass"),
+  List<DropdownMenuEntry> myCategoriesDDM = [
+    DropdownMenuEntry(value: Category(points: 10, type: "Metal"), label: "Metal"),
+    DropdownMenuEntry(value: Category(points: 20, type: "Plastic"), label: "Plastic"),
+    DropdownMenuEntry(value: Category(points: 25, type: "Glass"), label: "Glass"),
   ];
+
+  Map<String, int> myCategoriesMap = {
+    "Metal" : 10,
+    "Plastic" : 20,
+    "Glass" : 25,
+  };
 
   TextEditingController dropDownMenuController = TextEditingController();
   Category? selectedCategory;
 
-  TextEditingController itemNameController = TextEditingController();
+  // TextEditingController itemNameController = TextEditingController();
   int selectedNumber = 0;
 
 
   List<RecycleItem>myScannedItem = [];
   int totalScannedItemsPoints = 0;
   int totalScannedPlasticItems = 0;
-  int totalScannedCanItems = 0;
+  int totalScannedMetalItems = 0;
   int totalScannedGlassItems = 0;
 
 

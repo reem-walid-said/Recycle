@@ -142,7 +142,7 @@ Widget myRecyclingProcessItem({
       ),
     );
 
-Widget RecycleItemBuilder(BuildContext context, RecycleItem item) => Container(
+Widget RecycleItemBuilder(BuildContext context, RecycleItem item, int index) => Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey, width: 2),
         borderRadius: BorderRadius.circular(8),
@@ -152,13 +152,10 @@ Widget RecycleItemBuilder(BuildContext context, RecycleItem item) => Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "${item.name}",
-              style: TextStyle(fontSize: 22),
-            ),
+
             Row(
               children: [
-                Text("Category: ${item.category.type}"),
+                Text("Category: ${item.category}"),
                 Spacer(),
                 Text("Count: ${item.count}"),
                 Spacer(),
@@ -176,7 +173,7 @@ Widget RecycleItemBuilder(BuildContext context, RecycleItem item) => Container(
                 alignment: Alignment.centerRight,
                 child: ElevatedButton(
                   onPressed: () {
-                    context.read<ScanProvider>().onDeleteItem(item);
+                    context.read<ScanProvider>().onDeleteItem(index);
                   },
                   child: Icon(
                     Icons.delete_forever_outlined,

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:project/core/app_routes.dart';
 import 'package:project/core/components.dart';
 import 'package:project/core/styles.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/components/settings/settings_u.dart';
@@ -89,24 +90,59 @@ class _Profile_UState extends State<Profile_U> {
 
               SizedBox(height: 10,),
 
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: AppColor.main,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      //Text("You have", style: TextStyle(color: Colors.white, fontSize: 26),),
-                      Text(
-                        "${context.watch<UserProvider>().state.myUser!.points} points",
-                        style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),
+              Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigator.pushNamed(context, App_Routes.scan_U);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppColor.mainDisabled,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(28.0),
+                          child: Column(
+                            children: [
+                              Icon(Icons.qr_code),
+                              Text(
+                                "QR-Code",
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                  SizedBox(width: 10,),
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColor.mainDisabled,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(28.0),
+                        child: Column(
+                          children: [
+                            //Text("You have", style: TextStyle(color: Colors.white, fontSize: 26),),
+                            Text(
+                              "${context.watch<UserProvider>().state.myUser!.points}",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            Text(
+                              "Points",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
 
               SizedBox(height: 10,),

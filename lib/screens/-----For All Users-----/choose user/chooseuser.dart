@@ -15,53 +15,11 @@ class ChooseUser extends StatefulWidget {
 
 class _ChooseUserState extends State<ChooseUser> {
 
-  String? _localModelPath;
 
   @override
   void initState() {
     super.initState();
-    _downloadModel();
   }
-
-  Future<void> _downloadModel() async {
-    try {
-      final customModel = await FirebaseModelDownloader.instance.getModel(
-        "model.onnx",
-        FirebaseModelDownloadType.localModel,
-        FirebaseModelDownloadConditions(
-          iosAllowsCellularAccess: true,
-          iosAllowsBackgroundDownloading: false,
-          androidChargingRequired: false,
-          androidWifiRequired: false,
-          androidDeviceIdleRequired: false,
-        ),
-      );
-
-      setState(() {
-        _localModelPath = customModel.file.path;
-      });
-
-      // Now you can use the model with TensorFlow Lite
-      _initializeInterpreter();
-    } catch (e) {
-      print("Failed to download model: $e");
-    }
-  }
-
-  void _initializeInterpreter() {
-    if (_localModelPath != null) {
-      // Initialize TensorFlow Lite interpreter with the model
-      // Example:
-      // var interpreter = Interpreter.fromFile(File(_localModelPath!));
-      // Use the interpreter for inference
-    }
-  }
-
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {

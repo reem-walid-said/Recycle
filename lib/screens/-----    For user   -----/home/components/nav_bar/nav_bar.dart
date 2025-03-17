@@ -21,32 +21,32 @@ class _BottomNavBar_U extends State<BottomNavBar_U> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: context.watch<HomeProvider_U>().chosenPage(),
-      floatingActionButton: Container(
-        height: 65, // Adjust height as needed
-        width: 65, // Adjust width as needed
-        child: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, App_Routes.scan_U);
-          },
-          backgroundColor: AppColor.main,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25), // Rounded rectangle
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center, // Center the content
-            children: [
-              Icon(Icons.qr_code, size: 24, color: Colors.white),
-              SizedBox(height: 4), // Space between icon and text
-              Text(
-                "Generate",
-                style: TextStyle(
-                    fontSize: 12, color: Colors.white), // Adjust size and color
-              ),
-            ],
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: Container(
+      //   height: 65, // Adjust height as needed
+      //   width: 65, // Adjust width as needed
+      //   child: FloatingActionButton(
+      //     onPressed: () {
+      //       Navigator.pushNamed(context, App_Routes.scan_U);
+      //     },
+      //     backgroundColor: AppColor.main,
+      //     shape: RoundedRectangleBorder(
+      //       borderRadius: BorderRadius.circular(25), // Rounded rectangle
+      //     ),
+      //     child: Column(
+      //       mainAxisAlignment: MainAxisAlignment.center, // Center the content
+      //       children: [
+      //         Icon(Icons.qr_code, size: 24, color: Colors.white),
+      //         SizedBox(height: 4), // Space between icon and text
+      //         Text(
+      //           "Generate",
+      //           style: TextStyle(
+      //               fontSize: 12, color: Colors.white), // Adjust size and color
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         iconSize: 20,

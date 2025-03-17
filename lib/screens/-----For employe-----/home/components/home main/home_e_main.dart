@@ -168,7 +168,7 @@ class _Home_E_MainState extends State<Home_E_Main> {
                                   Image.asset(Assets.arrow, scale: 1),
                                   VerticalDivider(
                                       width: 1.w, color: Colors.transparent),
-                                  Text("+1 ",
+                                  Text(" +1",
                                       style: TextStyle(
                                           color: Colors.green,
                                           fontWeight: FontWeight.w500,
@@ -218,7 +218,11 @@ class _Home_E_MainState extends State<Home_E_Main> {
                           child: Column(
                             children: [
                               Divider(height: 2.h, color: Colors.transparent),
-                              Image.asset(Assets.bottle, scale: 1),
+                              Container(
+                                  width: 70,
+                                  height: 70,
+                                  child: Image.asset(Assets.bottle, scale: 1)
+                              ),
                               Divider(height: 1.h, color: Colors.transparent),
                               Text("Bottle",
                                   style: TextStyle(
@@ -239,7 +243,11 @@ class _Home_E_MainState extends State<Home_E_Main> {
                           child: Column(
                             children: [
                               Divider(height: 2.h, color: Colors.transparent),
-                              Image.asset(Assets.can, scale: 1),
+                              Container(
+                                  width: 70,
+                                  height: 70,
+                                  child: Image.asset(Assets.can, scale: 1)
+                              ),
                               Divider(height: 1.h, color: Colors.transparent),
                               Text("Can",
                                   style: TextStyle(
@@ -260,7 +268,11 @@ class _Home_E_MainState extends State<Home_E_Main> {
                           child: Column(
                             children: [
                               Divider(height: 2.h, color: Colors.transparent),
-                              Image.asset(Assets.glass, scale: 2),
+                              Container(
+                                  width: 70,
+                                  height: 70,
+                                  child: Image.asset(Assets.glass, scale: 1)
+                              ),
                               Divider(height: 1.h, color: Colors.transparent),
                               Text("Glass",
                                   style: TextStyle(

@@ -16,11 +16,8 @@ class ScannedItemsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Image.asset(
-          Assets.logo,
-          scale: 2,
-        ),
-        title: Text("Scanned Items",
+
+        title: Text("Checkout",
             style: TextStyle(
                 fontWeight: FontWeight.w700, fontSize: 20.sp)),
         centerTitle: true,
@@ -33,7 +30,7 @@ class ScannedItemsScreen extends StatelessWidget {
               child: Column(
                 children: [
                   ListView.separated(
-                    itemBuilder: (context, index) => RecycleItemBuilder(context, context.watch<ScanProvider>().state.myScannedItem[index]),
+                    itemBuilder: (context, index) => RecycleItemBuilder(context, context.watch<ScanProvider>().state.myScannedItem[index], index),
                     separatorBuilder: (context, index) => SizedBox(height: 10,),
                     itemCount: context.watch<ScanProvider>().state.myScannedItem.length,
                     shrinkWrap: true,
@@ -52,10 +49,10 @@ class ScannedItemsScreen extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Text("Total Can Items:", style: TextStyle(fontSize: 20),),
+                      Text("Total Metal Items:", style: TextStyle(fontSize: 20),),
                       Spacer(),
                       Text(
-                        "${context.watch<ScanProvider>().state.totalScannedCanItems}",
+                        "${context.watch<ScanProvider>().state.totalScannedMetalItems}",
                         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                     ],
