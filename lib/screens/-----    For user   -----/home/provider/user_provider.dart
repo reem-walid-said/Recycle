@@ -17,7 +17,11 @@ class UserProvider extends ChangeNotifier{
     print(result);
     if(result is DocumentSnapshot){
       print("User Found");
-      state.myUser = User.fromJson(result);
+
+      dynamic userRecycleResults = await DatabaseServices(id: id).getUserRecycleResults(result.get("localID"));
+
+
+      state.myUser = User.fromJson(result, userRecycleResults);
       print("User Stored");
       notifyListeners();
       return true;
@@ -48,6 +52,10 @@ class UserProvider extends ChangeNotifier{
       notifyListeners();
       return false;
     }
+  }
+
+  Future GetUserRecycleResults(id, localID) async {
+    dynamic result = await DatabaseServices(id: id).getUserRecycleResults(localID);
   }
 
   Future LogOut() async {

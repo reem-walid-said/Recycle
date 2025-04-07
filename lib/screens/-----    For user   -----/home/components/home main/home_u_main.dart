@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:project/core/assets.dart';
+import 'package:project/core/components.dart';
+import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/components/notifications/notifications.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -13,6 +17,43 @@ class Home_U_Main extends StatefulWidget {
 }
 
 class _Home_U_MainState extends State<Home_U_Main> {
+
+  final PageController _pageController = PageController();
+  final List<String> _images = [ /// Read from FireStore
+    Assets.homePanel1,
+    Assets.homePanel1,
+    Assets.homePanel1,
+  ];
+
+  int _currentPage = 0;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _timer = Timer.periodic(Duration(seconds: 4), (Timer timer) {
+      if (_currentPage < _images.length - 1) {
+        _currentPage++;
+      } else {
+        _currentPage = 0;
+      }
+
+      _pageController.animateToPage(
+        _currentPage,
+        duration: Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -30,175 +71,214 @@ class _Home_U_MainState extends State<Home_U_Main> {
                         scale: 3,
                       ),
                       VerticalDivider(width: 2.w, color: Colors.transparent),
-                      Text("Welcome, ${context.watch<UserProvider>().state.myUser?.username}",
+                      Flexible(
+                        child: Text(
+                          "Welcome, ${context.watch<UserProvider>().state.myUser?.username ?? 'Guest'}",
                           style: TextStyle(
-                              fontWeight: FontWeight.w700, fontSize: 18.sp)),
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18.sp,
+                          ),
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
                       Spacer(),
-                      Icon(Iconsax.notification),
+                      GestureDetector(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications_U()));
+                          },
+                          child: Icon(Iconsax.notification)
+                      ),
                     ],
                   ),
+
+                  // myElevatedButton(
+                  //     label: "Test",
+                  //     onPressed: () async {
+                  //       await context
+                  //           .read<UserProvider>()
+                  //           .GetUserRecycleResults(
+                  //               Provider.of<UserProvider>(context,
+                  //                       listen: false)
+                  //                   .state
+                  //                   .myUser
+                  //                   .globalID,
+                  //               Provider.of<UserProvider>(context,
+                  //                       listen: false)
+                  //                   .state
+                  //                   .myUser
+                  //                   .localID);
+                  //     }),
                   Divider(height: 3.h, color: Colors.transparent),
-                  Row(
-                    children: [
-                      Text("End of Day Work",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700, fontSize: 18.sp)),
-                    ],
-                  ),
-                  Divider(
-                    height: 2.h,
-                    color: Colors.transparent,
-                  ),
+
+                  // Slider
                   Container(
-                      height: 20.h,
-                      width: 90.w,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(Assets.container_home),
+                    height: 20.h,
+                    child: PageView.builder(
+                      controller: _pageController,
+                      itemCount: _images.length,
+                      itemBuilder: (context, index) {
+                        return Image.asset(
+                          _images[index],
                           fit: BoxFit.cover,
-                        ),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                        child: Text("2:30:59",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w700, fontSize: 18.sp)),
-                      )),
+                          width: double.infinity,
+                        );
+                      },
+                    ),
+                  ),
+
                   Divider(
                     height: 2.h,
                     color: Colors.transparent,
                   ),
-                  Row(
-                    children: [
-                      Text("Transactions",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700, fontSize: 18.sp)),
-                    ],
-                  ),
-                  Divider(
-                    height: 2.h,
-                    color: Colors.transparent,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        height: 20.h,
-                        width: 43.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Color(0xCCFFFFFF),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color(0x1A808080),
-                              spreadRadius: 2,
-                              blurRadius: 2,
-                              offset:
-                                  Offset(0, 3), // changes position of shadow
+
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: [
+                            Image.asset(
+                              Assets.coins,
+                              scale: 1.5,
                             ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(context
+                                .watch<UserProvider>()
+                                .state
+                                .myUser
+                                .points
+                                .toString()),
+                            Text("Points"),
                           ],
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Text("Attendance",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 16.sp)),
-                                ],
-                              ),
-                              Divider(
-                                height: 5.h,
-                                color: Colors.transparent,
-                              ),
-                              Text("29 Day",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 18.sp)),
-                            ],
-                          ),
+                        Container(
+                          color: Colors.grey,
+                          height: 88,
+                          width: 1,
                         ),
-                      ),
-                      Container(
-                        height: 20.h,
-                        width: 43.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Color(0xCCFFFFFF),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color(0x1A808080),
-                              spreadRadius: 2,
-                              blurRadius: 2,
-                              offset:
-                                  Offset(0, 3), // changes position of shadow
+                        Column(
+                          children: [
+                            Image.asset(
+                              Assets.bottle,
+                              scale: 1.5,
                             ),
+                            Text(context.watch<UserProvider>().state.myUser.plasticNumbers.toString()),
+                            Text("Bottles"),
                           ],
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Text("Recycle Today",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 16.sp)),
-                                ],
-                              ),
-                              Divider(
-                                height: 5.h,
-                                color: Colors.transparent,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text("15 ",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 18.sp)),
-                                  VerticalDivider(
-                                      width: 1.w, color: Colors.transparent),
-                                  Image.asset(Assets.arrow, scale: 1),
-                                  VerticalDivider(
-                                      width: 1.w, color: Colors.transparent),
-                                  Text("+1 ",
-                                      style: TextStyle(
-                                          color: Colors.green,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 18.sp)),
-                                ],
-                              ),
-                            ],
-                          ),
+                        Container(
+                          color: Colors.grey,
+                          height: 88,
+                          width: 1,
                         ),
-                      )
-                    ],
+                        Column(
+                          children: [
+                            Image.asset(
+                              Assets.can,
+                              scale: 1.5,
+                            ),
+                            Text(context.watch<UserProvider>().state.myUser.canNumbers.toString()),
+                            Text("Cans"),
+                          ],
+                        ),
+                        Container(
+                          color: Colors.grey,
+                          height: 88,
+                          width: 1,
+                        ),
+                        Column(
+                          children: [
+                            Image.asset(
+                              Assets.glass,
+                              scale: 1.5,
+                            ),
+                            Text(context.watch<UserProvider>().state.myUser.glassNumbers.toString()),
+                            Text("Glasses"),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                   Divider(
                     height: 2.h,
                     color: Colors.transparent,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Categories",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700, fontSize: 18.sp)),
-                      Text(
-                        "See All",
-                        style: TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16.sp),
-                      ),
-                    ],
+
+                  Text("Tools & Services",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700, fontSize: 18.sp)),
+
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: [
+                            CircleAvatar(
+                              radius: 45,
+                              backgroundColor: Colors.orange[100],
+                              child: Image.asset(
+                                Assets.coins,
+                                scale: 1.5,
+                                color: Colors.orange[800],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text("Store"),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            CircleAvatar(
+                              radius: 45,
+                              backgroundColor: Colors.cyan[100],
+                              child: Image.asset(
+                                Assets.mapMarker,
+                                scale: 1.5,
+                                color: Colors.cyan[800],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text("Map"),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            CircleAvatar(
+                              radius: 45,
+                              backgroundColor: Colors.blueGrey[100],
+                              child: Image.asset(
+                                Assets.qrCode,
+                                scale: 1.5,
+                                color: Colors.blueGrey[800],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text("QR Code"),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
+
+                  Divider(
+                    height: 2.h,
+                    color: Colors.transparent,
+                  ),
+                  Text("Categories",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700, fontSize: 18.sp)),
                   Divider(
                     height: 2.h,
                     color: Colors.transparent,
@@ -211,13 +291,17 @@ class _Home_U_MainState extends State<Home_U_Main> {
                         width: 27.w,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Color(0x40649014),
+                          color: Color.fromRGBO(255, 179, 0, 0.25),
                         ),
                         child: Center(
                           child: Column(
                             children: [
                               Divider(height: 2.h, color: Colors.transparent),
-                              Image.asset(Assets.bottle, scale: 1),
+                              Image.asset(
+                                Assets.bottle,
+                                scale: 1,
+                                color: Color.fromRGBO(255, 179, 0, 1),
+                              ),
                               Divider(height: 1.h, color: Colors.transparent),
                               Text("Bottle",
                                   style: TextStyle(
@@ -232,13 +316,17 @@ class _Home_U_MainState extends State<Home_U_Main> {
                         width: 27.w,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Color(0x40649014),
+                          color: Color.fromRGBO(0, 150, 136, 0.25),
                         ),
                         child: Center(
                           child: Column(
                             children: [
                               Divider(height: 2.h, color: Colors.transparent),
-                              Image.asset(Assets.can, scale: 1),
+                              Image.asset(
+                                Assets.can,
+                                scale: 1,
+                                color: Color.fromRGBO(0, 150, 136, 1),
+                              ),
                               Divider(height: 1.h, color: Colors.transparent),
                               Text("Can",
                                   style: TextStyle(
@@ -253,13 +341,15 @@ class _Home_U_MainState extends State<Home_U_Main> {
                         width: 27.w,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Color(0x40649014),
+                          color: Color.fromRGBO(38, 70, 83, 0.25),
                         ),
                         child: Center(
                           child: Column(
                             children: [
                               Divider(height: 2.h, color: Colors.transparent),
-                              Image.asset(Assets.glass, scale: 2),
+                              Image.asset(Assets.glass,
+                                  scale: 1,
+                                  color: Color.fromRGBO(38, 70, 83, 1)),
                               Divider(height: 1.h, color: Colors.transparent),
                               Text("Glass",
                                   style: TextStyle(

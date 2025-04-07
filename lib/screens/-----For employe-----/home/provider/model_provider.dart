@@ -148,7 +148,11 @@ class ModelProvider extends ChangeNotifier{
   }
 
   String categoryResult(int value){
-    return state.Categories[value];
+    if(value < 3)
+      return state.Categories[value];
+    else{
+      return "Unknown";
+    }
   }
 
   void reset(){

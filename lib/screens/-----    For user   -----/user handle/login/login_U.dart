@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:project/core/app_routes.dart';
 import 'package:project/core/assets.dart';
 import 'package:project/core/components.dart';
+import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/homeprovider.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/user_provider.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/login/provider/login_U_provider.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/register/register_U.dart';
@@ -230,6 +231,7 @@ class Login_UState extends State<Login_U> {
                             message: "Logged In Successfully",
                             backgroundColor: Colors.green,
                           );
+                          context.read<HomeProvider_U>().returnHome();
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             App_Routes.home_U,

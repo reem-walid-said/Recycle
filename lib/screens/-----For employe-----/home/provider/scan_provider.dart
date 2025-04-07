@@ -79,6 +79,13 @@ class ScanProvider extends ChangeNotifier{
     required String category,
     required int count,
 }){
+    if(category == "Unknown"){
+      myToast(
+        message: "Unknown Product Can't be Added",
+      );
+      return;
+    }
+
     state.myScannedItem.add(RecycleItem(
       category: category,
       count: count,
@@ -199,7 +206,7 @@ class ScanProvider extends ChangeNotifier{
     dynamic result = await DatabaseServices(id: scannedId).getUserData();
     if(result == null) return false;
 
-    state.scannedUser = User.fromJson(result);
+    state.scannedUser = User.fromJson(result, {});
 
     //state.cameraController.start(); // Start the Camera
     notifyListeners();

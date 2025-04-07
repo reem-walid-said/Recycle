@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
         ),
 
         // child: MaterialApp(
-        //   home: OnnxTestScreen(),
+        //   home: TestScreen(),
         // ),
 
       );

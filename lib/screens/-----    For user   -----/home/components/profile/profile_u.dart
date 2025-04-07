@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:project/core/app_routes.dart';
 import 'package:project/core/components.dart';
 import 'package:project/core/styles.dart';
+import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/components/notifications/notifications.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/components/settings/settings_u.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/user_provider.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/login/login_U.dart';
@@ -42,11 +44,10 @@ class _Profile_UState extends State<Profile_U> {
             centerTitle: true,
             actions: [
               IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.notifications_none_outlined,
-                    size: 30,
-                  )),
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications_U()));
+                  },
+                  icon: Icon(Iconsax.notification)),
             ],
           ),
           body: Column(

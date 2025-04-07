@@ -10,6 +10,10 @@ class User{
 
   String? address;
 
+  int? canNumbers;
+  int? plasticNumbers;
+  int? glassNumbers;
+
   User({
     required this.globalID,
     required this.localID,
@@ -17,11 +21,14 @@ class User{
     required this.email,
     required this.phone,
     required this.points,
+    this.canNumbers,
+    this.glassNumbers,
+    this.plasticNumbers,
 
     this.address,
 });
 
-  static User fromJson(DocumentSnapshot snapshot) => User(
+  static User fromJson(DocumentSnapshot snapshot, dynamic recycleResults) => User(
       globalID: snapshot.get("globalID"),
       localID: snapshot.get("localID"),
       username: snapshot.get("username"),
@@ -29,5 +36,10 @@ class User{
       phone: snapshot.get("phone"),
       points: snapshot.get("points"),
       address: snapshot.get("address"),
+
+      canNumbers: recycleResults["can"],
+      plasticNumbers: recycleResults["plastic"],
+      glassNumbers: recycleResults["glass"],
+
   );
 }

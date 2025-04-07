@@ -67,6 +67,10 @@ class _BottomNavBar_U extends State<BottomNavBar_U> {
               activeIcon: Icon(Iconsax.home_15),
               label: "Home"),
           BottomNavigationBarItem(
+              icon: Icon(Icons.location_on_outlined),
+              activeIcon: Icon(Icons.location_on),
+              label: "Map"),
+          BottomNavigationBarItem(
               icon: Icon(Icons.sync_alt),
               activeIcon: Icon(Icons.sync_alt),
               label: "Recycling Process"),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project/core/enum.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/components/categories/categories_u.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/components/home%20main/home_u_main.dart';
+import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/components/map/map.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/components/profile/profile_u.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/components/recycling%20process/recycling_u.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/components/scan/scan_u.dart';
@@ -25,12 +26,15 @@ class HomeProvider_U extends ChangeNotifier {
         break;
       case 1:
         state.chosenNavigationItem =
-            ParentsChosenNavigationItem.recycling_process;
+            ParentsChosenNavigationItem.map;
         break;
       case 2:
-        state.chosenNavigationItem = ParentsChosenNavigationItem.categories;
+        state.chosenNavigationItem = ParentsChosenNavigationItem.recycling_process;
         break;
       case 3:
+        state.chosenNavigationItem = ParentsChosenNavigationItem.categories;
+        break;
+      case 4:
         state.chosenNavigationItem = ParentsChosenNavigationItem.profile;
         break;
     }
@@ -41,6 +45,8 @@ class HomeProvider_U extends ChangeNotifier {
     switch (state.chosenNavigationItem) {
       case ParentsChosenNavigationItem.home:
         return Home_U_Main();
+      case ParentsChosenNavigationItem.map:
+        return MapScreen();
       case ParentsChosenNavigationItem.recycling_process:
         return Recycling_U();
 

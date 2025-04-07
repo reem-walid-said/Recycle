@@ -3,32 +3,50 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:image/image.dart' as img;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:onnxruntime/onnxruntime.dart';
 import 'package:project/core/components.dart';
 
-class OnnxTestScreen extends StatefulWidget {
-  const OnnxTestScreen({super.key});
+class TestScreen extends StatefulWidget {
+  const TestScreen({super.key});
 
   @override
-  State<OnnxTestScreen> createState() => _OnnxTestScreenState();
+  State<TestScreen> createState() => _TestScreenState();
 }
 
-class _OnnxTestScreenState extends State<OnnxTestScreen> {
+class _TestScreenState extends State<TestScreen> {
   late OrtSession session;
   bool isModelLoaded = false;
   File? _selectedImage;
+  late final MapController _mapController;
+  double _currentZoom = 6.0;
+
 
   @override
   void initState() {
     super.initState();
-    _loadModel();
+    //_loadModel();
+    _mapController = MapController();
   }
 
+  void _zoomIn() {
+    setState(() {
+      _currentZoom = (_currentZoom + 1).clamp(2.0, 18.0);
+      _mapController.move(_mapController.center, _currentZoom);
+    });
+  }
 
+  void _zoomOut() {
+    setState(() {
+      _currentZoom = (_currentZoom - 1).clamp(2.0, 18.0);
+      _mapController.move(_mapController.center, _currentZoom);
+    });
+  }
 
   Future<void> _pickImage() async {
     final picker = ImagePicker();
@@ -159,24 +177,54 @@ class _OnnxTestScreenState extends State<OnnxTestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("ONNX Model Test"), centerTitle: true,),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            isModelLoaded
-                ? myElevatedButton(label: "Pick an Image", onPressed: _pickImage)
-                : const CircularProgressIndicator(),
-            if (_selectedImage != null) ...[
-              Image.file(_selectedImage!),  // Show selected image
-              myElevatedButton(
-                onPressed: () => _runInference(_selectedImage!),
-                label: "Run Model",
+      appBar: AppBar(title: Text("OpenStreetMap - Egypt")),
+      body: Stack(
+        children: [
+          FlutterMap(
+            mapController: _mapController,
+            options: MapOptions(
+              center: LatLng(26.8206, 30.8025),
+              zoom: _currentZoom,
+            ),
+            children: [
+              TileLayer(
+                urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                subdomains: ['a', 'b', 'c'],
               ),
-            ]
-          ],
-        ),
+              MarkerLayer(
+                markers: [
+                  Marker(
+                    width: 40.0,
+                    height: 40.0,
+                    point: LatLng(30.0444, 31.2357), // Cairo
+                    child: Icon(Icons.location_pin, color: Colors.red, size: 40),
+                  ),
+                ],
+              ),
+            ],
+          ),
+
+          // Zoom Buttons
+          Positioned(
+            bottom: 20,
+            right: 20,
+            child: Column(
+              children: [
+                FloatingActionButton(
+                  heroTag: "zoomIn",
+                  onPressed: _zoomIn,
+                  child: Icon(Icons.zoom_in),
+                ),
+                SizedBox(height: 10),
+                FloatingActionButton(
+                  heroTag: "zoomOut",
+                  onPressed: _zoomOut,
+                  child: Icon(Icons.zoom_out),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -2,6 +2,7 @@ enum ScreenStates { init, loading, done, error, empty, notFound, success }
 
 enum ParentsChosenNavigationItem {
   home,
+  map,
   recycling_process,
   categories,
   profile

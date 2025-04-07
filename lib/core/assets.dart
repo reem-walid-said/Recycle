@@ -23,4 +23,9 @@ class Assets {
   static String sign_at = "assets/images/sign-at.png";
   static String arrowDown = "assets/images/arrow_down.png";
   static String recyclingProcessEmptyBackground = "assets/images/recycling_process_empty.png";
+  static String coins = "assets/images/coins.png";
+  static String mapMarker = "assets/images/map_marker.png";
+  static String qrCode = "assets/images/qr_code.png";
+
+  static String homePanel1 = "assets/images/home_panel_1.png";
 }

@@ -45,6 +45,26 @@ class DatabaseServices {
     }
   }
 
+  Future getUserRecycleResults(String localID) async {
+    QuerySnapshot document = await RecycleProcessCollection.where("uid", isEqualTo: localID).get();
+    print(document.docs);
+    dynamic result = {
+      "can" : 0,
+      "plastic" : 0,
+      "glass" : 0,
+    };
+    for(var doc in document.docs){
+      print(doc.get("amount"));
+      result["can"] += doc.get("amount")["can"];
+      result["plastic"] += doc.get("amount")["plastic"];
+      result["glass"] += doc.get("amount")["glass"];
+    }
+
+    print("Result : $result");
+
+    return result;
+  }
+
   Future updateUserPoints({
     required String userId,
     required int points,
