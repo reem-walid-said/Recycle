@@ -8,6 +8,7 @@ import 'package:project/screens/-----For%20employe-----/home/provider/homeprovid
 import 'package:project/screens/-----For%20employe-----/user%20handle/login/provider/login_E_provider.dart';
 import 'package:project/screens/-----For%20employe-----/user%20handle/register/register_E.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/register/register_U.dart';
+import 'package:project/services/local/cache_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:iconsax/iconsax.dart';
@@ -230,6 +231,14 @@ class Login_EState extends State<Login_E> {
                         bool getDataResult = await context.read<UserProvider>().GetEmployeeData(id: LoginResult);
 
                         if(getDataResult == true){
+
+                          // Cache the {id} and {user type}
+                          if(Provider.of<Login_E_Provider>(context, listen: false).state.rememberMe){
+                            await CacheHelper.SetUserType(type: "employee");
+                            await CacheHelper.SetID(id: LoginResult);
+
+                            print("Employee Saved");
+                          }
 
                           await myToast(
                             message: "Logged In Successfully",

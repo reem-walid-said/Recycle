@@ -12,6 +12,7 @@ import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%2
 import 'package:project/screens/-----For%20All%20Users-----/FAQ/FAQ.dart';
 import 'package:project/screens/-----For%20All%20Users-----/choose%20user/chooseuser.dart';
 import 'package:project/screens/-----For%20employe-----/user%20handle/register/provider/register_provder.dart';
+import 'package:project/services/local/cache_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -45,7 +46,7 @@ class _Profile_UState extends State<Profile_U> {
             actions: [
               IconButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications_U()));
+                    //Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications_U()));
                   },
                   icon: Icon(Iconsax.notification)),
             ],
@@ -211,6 +212,8 @@ class _Profile_UState extends State<Profile_U> {
               GestureDetector(
                 onTap: () async {
                   await context.read<UserProvider>().LogOut();
+                  await CacheHelper.DeleteKey(key: "userType");
+                  await CacheHelper.DeleteKey(key: "id");
                   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => ChooseUser()), (route) => false);
                 },
                 child: Row(
@@ -258,10 +261,9 @@ class _Profile_UState extends State<Profile_U> {
               children: [
                 const Center(child: Text("Edit", style: TextStyle(fontSize: 24),)),
                 SizedBox(height: 30,),
-                myTextFormField(label: "Name", hintText: "Enter Name", controller: EditNameController, prefixIcon: Icons.person_outline_outlined),
+                myTextFormField(label: "Username", hintText: "enter new username", controller: EditNameController, prefixIcon: Icons.person_outline_outlined),
                 SizedBox(height: 20),
-                myTextFormField(label: "Email", hintText: "Enter Email", controller: EditEmailController, prefixIcon: Icons.email_outlined),
-                SizedBox(height: 20),
+
 
                 Text("Phone Number", style: TextStyle(fontSize: 18),),
                 Container(

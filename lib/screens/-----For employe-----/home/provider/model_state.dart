@@ -9,6 +9,6 @@ class ModelStates{
   String? selectedImageCategoryResult;
   int selectedImageCount = 1;
 
-  List<String> Categories = ["Plastic", "Glass", "Metal"];
+  List<String> Categories = ["Glass", "Can", "Plastic"];
   
 }

@@ -9,6 +9,7 @@ import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/p
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/user_provider.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/login/provider/login_U_provider.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/register/register_U.dart';
+import 'package:project/services/local/cache_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -227,6 +228,16 @@ class Login_UState extends State<Login_U> {
                         bool getDataResult = await context.read<UserProvider>().GetUserData(id: LoginResult);
 
                         if(getDataResult == true){
+
+                          // Cache the {id} and {user type}
+                          if(Provider.of<Login_U_Provider>(context, listen: false).state.rememberMe){
+
+                            await CacheHelper.SetUserType(type: "user");
+                            await CacheHelper.SetID(id: LoginResult);
+
+                            print("User Saved");
+                          }
+
                           await myToast(
                             message: "Logged In Successfully",
                             backgroundColor: Colors.green,

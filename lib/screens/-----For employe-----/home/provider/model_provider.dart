@@ -110,32 +110,30 @@ class ModelProvider extends ChangeNotifier{
       throw Exception("Failed to decode image.");
     }
 
-    // Resize image to match model input shape (e.g., 224x224)
-    final img.Image resizedImage = img.copyResize(image, width: 224, height: 224);
+    // Resize image to 224x224 without altering colors or quality
+    final img.Image resizedImage = img.copyResize(
+      image,
+      width: 224,
+      height: 224,
+      interpolation: img.Interpolation.average, // Ensures smoother resizing
+    );
 
-    // Convert image pixels to Float32List
-    final Float32List inputTensor = Float32List(1 * 3 * 224 * 224);
-    int pixelIndex = 0;
+    // Convert image to Float32List without normalization or channel rearrangement
+    final Float32List pixelData = Float32List(224 * 224 * 3);
+    int index = 0;
 
     for (int y = 0; y < 224; y++) {
       for (int x = 0; x < 224; x++) {
         final pixel = resizedImage.getPixel(x, y);
-
-        // Extract RGB values
-        final r = img.getRed(pixel) / 255.0; // Normalize [0,1]
-        final g = img.getGreen(pixel) / 255.0;
-        final b = img.getBlue(pixel) / 255.0;
-
-        // ONNX expects channel-first format (C, H, W)
-        inputTensor[pixelIndex] = r;
-        inputTensor[pixelIndex + 224 * 224] = g;
-        inputTensor[pixelIndex + 2 * 224 * 224] = b;
-        pixelIndex++;
+        pixelData[index++] = img.getRed(pixel).toDouble();
+        pixelData[index++] = img.getGreen(pixel).toDouble();
+        pixelData[index++] = img.getBlue(pixel).toDouble();
       }
     }
 
-    return inputTensor;
+    return pixelData;
   }
+
 
 
   List<double> softmax(List<double> inputs) {

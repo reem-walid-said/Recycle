@@ -20,6 +20,9 @@ class _Scan_UState extends State<Scan_U> {
       appBar: AppBar(
         title: const Text("QR Code"),
         centerTitle: true,
+        actions: [
+          Image.asset(Assets.logo),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

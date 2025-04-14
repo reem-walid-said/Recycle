@@ -97,7 +97,7 @@ class ScanProvider extends ChangeNotifier{
       if(category == "Plastic"){
         state.totalScannedPlasticItems += count;
       }
-      if(category == "Metal"){
+      if(category == "Can"){
         state.totalScannedMetalItems += count;
       }
       if(category == "Glass"){
@@ -120,7 +120,7 @@ class ScanProvider extends ChangeNotifier{
     if(item.category == "Plastic"){
       state.totalScannedPlasticItems -= item.count;
     }
-    if(item.category == "Metal"){
+    if(item.category == "Can"){
       state.totalScannedMetalItems -= item.count;
     }
     if(item.category == "Glass"){

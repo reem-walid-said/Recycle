@@ -4,6 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:gif/gif.dart';
 import 'package:project/core/app_routes.dart';
 import 'package:project/core/assets.dart';
+import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/homeprovider.dart';
+import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/user_provider.dart';
+import 'package:project/screens/-----For%20employe-----/home/provider/homeprovider.dart';
+import 'package:project/services/local/cache_helper.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -41,7 +46,43 @@ class _SplashScreenState extends State<SplashScreen>
   Future<void> handleData(BuildContext context) async {
     await Future.delayed(const Duration(seconds: 5));
 
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(App_Routes.onboardingmain, (route) => false);
+    String? id = CacheHelper.GetID();
+    bool? firstTime = CacheHelper.firstTimeInstall();
+    String? userType = CacheHelper.getUserType();
+
+    print(id);
+    print(firstTime);
+    print(userType);
+
+    if(firstTime == null){
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(App_Routes.onboardingmain, (route) => false);
+    }
+    else{
+      if(id == null){
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil(App_Routes.chooseuser, (route) => false);
+      }
+      else{
+        if(userType == "user"){
+          await context.read<UserProvider>().GetUserData(id: id);
+          context.read<HomeProvider_U>().returnHome();
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            App_Routes.home_U,
+                (route) => false,
+          );
+        }
+        else{
+          await context.read<UserProvider>().GetEmployeeData(id: id);
+          context.read<HomeProvider_E>().returnHome();
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            App_Routes.home_E,
+                (route) => false,
+          );
+        }
+      }
+    }
   }
 }

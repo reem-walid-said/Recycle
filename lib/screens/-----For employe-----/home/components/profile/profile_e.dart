@@ -8,6 +8,7 @@ import 'package:project/screens/-----For%20All%20Users-----/choose%20user/choose
 import 'package:project/screens/-----For%20employe-----/home/components/settings/settings_e.dart';
 import 'package:project/screens/-----For%20employe-----/user%20handle/login/login_E.dart';
 import 'package:project/screens/-----For%20employe-----/user%20handle/register/provider/register_provder.dart';
+import 'package:project/services/local/cache_helper.dart';
 import 'package:project/services/network/authentication.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -173,6 +174,8 @@ class _Profile_EState extends State<Profile_E> {
                   Spacer(),
                   IconButton(onPressed: () async {
                     await context.read<UserProvider>().LogOut();
+                    await CacheHelper.DeleteKey(key: "userType");
+                    await CacheHelper.DeleteKey(key: "id");
                     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => ChooseUser()), (route) => false);
                   }, icon: Icon(Icons.arrow_forward_ios_rounded)),
                 ],

@@ -7,6 +7,8 @@ import 'package:project/screens/-----For%20All%20Users-----/onbourding/provider/
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../services/local/cache_helper.dart';
+
 class OnBourding_2 extends StatelessWidget {
   const OnBourding_2({super.key});
 
@@ -24,7 +26,8 @@ class OnBourding_2 extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       InkWell(
-                        onTap: () {
+                        onTap: () async {
+                          await CacheHelper.SetFirstTimeValue(value: false);
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             App_Routes.chooseuser,

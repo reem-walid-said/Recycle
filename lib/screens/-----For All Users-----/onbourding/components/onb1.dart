@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/core/app_routes.dart';
 import 'package:project/core/assets.dart';
+import 'package:project/services/local/cache_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import '../provider/onbprovider.dart';
@@ -24,7 +25,8 @@ class OnBourding_1 extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       InkWell(
-                        onTap: () {
+                        onTap: () async {
+                          await CacheHelper.SetFirstTimeValue(value: false);
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             App_Routes.chooseuser,

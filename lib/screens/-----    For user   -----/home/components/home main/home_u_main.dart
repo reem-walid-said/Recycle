@@ -5,9 +5,12 @@ import 'package:iconsax/iconsax.dart';
 import 'package:project/core/assets.dart';
 import 'package:project/core/components.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/components/notifications/notifications.dart';
+import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/homeprovider.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../../../core/app_routes.dart';
 
 class Home_U_Main extends StatefulWidget {
   const Home_U_Main({super.key});
@@ -85,7 +88,7 @@ class _Home_U_MainState extends State<Home_U_Main> {
                       Spacer(),
                       GestureDetector(
                           onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications_U()));
+                            //Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications_U()));
                           },
                           child: Icon(Iconsax.notification)
                       ),
@@ -236,13 +239,20 @@ class _Home_U_MainState extends State<Home_U_Main> {
                         ),
                         Column(
                           children: [
-                            CircleAvatar(
-                              radius: 45,
-                              backgroundColor: Colors.cyan[100],
-                              child: Image.asset(
-                                Assets.mapMarker,
-                                scale: 1.5,
-                                color: Colors.cyan[800],
+                            GestureDetector(
+                              onTap: (){
+                                setState(() {
+                                  context.read<HomeProvider_U>().onNavigationTap(1);
+                                });
+                              },
+                              child: CircleAvatar(
+                                radius: 45,
+                                backgroundColor: Colors.cyan[100],
+                                child: Image.asset(
+                                  Assets.mapMarker,
+                                  scale: 1.5,
+                                  color: Colors.cyan[800],
+                                ),
                               ),
                             ),
                             SizedBox(
@@ -253,13 +263,18 @@ class _Home_U_MainState extends State<Home_U_Main> {
                         ),
                         Column(
                           children: [
-                            CircleAvatar(
-                              radius: 45,
-                              backgroundColor: Colors.blueGrey[100],
-                              child: Image.asset(
-                                Assets.qrCode,
-                                scale: 1.5,
-                                color: Colors.blueGrey[800],
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.pushNamed(context, App_Routes.scan_U);
+                              },
+                              child: CircleAvatar(
+                                radius: 45,
+                                backgroundColor: Colors.blueGrey[100],
+                                child: Image.asset(
+                                  Assets.qrCode,
+                                  scale: 1.5,
+                                  color: Colors.blueGrey[800],
+                                ),
                               ),
                             ),
                             SizedBox(
@@ -276,9 +291,17 @@ class _Home_U_MainState extends State<Home_U_Main> {
                     height: 2.h,
                     color: Colors.transparent,
                   ),
-                  Text("Categories",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700, fontSize: 18.sp)),
+                  Row(
+                    children: [
+                      Text("Categories",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700, fontSize: 18.sp)),
+                      Spacer(),
+                      TextButton(onPressed: (){
+                        context.read<HomeProvider_U>().onNavigationTap(3);
+                      }, child: Text("See All")),
+                    ],
+                  ),
                   Divider(
                     height: 2.h,
                     color: Colors.transparent,
@@ -303,7 +326,7 @@ class _Home_U_MainState extends State<Home_U_Main> {
                                 color: Color.fromRGBO(255, 179, 0, 1),
                               ),
                               Divider(height: 1.h, color: Colors.transparent),
-                              Text("Bottle",
+                              Text("Plastic",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 16.sp)),

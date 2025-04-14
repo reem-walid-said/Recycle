@@ -14,11 +14,13 @@ import 'package:project/screens/-----For%20employe-----/user%20handle/login/prov
 import 'package:project/screens/-----For%20employe-----/user%20handle/register/provider/register_provder.dart';
 import 'package:project/core/app_routes.dart';
 import 'package:project/screens/-----For%20All%20Users-----/onbourding/provider/onbprovider.dart';
+import 'package:project/services/network/notifications.dart';
 import 'package:sizer/sizer.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/-----For employe-----/home/provider/scan_provider.dart';
 import 'screens/test_screen.dart';
+import 'services/local/cache_helper.dart';
 
 void main() async {
   // runApp(DevicePreview(
@@ -27,8 +29,12 @@ void main() async {
   // ));
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  // await FirebaseNotifications().initNotifications();
+  await CacheHelper.init();
   runApp(const MyApp());
 }
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -54,6 +60,7 @@ class MyApp extends StatelessWidget {
         ],
 
         child: MaterialApp(
+          // navigatorKey: navigatorKey,
           title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,
           initialRoute: App_Routes.splash,

@@ -1,8 +1,10 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:project/core/Assets.dart';
 
 class Notifications_U extends StatelessWidget {
-  const Notifications_U({super.key});
+  final RemoteMessage message;
+  const Notifications_U({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
