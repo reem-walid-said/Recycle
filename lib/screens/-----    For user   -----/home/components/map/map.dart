@@ -57,7 +57,7 @@ class _MapScreenState extends State<MapScreen> {
               body: ListView.builder(
                 itemCount: warehouses.length,
                 itemBuilder: (context, index) {
-                  return WarehouseItemBuilder(warehouse: warehouses[index]);
+                  return WarehouseItemBuilderNew(warehouse: warehouses[index]);
                 },
               ),
             ),

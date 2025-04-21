@@ -13,6 +13,8 @@ import 'package:project/services/local/cache_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../services/local/notifications.dart';
+
 class Login_U extends StatefulWidget {
   const Login_U({super.key});
 
@@ -242,6 +244,7 @@ class Login_UState extends State<Login_U> {
                             message: "Logged In Successfully",
                             backgroundColor: Colors.green,
                           );
+
                           context.read<HomeProvider_U>().returnHome();
                           Navigator.pushNamedAndRemoveUntil(
                             context,

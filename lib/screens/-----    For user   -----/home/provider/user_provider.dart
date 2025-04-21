@@ -6,27 +6,33 @@ import 'package:project/services/network/authentication.dart';
 import 'package:project/services/network/database.dart';
 
 import '../../../../models/user.dart';
+import '../../../../services/local/notifications.dart';
 
-class UserProvider extends ChangeNotifier{
+class UserProvider extends ChangeNotifier {
   UserStates state = UserStates();
 
   Future GetUserData({
     id,
-}) async {
+  }) async {
     dynamic result = await DatabaseServices(id: id).getUserData();
     print(result);
-    if(result is DocumentSnapshot){
+    if (result is DocumentSnapshot) {
       print("User Found");
 
-      dynamic userRecycleResults = await DatabaseServices(id: id).getUserRecycleResults(result.get("localID"));
-
+      dynamic userRecycleResults = await DatabaseServices(id: id)
+          .getUserRecycleResults(result.get("localID"));
 
       state.myUser = User.fromJson(result, userRecycleResults);
+
+      // state.notificationService.cancelNotificationListener();
+      // state.notificationService.initNotifications();
+      // state.notificationService.requestNotificationPermissions();
+      // state.notificationService.listenForNotifications(id);
+
       print("User Stored");
       notifyListeners();
       return true;
-    }
-    else{
+    } else {
       state.myUser = null;
       print("User not found");
       notifyListeners();
@@ -39,14 +45,13 @@ class UserProvider extends ChangeNotifier{
   }) async {
     dynamic result = await DatabaseServices(id: id).getEmployeeData();
     print(result);
-    if(result is DocumentSnapshot){
+    if (result is DocumentSnapshot) {
       print("User Found");
       state.myUser = Employee.fromJson(result);
       print("User Stored");
       notifyListeners();
       return true;
-    }
-    else{
+    } else {
       state.myUser = null;
       print("User not found");
       notifyListeners();
@@ -54,15 +59,24 @@ class UserProvider extends ChangeNotifier{
     }
   }
 
-  Future GetUserRecycleResults(id, localID) async {
-    dynamic result = await DatabaseServices(id: id).getUserRecycleResults(localID);
+  // Future GetUserRecycleResults(id, localID) async {
+  //   dynamic result = await DatabaseServices(id: id).getUserRecycleResults(localID);
+  // }
+
+  Future UpdateUsername({
+    String? newUsername,
+  }) async {
+    await DatabaseServices(id: state.myUser.globalID)
+        .updateUsername(username: newUsername);
+
+    notifyListeners();
   }
 
   Future LogOut() async {
+    NotificationService().cancelNotificationListener();
+
     state.myUser = null;
-    ///Todo
-    ///clear the caches
+
     await AuthServices().signOut();
   }
-
 }

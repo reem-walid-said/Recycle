@@ -5,6 +5,9 @@ import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/p
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../provider/homeprovider.dart';
+import '../category_examples/category_examples.dart';
+
 class Home_E_Main extends StatefulWidget {
   const Home_E_Main({super.key});
 
@@ -34,7 +37,7 @@ class _Home_E_MainState extends State<Home_E_Main> {
                           style: TextStyle(
                               fontWeight: FontWeight.w700, fontSize: 18.sp)),
                       Spacer(),
-                      Icon(Iconsax.notification),
+                      // Icon(Iconsax.notification),
                     ],
                   ),
                   Divider(height: 3.h, color: Colors.transparent),
@@ -191,13 +194,19 @@ class _Home_E_MainState extends State<Home_E_Main> {
                       Text("Categories",
                           style: TextStyle(
                               fontWeight: FontWeight.w700, fontSize: 18.sp)),
-                      Text(
+                      TextButton(
+                        onPressed: (){
+                          context.read<HomeProvider_E>().onNavigationTap(2);
+                        },
+                        child: Text(
                         "See All",
                         style: TextStyle(
                             color: Colors.blue,
                             fontWeight: FontWeight.w500,
                             fontSize: 16.sp),
                       ),
+                      ),
+
                     ],
                   ),
                   Divider(
@@ -207,81 +216,94 @@ class _Home_E_MainState extends State<Home_E_Main> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        height: 15.h,
-                        width: 27.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Color(0x40649014),
-                        ),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              Divider(height: 2.h, color: Colors.transparent),
-                              Container(
-                                  width: 70,
-                                  height: 70,
-                                  child: Image.asset(Assets.bottle, scale: 1)
-                              ),
-                              Divider(height: 1.h, color: Colors.transparent),
-                              Text("Bottle",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16.sp)),
-                            ],
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryExamples(category: "Plastic")));
+                        },
+                        child: Container(
+                          height: 15.h,
+                          width: 27.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color.fromRGBO(255, 179, 0, 0.25),
+                          ),
+                          child: Center(
+                            child: Column(
+                              children: [
+                                Divider(height: 2.h, color: Colors.transparent),
+                                Image.asset(
+                                  Assets.bottle,
+                                  scale: 1,
+                                  color: Color.fromRGBO(255, 179, 0, 1),
+                                ),
+                                Divider(height: 1.h, color: Colors.transparent),
+                                Text("Plastic",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16.sp)),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                      Container(
-                        height: 15.h,
-                        width: 27.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Color(0x40649014),
-                        ),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              Divider(height: 2.h, color: Colors.transparent),
-                              Container(
-                                  width: 70,
-                                  height: 70,
-                                  child: Image.asset(Assets.can, scale: 1)
-                              ),
-                              Divider(height: 1.h, color: Colors.transparent),
-                              Text("Can",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16.sp)),
-                            ],
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryExamples(category: "Can")));
+                        },
+                        child: Container(
+                          height: 15.h,
+                          width: 27.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color.fromRGBO(0, 150, 136, 0.25),
+                          ),
+                          child: Center(
+                            child: Column(
+                              children: [
+                                Divider(height: 2.h, color: Colors.transparent),
+                                Image.asset(
+                                  Assets.can,
+                                  scale: 1,
+                                  color: Color.fromRGBO(0, 150, 136, 1),
+                                ),
+                                Divider(height: 1.h, color: Colors.transparent),
+                                Text("Can",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16.sp)),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                      Container(
-                        height: 15.h,
-                        width: 27.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Color(0x40649014),
-                        ),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              Divider(height: 2.h, color: Colors.transparent),
-                              Container(
-                                  width: 70,
-                                  height: 70,
-                                  child: Image.asset(Assets.glass, scale: 1)
-                              ),
-                              Divider(height: 1.h, color: Colors.transparent),
-                              Text("Glass",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16.sp)),
-                            ],
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryExamples(category: "Glass")));
+                        },
+                        child: Container(
+                          height: 15.h,
+                          width: 27.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color.fromRGBO(38, 70, 83, 0.25),
+                          ),
+                          child: Center(
+                            child: Column(
+                              children: [
+                                Divider(height: 2.h, color: Colors.transparent),
+                                Image.asset(Assets.glass,
+                                    scale: 1,
+                                    color: Color.fromRGBO(38, 70, 83, 1)),
+                                Divider(height: 1.h, color: Colors.transparent),
+                                Text("Glass",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16.sp)),
+                              ],
+                            ),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   )
                 ],

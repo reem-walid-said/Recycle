@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:pair/pair.dart';
 import 'package:project/models/category_example_item.dart';
 
@@ -63,3 +65,11 @@ List<CategoryExampleItem> AllItems = [
   ),
 
 ];
+
+
+
+class NotificationConstants {
+  static const String channelId = 'high_priority_channel';
+  static const String channelName = 'Important Messages';
+  static const String channelDescription = 'Notifications for important messages';
+}

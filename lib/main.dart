@@ -29,12 +29,10 @@ void main() async {
   // ));
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // await FirebaseNotifications().initNotifications();
   await CacheHelper.init();
   runApp(const MyApp());
 }
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -60,7 +58,6 @@ class MyApp extends StatelessWidget {
         ],
 
         child: MaterialApp(
-          // navigatorKey: navigatorKey,
           title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,
           initialRoute: App_Routes.splash,
@@ -69,7 +66,7 @@ class MyApp extends StatelessWidget {
         ),
 
         // child: MaterialApp(
-        //   home: TestScreen(),
+        //   home: NotificationDemoScreen(),
         // ),
 
       );

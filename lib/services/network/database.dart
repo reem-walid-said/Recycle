@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseServices {
-  final String id;
+  final id;
   DatabaseServices({required this.id});
 
   final CollectionReference UserCollection =
@@ -14,6 +14,8 @@ class DatabaseServices {
       FirebaseFirestore.instance.collection("recycle_process");
   final CollectionReference ScannedItemsCount =
       FirebaseFirestore.instance.collection("ScannedItemsCount");
+  CollectionReference get NotificationsCollection =>
+      FirebaseFirestore.instance.collection("Costumer").doc(id).collection("Notifications");
 
   Future createUser({
     required username,
@@ -45,22 +47,30 @@ class DatabaseServices {
     }
   }
 
+  Future updateUsername({
+    String? username,
+}) async{
+    await UserCollection.doc(id).update({
+      "username" : username,
+    });
+  }
+
   Future getUserRecycleResults(String localID) async {
     QuerySnapshot document = await RecycleProcessCollection.where("uid", isEqualTo: localID).get();
-    print(document.docs);
+    //print(document.docs);
     dynamic result = {
       "can" : 0,
       "plastic" : 0,
       "glass" : 0,
     };
     for(var doc in document.docs){
-      print(doc.get("amount"));
+      //print(doc.get("amount"));
       result["can"] += doc.get("amount")["can"];
       result["plastic"] += doc.get("amount")["plastic"];
       result["glass"] += doc.get("amount")["glass"];
     }
 
-    print("Result : $result");
+    //print("Result : $result");
 
     return result;
   }
@@ -75,7 +85,7 @@ class DatabaseServices {
       });
     }
     catch(e){
-      print(e);
+      //print(e);
       return false;
     }
   }
@@ -121,7 +131,7 @@ class DatabaseServices {
 
       return true;
     }catch(e){
-      print(e);
+      //print(e);
       return false;
     }
   }

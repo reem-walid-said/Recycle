@@ -1,9 +1,12 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:project/core/assets.dart';
 import 'package:project/core/styles.dart';
+import 'package:project/models/notification.dart';
 import 'package:project/models/recycle_item.dart';
 import 'package:project/models/recycle_process_item.dart';
 import 'package:project/models/warehouse.dart';
@@ -178,13 +181,13 @@ Widget RecycleItemBuilder(BuildContext context, RecycleItem item, int index) => 
                   onPressed: () {
                     context.read<ScanProvider>().onDeleteItem(index);
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                  ),
                   child: Icon(
                     Icons.delete_forever_outlined,
                     color: Colors.white,
                     size: 30,
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
                   ),
                 ))
           ],
@@ -306,21 +309,66 @@ Widget WarehouseItemBuilder({
   ),
 );
 
-Widget _buildStarRating(dynamic rating) {
-  const totalStars = 5;
-  final filledStars = rating.floor();
-  final halfStar = rating - filledStars >= 0.5;
+Widget WarehouseItemBuilderNew({
+required Warehouse warehouse,
+}) => Padding(
+  padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+  child: Card(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+    elevation: 4,
+    child: Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
 
+          Image.asset(Assets.mapMarker),
+
+          SizedBox(width: 12),
+
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  warehouse.name,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 12),
+                _buildStarRating(warehouse.rating),
+              ],
+            ),
+          ),
+          InkWell(
+            onTap: () => openMap(warehouse.location),
+            child: Row(
+              children: [
+                Icon(Icons.map, color: Colors.blue),
+                SizedBox(width: 6),
+                Text(
+                  'View on Map',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ),
+  ),
+);
+
+Widget _buildStarRating(dynamic rating) {
   return Row(
-    children: List.generate(totalStars, (index) {
-      if (index < filledStars) {
-        return Icon(Icons.star, color: Colors.amber, size: 20);
-      } else if (index == filledStars && halfStar) {
-        return Icon(Icons.star_half, color: Colors.amber, size: 20);
-      } else {
-        return Icon(Icons.star_border, color: Colors.amber, size: 20);
-      }
-    }),
+    children: [
+      Text(rating.toString()),
+      SizedBox(width: 5,),
+      Icon(Icons.star, color: Colors.yellow[700],),
+    ],
   );
 }
 
@@ -330,3 +378,53 @@ void openMap(LatLng location) async {
   await launchUrl(url, mode: LaunchMode.externalApplication);
 
 }
+
+
+Widget NotificationBuilder(NotificationModel notification) => Container(
+  decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(8),
+    color: Colors.grey[200],
+  ),
+  child: Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Color.fromRGBO(255, 179, 0, 0.25)
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(Assets.coins, width: 32, height: 32, color: Color.fromRGBO(255, 179, 0, 1),),
+            )
+        ),
+
+        SizedBox(width: 20,),
+
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(notification.title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              SizedBox(height: 5,),
+              Text(notification.body, style: TextStyle(color: Colors.grey[800])),
+              SizedBox(height: 15,),
+              Align(
+                  alignment: AlignmentDirectional.bottomEnd,
+                  child: Text(DateFormat.yMMMMd().add_jm().format(notification.timestamp.toDate()))),
+            ],
+          ),
+        ),
+
+        if(notification.rated == false)...[
+          CircleAvatar(
+            backgroundColor: Colors.orange,
+            radius: 5,
+          )
+        ]
+      ],
+    ),
+  ),
+);

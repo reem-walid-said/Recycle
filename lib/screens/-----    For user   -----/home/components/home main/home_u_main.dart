@@ -5,11 +5,13 @@ import 'package:iconsax/iconsax.dart';
 import 'package:project/core/assets.dart';
 import 'package:project/core/components.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/components/notifications/notifications.dart';
+import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/components/store/store.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/homeprovider.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../-----For employe-----/home/components/category_examples/category_examples.dart' show CategoryExamples;
 import '../../../../../core/app_routes.dart';
 
 class Home_U_Main extends StatefulWidget {
@@ -88,7 +90,7 @@ class _Home_U_MainState extends State<Home_U_Main> {
                       Spacer(),
                       GestureDetector(
                           onTap: (){
-                            //Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications_U()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications_U()));
                           },
                           child: Icon(Iconsax.notification)
                       ),
@@ -115,7 +117,7 @@ class _Home_U_MainState extends State<Home_U_Main> {
                   Divider(height: 3.h, color: Colors.transparent),
 
                   // Slider
-                  Container(
+                  SizedBox(
                     height: 20.h,
                     child: PageView.builder(
                       controller: _pageController,
@@ -222,13 +224,18 @@ class _Home_U_MainState extends State<Home_U_Main> {
                       children: [
                         Column(
                           children: [
-                            CircleAvatar(
-                              radius: 45,
-                              backgroundColor: Colors.orange[100],
-                              child: Image.asset(
-                                Assets.coins,
-                                scale: 1.5,
-                                color: Colors.orange[800],
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => Store()));
+                              },
+                              child: CircleAvatar(
+                                radius: 45,
+                                backgroundColor: Colors.orange[100],
+                                child: Image.asset(
+                                  Assets.coins,
+                                  scale: 1.5,
+                                  color: Colors.orange[800],
+                                ),
                               ),
                             ),
                             SizedBox(
@@ -309,76 +316,91 @@ class _Home_U_MainState extends State<Home_U_Main> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        height: 15.h,
-                        width: 27.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Color.fromRGBO(255, 179, 0, 0.25),
-                        ),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              Divider(height: 2.h, color: Colors.transparent),
-                              Image.asset(
-                                Assets.bottle,
-                                scale: 1,
-                                color: Color.fromRGBO(255, 179, 0, 1),
-                              ),
-                              Divider(height: 1.h, color: Colors.transparent),
-                              Text("Plastic",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16.sp)),
-                            ],
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryExamples(category: "Plastic")));
+                        },
+                        child: Container(
+                          height: 15.h,
+                          width: 27.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color.fromRGBO(255, 179, 0, 0.25),
                           ),
-                        ),
-                      ),
-                      Container(
-                        height: 15.h,
-                        width: 27.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Color.fromRGBO(0, 150, 136, 0.25),
-                        ),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              Divider(height: 2.h, color: Colors.transparent),
-                              Image.asset(
-                                Assets.can,
-                                scale: 1,
-                                color: Color.fromRGBO(0, 150, 136, 1),
-                              ),
-                              Divider(height: 1.h, color: Colors.transparent),
-                              Text("Can",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16.sp)),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 15.h,
-                        width: 27.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Color.fromRGBO(38, 70, 83, 0.25),
-                        ),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              Divider(height: 2.h, color: Colors.transparent),
-                              Image.asset(Assets.glass,
+                          child: Center(
+                            child: Column(
+                              children: [
+                                Divider(height: 2.h, color: Colors.transparent),
+                                Image.asset(
+                                  Assets.bottle,
                                   scale: 1,
-                                  color: Color.fromRGBO(38, 70, 83, 1)),
-                              Divider(height: 1.h, color: Colors.transparent),
-                              Text("Glass",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16.sp)),
-                            ],
+                                  color: Color.fromRGBO(255, 179, 0, 1),
+                                ),
+                                Divider(height: 1.h, color: Colors.transparent),
+                                Text("Plastic",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16.sp)),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryExamples(category: "Can")));
+                        },
+                        child: Container(
+                          height: 15.h,
+                          width: 27.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color.fromRGBO(0, 150, 136, 0.25),
+                          ),
+                          child: Center(
+                            child: Column(
+                              children: [
+                                Divider(height: 2.h, color: Colors.transparent),
+                                Image.asset(
+                                  Assets.can,
+                                  scale: 1,
+                                  color: Color.fromRGBO(0, 150, 136, 1),
+                                ),
+                                Divider(height: 1.h, color: Colors.transparent),
+                                Text("Can",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16.sp)),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryExamples(category: "Glass")));
+                        },
+                        child: Container(
+                          height: 15.h,
+                          width: 27.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color.fromRGBO(38, 70, 83, 0.25),
+                          ),
+                          child: Center(
+                            child: Column(
+                              children: [
+                                Divider(height: 2.h, color: Colors.transparent),
+                                Image.asset(Assets.glass,
+                                    scale: 1,
+                                    color: Color.fromRGBO(38, 70, 83, 1)),
+                                Divider(height: 1.h, color: Colors.transparent),
+                                Text("Glass",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16.sp)),
+                              ],
+                            ),
                           ),
                         ),
                       )

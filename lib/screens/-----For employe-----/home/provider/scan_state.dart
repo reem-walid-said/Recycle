@@ -13,7 +13,7 @@ class ScanStates{
   ];
 
   Map<String, int> myCategoriesMap = {
-    "Metal" : 10,
+    "Can" : 10,
     "Plastic" : 20,
     "Glass" : 25,
   };

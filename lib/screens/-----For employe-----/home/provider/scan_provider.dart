@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project/core/components.dart';
 import 'package:project/models/recycle_item.dart';
 import 'package:project/screens/-----For%20employe-----/home/provider/scan_state.dart';
+import 'package:project/services/local/notifications.dart';
 import 'package:project/services/network/database.dart';
 
 import '../../../../models/user.dart';
@@ -85,7 +84,6 @@ class ScanProvider extends ChangeNotifier{
       );
       return;
     }
-
     state.myScannedItem.add(RecycleItem(
       category: category,
       count: count,
@@ -180,6 +178,12 @@ class ScanProvider extends ChangeNotifier{
       await myToast(
         message: "Order has Confirmed",
         backgroundColor: Colors.green,
+      );
+
+      await NotificationService().sendNotification(
+          recipientUserId: state.scannedUser!.globalID,
+          title: "Received Points",
+          body: "you have received ${state.totalScannedItemsPoints} points",
       );
 
 

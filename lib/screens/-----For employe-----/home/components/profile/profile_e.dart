@@ -31,22 +31,22 @@ class _Profile_EState extends State<Profile_E> {
       padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 12),
       child: Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            onPressed: () async {
-              await context.read<UserProvider>().GetEmployeeData(id: Provider.of<UserProvider>(context, listen: false).state.myUser.globalID);
-            },
-            icon: Icon(Icons.refresh),
-          ),
+          // leading: IconButton(
+          //   onPressed: () async {
+          //     await context.read<UserProvider>().GetEmployeeData(id: Provider.of<UserProvider>(context, listen: false).state.myUser.globalID);
+          //   },
+          //   icon: Icon(Icons.refresh),
+          // ),
           title: const Text("Account"),
           centerTitle: true,
-          actions: [
-            IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.notifications_none_outlined,
-                  size: 30,
-                )),
-          ],
+          // actions: [
+          //   IconButton(
+          //       onPressed: () {},
+          //       icon: Icon(
+          //         Icons.notifications_none_outlined,
+          //         size: 30,
+          //       )),
+          // ],
         ),
         body: Column(
           children: [
@@ -81,9 +81,9 @@ class _Profile_EState extends State<Profile_E> {
                   ],
                 ),
                 Spacer(),
-                IconButton(onPressed: () {
-                  editDialog();
-                }, icon: Icon(Icons.edit_outlined)),
+                // IconButton(onPressed: () {
+                //   editDialog();
+                // }, icon: Icon(Icons.edit_outlined)),
               ],
             ),
 

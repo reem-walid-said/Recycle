@@ -1,232 +1,79 @@
-import 'dart:ffi';
-import 'dart:io';
-import 'dart:math';
-import 'dart:typed_data';
-import 'dart:ui';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:image/image.dart' as img;
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:onnxruntime/onnxruntime.dart';
-import 'package:project/core/components.dart';
+import '../services/local/notifications.dart' show NotificationService;
 
-class TestScreen extends StatefulWidget {
-  const TestScreen({super.key});
-
+class NotificationDemoScreen extends StatefulWidget {
   @override
-  State<TestScreen> createState() => _TestScreenState();
+  _NotificationDemoScreenState createState() => _NotificationDemoScreenState();
 }
 
-class _TestScreenState extends State<TestScreen> {
-  late OrtSession session;
-  bool isModelLoaded = false;
-  File? _selectedImage;
-  late final MapController _mapController;
-  double _currentZoom = 6.0;
-
+class _NotificationDemoScreenState extends State<NotificationDemoScreen> {
+  final NotificationService _notificationService = NotificationService();
+  final TextEditingController _userIdController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _bodyController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    //_loadModel();
-    _mapController = MapController();
+    _requestNotificationPermissions();
+    _notificationService.initNotifications();
+    _notificationService.listenForNotifications('papj72q6QUM2brm3qFWNflzbmD93'); // Replace with actual user ID
   }
 
-  void _zoomIn() {
-    setState(() {
-      _currentZoom = (_currentZoom + 1).clamp(2.0, 18.0);
-      _mapController.move(_mapController.center, _currentZoom);
-    });
-  }
+  Future<void> _requestNotificationPermissions() async {
+    // Request permissions
+    NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
 
-  void _zoomOut() {
-    setState(() {
-      _currentZoom = (_currentZoom - 1).clamp(2.0, 18.0);
-      _mapController.move(_mapController.center, _currentZoom);
-    });
-  }
-
-  Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      setState(() {
-        _selectedImage = File(pickedFile.path);
-      });
+    // Check if granted
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print("Notifications enabled");
+    } else {
+      print("Notifications disabled");
+      // Optionally show a message to the user
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please enable notifications in settings")),
+      );
     }
-  }
-
-  Future<void> _loadModel() async {
-    try {
-      OrtEnv.instance.init();
-      final sessionOptions = OrtSessionOptions();
-      const assetFileName = 'assets/onnx/model.onnx';
-      final rawAssetFile = await rootBundle.load(assetFileName);
-      final bytes = rawAssetFile.buffer.asUint8List();
-      session = OrtSession.fromBuffer(bytes, sessionOptions);
-      setState(() {
-        isModelLoaded = true;
-      });
-      print("Model loaded successfully");
-      print("Input Names: ${session.inputNames}");
-    } catch (e) {
-      print("Error loading model: $e");
-    }
-  }
-
-  Future<void> _runInference(File imageFile) async {
-    if (!isModelLoaded) {
-      print("Model not loaded yet.");
-      return;
-    }
-
-    try {
-      // Define input shape based on your ONNX model
-      final inputTensor = await _preprocessImage(imageFile);
-      final shape = [1, 3, 224, 224];
-
-      final inputOrt = OrtValueTensor.createTensorWithDataList(inputTensor, shape);
-      final inputs = {session.inputNames.first: inputOrt}; // Use correct input name
-
-      final runOptions = OrtRunOptions();
-      dynamic outputs = await session.runAsync(runOptions, inputs);
-
-      // Process Outputs
-      outputs.forEach((value) {
-        print("Output: ${value.toString()}");
-        print("Output: ${value.value[0]}");
-
-        dynamic value1 = value.value[0];
-
-        dynamic softValue = softmax(value1);
-        print("Output Soft: ${softValue}");
-
-
-        dynamic argValue = argmax(softValue);
-        print("Output Arg: ${argValue}");
-
-      });
-
-      // Release resources
-      inputOrt.release();
-      runOptions.release();
-      outputs?.forEach((value) => value?.release());
-    } catch (e) {
-      print("Error during inference: $e");
-    }
-  }
-
-
-
-  Future<Float32List> _preprocessImage(File imageFile) async {
-    // Load image as Uint8List
-    final Uint8List imageBytes = await imageFile.readAsBytes();
-
-    // Decode image
-    img.Image? image = img.decodeImage(imageBytes);
-    if (image == null) {
-      throw Exception("Failed to decode image.");
-    }
-
-    // Resize image to match model input shape (e.g., 224x224)
-    final img.Image resizedImage = img.copyResize(image, width: 224, height: 224);
-
-    // Convert image pixels to Float32List
-    final Float32List inputTensor = Float32List(1 * 3 * 224 * 224);
-    int pixelIndex = 0;
-
-    for (int y = 0; y < 224; y++) {
-      for (int x = 0; x < 224; x++) {
-        final pixel = resizedImage.getPixel(x, y);
-
-        // Extract RGB values
-        final r = img.getRed(pixel) / 255.0; // Normalize [0,1]
-        final g = img.getGreen(pixel) / 255.0;
-        final b = img.getBlue(pixel) / 255.0;
-
-        // ONNX expects channel-first format (C, H, W)
-        inputTensor[pixelIndex] = r;
-        inputTensor[pixelIndex + 224 * 224] = g;
-        inputTensor[pixelIndex + 2 * 224 * 224] = b;
-        pixelIndex++;
-      }
-    }
-
-    return inputTensor;
-  }
-
-
-  List<double> softmax(List<double> inputs) {
-    double sumExp = inputs.map((x) => exp(x)).reduce((a, b) => a + b);
-    return inputs.map((x) => exp(x) / sumExp).toList();
-  }
-
-  int argmax(List<double> inputs) {
-    return inputs.indexOf(inputs.reduce((a, b) => a > b ? a : b));
-  }
-
-  @override
-  void dispose() {
-    // session.close();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("OpenStreetMap - Egypt")),
-      body: Stack(
-        children: [
-          FlutterMap(
-            mapController: _mapController,
-            options: MapOptions(
-              center: LatLng(26.8206, 30.8025),
-              zoom: _currentZoom,
+      appBar: AppBar(title: Text('Firestore Notifications')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: _userIdController,
+              decoration: InputDecoration(labelText: 'Recipient User ID'),
             ),
-            children: [
-              TileLayer(
-                urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                subdomains: ['a', 'b', 'c'],
-              ),
-              MarkerLayer(
-                markers: [
-                  Marker(
-                    width: 40.0,
-                    height: 40.0,
-                    point: LatLng(30.0444, 31.2357), // Cairo
-                    child: Icon(Icons.location_pin, color: Colors.red, size: 40),
-                  ),
-                ],
-              ),
-            ],
-          ),
-
-          // Zoom Buttons
-          Positioned(
-            bottom: 20,
-            right: 20,
-            child: Column(
-              children: [
-                FloatingActionButton(
-                  heroTag: "zoomIn",
-                  onPressed: _zoomIn,
-                  child: Icon(Icons.zoom_in),
-                ),
-                SizedBox(height: 10),
-                FloatingActionButton(
-                  heroTag: "zoomOut",
-                  onPressed: _zoomOut,
-                  child: Icon(Icons.zoom_out),
-                ),
-              ],
+            TextField(
+              controller: _titleController,
+              decoration: InputDecoration(labelText: 'Title'),
             ),
-          ),
-        ],
+            TextField(
+              controller: _bodyController,
+              decoration: InputDecoration(labelText: 'Message'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                await _notificationService.sendNotification(
+                  recipientUserId: _userIdController.text,
+                  title: _titleController.text,
+                  body: _bodyController.text,
+                );
+              },
+              child: Text('Send Notification'),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
-// [Plastic, Glass, Metal]
