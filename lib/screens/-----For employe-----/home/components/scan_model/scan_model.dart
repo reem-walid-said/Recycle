@@ -52,7 +52,7 @@ class ScanWithModel extends StatelessWidget {
                     ? Image.file(
                         context.watch<ModelProvider>().state.selectedImage!,
                         width: 300,
-                        height: 300,
+                        height: 450,
                         fit: BoxFit.cover)
                     : Text('No image selected', style: TextStyle(fontSize: 16)),
                 SizedBox(height: 20),
@@ -117,7 +117,7 @@ class ScanWithModel extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 Image.file(context.watch<ModelProvider>().state.selectedImage!,
-                    width: 224, height: 224, fit: BoxFit.cover),
+                    width: 124, height: 180,fit: BoxFit.cover),
                 SizedBox(height: 10),
                 Text(
                   "Item Category: ${context.watch<ModelProvider>().state.selectedImageCategoryResult}",

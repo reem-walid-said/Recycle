@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:project/core/components.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/user_provider.dart';
 import 'package:project/screens/-----For%20employe-----/home/provider/homeprovider.dart';
+import 'package:project/screens/-----For%20employe-----/home/provider/model_provider.dart';
 import 'package:project/screens/-----For%20employe-----/user%20handle/login/provider/login_E_provider.dart';
 import 'package:project/screens/-----For%20employe-----/user%20handle/register/register_E.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/register/register_U.dart';
@@ -245,6 +246,7 @@ class Login_EState extends State<Login_E> {
                             backgroundColor: Colors.green,
                           );
                           context.read<HomeProvider_E>().returnHome();
+                          await context.read<ModelProvider>().loadModel();
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             App_Routes.home_E,

@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
@@ -17,10 +18,11 @@ class ModelProvider extends ChangeNotifier{
   ModelStates state = ModelStates();
 
   Future<void> loadModel() async {
+    print("Model loading...");
     try {
       OrtEnv.instance.init();
       final sessionOptions = OrtSessionOptions();
-      const assetFileName = 'assets/onnx/model.onnx';
+      const assetFileName = 'assets/onnx/garbage_classifier.onnx';
       final rawAssetFile = await rootBundle.load(assetFileName);
       final bytes = rawAssetFile.buffer.asUint8List();
       state.session = OrtSession.fromBuffer(bytes, sessionOptions);
@@ -64,8 +66,8 @@ class ModelProvider extends ChangeNotifier{
       state.selectedImageCategoryResult = null;
       notifyListeners();
       // Define input shape based on your ONNX model
-      final inputTensor = await preprocessImage(state.selectedImage!);
-      final shape = [1, 3, 224, 224];
+      final inputTensor = await transformImageToTensor(state.selectedImage!);
+      final shape = [1, 3, 256, 256];
 
       final inputOrt = OrtValueTensor.createTensorWithDataList(inputTensor, shape);
       final inputs = {state.session.inputNames.first: inputOrt};
@@ -80,8 +82,8 @@ class ModelProvider extends ChangeNotifier{
 
         dynamic value1 = value.value[0];
 
-        dynamic softValue = softmax(value1);
-        print("Output Soft: ${softValue}");
+        List<double> softValue = softmax(value1);
+        print("Output Soft: ${softValue}")  ;
 
         dynamic argValue = argmax(softValue);
         print("Output Arg: ${argValue}");
@@ -100,40 +102,110 @@ class ModelProvider extends ChangeNotifier{
     }
   }
 
-
   Future<Float32List> preprocessImage(File imageFile) async {
+    // Load image with maximum quality preservation
     final Uint8List imageBytes = await imageFile.readAsBytes();
+    final img.Image? image = img.decodeImage(imageBytes);
+    if (image == null) throw Exception("Failed to decode image.");
 
-    // Decode image
-    img.Image? image = img.decodeImage(imageBytes);
-    if (image == null) {
-      throw Exception("Failed to decode image.");
-    }
-
-    // Resize image to 224x224 without altering colors or quality
+    // High-quality resizing with Lanczos interpolation (best for downscaling)
     final img.Image resizedImage = img.copyResize(
       image,
-      width: 224,
-      height: 224,
-      interpolation: img.Interpolation.average, // Ensures smoother resizing
+      width: 256,
+      height: 256,
     );
 
-    // Convert image to Float32List without normalization or channel rearrangement
-    final Float32List pixelData = Float32List(224 * 224 * 3);
-    int index = 0;
+    // Convert to CHW format with optimized memory access
+    final Float32List pixelData = Float32List(3 * 256 * 256);
 
-    for (int y = 0; y < 224; y++) {
-      for (int x = 0; x < 224; x++) {
+    // Common normalization values (ImageNet)
+    const mean = [0.485, 0.456, 0.406];
+    const std = [0.229, 0.224, 0.225];
+
+    // Pre-calculate strides for faster access
+    final channelStride = 256 * 256;
+    final rowStride = 256;
+
+    // Process all pixels with minimal conversions
+    for (int y = 0; y < 256; y++) {
+      for (int x = 0; x < 256; x++) {
         final pixel = resizedImage.getPixel(x, y);
-        pixelData[index++] = img.getRed(pixel).toDouble();
-        pixelData[index++] = img.getGreen(pixel).toDouble();
-        pixelData[index++] = img.getBlue(pixel).toDouble();
+
+        // Get channels with one pixel access
+        final r = img.getRed(pixel) / 255.0;
+        final g = img.getGreen(pixel) / 255.0;
+        final b = img.getBlue(pixel) / 255.0;
+
+        // Normalize and store in CHW order
+        pixelData[y * rowStride + x] = (r - mean[0]) / std[0];           // R channel
+        pixelData[channelStride + y * rowStride + x] = (g - mean[1]) / std[1]; // G channel
+        pixelData[2 * channelStride + y * rowStride + x] = (b - mean[2]) / std[2]; // B channel
       }
     }
 
     return pixelData;
   }
 
+  Future<Float32List> prepareImageForOnnx(File imageFile) async {
+    // 1. Load and decode image
+    final image = img.decodeImage(await imageFile.readAsBytes())!;
+
+    // 2. Resize to 256x256
+    final resized = img.copyResize(image, width: 256, height: 256);
+
+    // 3. Prepare Float32 array (256x256x3)
+    final data = Float32List(256 * 256 * 3);
+
+    // 4. Normalize pixels (ImageNet standardization)
+    int index = 0;
+    for (var y = 0; y < 256; y++) {
+      for (var x = 0; x < 256; x++) {
+        final pixel = resized.getPixel(x, y);
+        // RGB channels with ImageNet normalization
+        data[index++] = (img.getRed(pixel)/255.0 - 0.485) / 0.229;   // Red
+        data[index++] = (img.getGreen(pixel)/255.0 - 0.456) / 0.224; // Green
+        data[index++] = (img.getBlue(pixel)/255.0 - 0.406) / 0.225;  // Blue
+      }
+    }
+
+    return data;
+  }
+
+  Future<Float32List> transformImageToTensor(File imageFile) async {
+    // 1. Read and decode the image
+    final originalImage = img.decodeImage(await imageFile.readAsBytes());
+    if (originalImage == null) {
+      throw Exception('Failed to decode image');
+    }
+
+    // 2. Resize to 256x256
+    final resizedImage = img.copyResize(originalImage, width: 256, height: 256);
+
+    // 3. Convert to Float32List tensor with shape [3, 256, 256]
+    // Allocate the tensor (3 channels × 256 height × 256 width)
+    final tensor = Float32List(3 * 256 * 256);
+
+    // Get image bytes in RGB format
+    final bytes = resizedImage.getBytes(format: img.Format.rgb);
+
+    // Reorganize into channel-first format and normalize to [0, 1]
+    for (int y = 0; y < 256; y++) {
+      for (int x = 0; x < 256; x++) {
+        final pixelOffset = (y * 256 + x) * 3;
+
+        // Red channel (index 0)
+        tensor[y * 256 + x] = bytes[pixelOffset] / 255.0;
+
+        // Green channel (index 1)
+        tensor[256 * 256 + y * 256 + x] = bytes[pixelOffset + 1] / 255.0;
+
+        // Blue channel (index 2)
+        tensor[2 * 256 * 256 + y * 256 + x] = bytes[pixelOffset + 2] / 255.0;
+      }
+    }
+
+    return tensor;
+  }
 
 
   List<double> softmax(List<double> inputs) {

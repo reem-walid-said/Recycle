@@ -11,6 +11,8 @@ import 'package:project/services/local/cache_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../-----For employe-----/home/provider/model_provider.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -75,6 +77,7 @@ class _SplashScreenState extends State<SplashScreen>
         }
         else{
           await context.read<UserProvider>().GetEmployeeData(id: id);
+          await context.read<ModelProvider>().loadModel();
           context.read<HomeProvider_E>().returnHome();
           Navigator.pushNamedAndRemoveUntil(
             context,
