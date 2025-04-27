@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:project/core/Assets.dart';
+import 'package:project/models/warehouse.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/components.dart';
@@ -54,7 +55,7 @@ class _Notifications_UState extends State<Notifications_U> {
                       onTap: (){
                         if(myNotifications[index].rated)return;
                         print("Dialog");
-                        showRateDialog(context, myNotifications[index].id);
+                        showRateDialog(context, myNotifications[index]);
                       },
                       child: NotificationBuilder(myNotifications[index])
                   ),
@@ -77,16 +78,16 @@ class _Notifications_UState extends State<Notifications_U> {
   }
 
 
-  void showRateDialog(BuildContext context, notificationId) {
+  void showRateDialog(BuildContext context, NotificationModel notification) {
     showDialog(
       context: context,
       builder: (context) {
-        return RateDialog(context, notificationId);
+        return RateDialog(context, notification);
       },
     );
   }
 
-  Widget RateDialog(context, notificationId) {
+  Widget RateDialog(context, NotificationModel notification) {
     double rating = 3;
     TextEditingController reviewController = TextEditingController();
     return AlertDialog(
@@ -137,10 +138,45 @@ class _Notifications_UState extends State<Notifications_U> {
                   .collection("Costumer")
                   .doc(Provider.of<UserProvider>(context, listen: false).state.myUser.globalID)
                   .collection("notifications")
-                  .doc(notificationId)
+                  .doc(notification.id)
                   .update({
                 'rated' : true,
               });
+
+              // Post the Review in the Warehouse -> Reviews Collection
+              QuerySnapshot warehouseJson = await FirebaseFirestore.instance
+                  .collection("warehouses")
+                  .where("W-ID", isEqualTo: notification.wid)
+                  .limit(1)
+                  .get();
+              
+              DocumentReference warehouseRef = warehouseJson.docs.first.reference;
+
+              QuerySnapshot querySnapshot = await warehouseRef.collection("Reviews").get();
+              int numberOfReviews = querySnapshot.docs.length;
+
+              DocumentSnapshot snapshot = await warehouseRef.get();
+              dynamic currentRate = snapshot.get("Rating");
+              dynamic newAverage = ((currentRate * numberOfReviews) + rating) / (numberOfReviews + 1);
+
+              // update the rate
+              await warehouseRef.update({
+                "Rating" : newAverage
+              });
+              
+              
+              // // add the user's review in the Review collection
+              await warehouseRef.collection("Reviews").add({
+                "RP-ID" : notification.recycleProcessId,
+                "comment" : reviewController.text,
+                "datetime" : DateTime.now(),
+                "rate" : rating,
+              });
+
+              myToast(
+                message: "Thanks for your feedback",
+                backgroundColor: Colors.green,
+              );
 
               Navigator.pop(context);
             }

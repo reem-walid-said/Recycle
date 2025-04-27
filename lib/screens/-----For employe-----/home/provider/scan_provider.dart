@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:project/core/components.dart';
 import 'package:project/models/recycle_item.dart';
+import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/user_provider.dart';
 import 'package:project/screens/-----For%20employe-----/home/provider/scan_state.dart';
 import 'package:project/services/local/notifications.dart';
 import 'package:project/services/network/database.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../models/user.dart';
 
@@ -157,14 +159,17 @@ class ScanProvider extends ChangeNotifier{
 
   Future onConfirmOrder({
     required String employeeId,
+    required String warehouseID,
 }) async {
 
+    print("Warehouse ID : $warehouseID");
     state.onConfirming = true;
     notifyListeners();
 
     try{
       await DatabaseServices(id: employeeId).updateUserPoints(points: state.totalScannedItemsPoints, userId: state.scannedUser!.globalID);
-      await DatabaseServices(id: employeeId).addRecyclingProcess(
+      String? newProcessId = await DatabaseServices(id: employeeId).addRecyclingProcess(
+        warehouseID: warehouseID,
         uid: state.scannedUser!.localID,
         username: state.scannedUser!.username,
         points: state.totalScannedItemsPoints,
@@ -175,6 +180,8 @@ class ScanProvider extends ChangeNotifier{
         }
       );
 
+      print("New Process ID : $newProcessId");
+
       await myToast(
         message: "Order has Confirmed",
         backgroundColor: Colors.green,
@@ -184,6 +191,8 @@ class ScanProvider extends ChangeNotifier{
           recipientUserId: state.scannedUser!.globalID,
           title: "Received Points",
           body: "you have received ${state.totalScannedItemsPoints} points",
+          warehouseId: warehouseID,
+          recycleProcessId: newProcessId!,
       );
 
 

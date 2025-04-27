@@ -63,11 +63,11 @@ class _NotificationDemoScreenState extends State<NotificationDemoScreen> {
             ),
             ElevatedButton(
               onPressed: () async {
-                await _notificationService.sendNotification(
-                  recipientUserId: _userIdController.text,
-                  title: _titleController.text,
-                  body: _bodyController.text,
-                );
+                // await _notificationService.sendNotification(
+                //   recipientUserId: _userIdController.text,
+                //   title: _titleController.text,
+                //   body: _bodyController.text,
+                //);
               },
               child: Text('Send Notification'),
             ),

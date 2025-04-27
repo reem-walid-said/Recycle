@@ -39,5 +39,6 @@ class Employee{
     address: snapshot.get("address"),
     dateTime: snapshot.get("date").toDate(),
     status: snapshot.get("status"),
+    warehouseID: snapshot.get("wid"),
   );
 }

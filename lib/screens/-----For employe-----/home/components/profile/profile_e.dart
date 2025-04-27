@@ -84,6 +84,7 @@ class _Profile_EState extends State<Profile_E> {
                 // IconButton(onPressed: () {
                 //   editDialog();
                 // }, icon: Icon(Icons.edit_outlined)),
+                Text("${Provider.of<UserProvider>(context, listen: false).state.currentEmployeeBranch!.name} Branch"),
               ],
             ),
 

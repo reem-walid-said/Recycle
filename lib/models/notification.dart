@@ -8,6 +8,7 @@ class NotificationModel{
   bool rated;
   Timestamp timestamp;
   String wid;
+  String recycleProcessId;
 
   NotificationModel({
 
@@ -18,6 +19,7 @@ class NotificationModel{
     required this.rated,
     required this.title,
     required this.wid,
+    required this.recycleProcessId,
 });
 
   static NotificationModel fromJson(DocumentSnapshot snapshot) => NotificationModel(
@@ -28,6 +30,7 @@ class NotificationModel{
       rated: snapshot.get("rated"),
       title: snapshot.get("title"),
       wid: snapshot.get("W-ID"),
+      recycleProcessId: snapshot.get("RP-ID"),
   );
 
 }

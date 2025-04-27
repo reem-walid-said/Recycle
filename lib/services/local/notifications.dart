@@ -86,7 +86,8 @@ class NotificationService {
     required String recipientUserId,
     required String title,
     required String body,
-    String warehouseId = "W-001",
+    required String warehouseId,
+    required String recycleProcessId,
   }) async {
     final docRef = await FirebaseFirestore.instance
         .collection('Costumer')
@@ -99,6 +100,7 @@ class NotificationService {
       'read': false,
       'rated': false,
       'W-ID': warehouseId,
+      'RP-ID': recycleProcessId,
     });
 
     // Update the same document with its generated ID

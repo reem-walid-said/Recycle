@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:project/models/employee.dart';
+import 'package:project/models/warehouse.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/user_state.dart';
 import 'package:project/services/network/authentication.dart';
 import 'package:project/services/network/database.dart';
@@ -48,6 +49,10 @@ class UserProvider extends ChangeNotifier {
     if (result is DocumentSnapshot) {
       print("User Found");
       state.myUser = Employee.fromJson(result);
+
+      dynamic warehouseResult = await DatabaseServices(id: id).getWarehouse(state.myUser.warehouseID);
+      state.currentEmployeeBranch = Warehouse.fromJson(warehouseResult);
+
       print("User Stored");
       notifyListeners();
       return true;
@@ -58,6 +63,13 @@ class UserProvider extends ChangeNotifier {
       return false;
     }
   }
+
+
+  Future GetEmployeeWarehouse({
+    warehouseId,
+}) async {
+
+}
 
   // Future GetUserRecycleResults(id, localID) async {
   //   dynamic result = await DatabaseServices(id: id).getUserRecycleResults(localID);

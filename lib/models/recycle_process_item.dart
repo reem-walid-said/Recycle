@@ -10,6 +10,7 @@ class RecycleProcessItem{
   int points;
   DateTime dateTime;
   String status;
+  String? warehouseID;
 
   RecycleProcessItem({
     required this.dateTime,
@@ -20,7 +21,9 @@ class RecycleProcessItem{
     required this.id,
     required this.amount,
     required this.eid,
+
     this.employeeName,
+    this.warehouseID,
 });
 
 
@@ -32,6 +35,8 @@ class RecycleProcessItem{
       uid: snapshot.get("uid"),
       id: snapshot.get("id"),
       amount: snapshot.get("amount"),
-      eid: snapshot.get("eid")
+      eid: snapshot.get("eid"),
+
+      warehouseID: snapshot.get("wid"),
   );
 }

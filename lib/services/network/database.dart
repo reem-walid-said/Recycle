@@ -90,12 +90,13 @@ class DatabaseServices {
     }
   }
 
-  Future addRecyclingProcess({
+  Future<String?> addRecyclingProcess({
     required String uid,
     required String username,
     required int points,
     required Map<String, dynamic> amount,
     String status = "Done",
+    required String warehouseID,
 }) async {
     try{
       //Getting the last document
@@ -113,26 +114,27 @@ class DatabaseServices {
         'amount': amount,
         'status': status,
         'DateTime': DateTime.now(),
+        "wid" : warehouseID,
       };
 
       // Adding a new Recycle process
       await RecycleProcessCollection.doc(newID).set(data);
 
       // Updating the count for all scanned items
-      await ScannedItemsCount.doc("plastic").update({
-        "count": FieldValue.increment(amount["plastic"]),
-      });
-      await ScannedItemsCount.doc("can").update({
-        "count": FieldValue.increment(amount["can"]),
-      });
-      await ScannedItemsCount.doc("glass").update({
-        "count": FieldValue.increment(amount["glass"]),
-      });
+      // await ScannedItemsCount.doc("plastic").update({
+      //   "count": FieldValue.increment(amount["plastic"]),
+      // });
+      // await ScannedItemsCount.doc("can").update({
+      //   "count": FieldValue.increment(amount["can"]),
+      // });
+      // await ScannedItemsCount.doc("glass").update({
+      //   "count": FieldValue.increment(amount["glass"]),
+      // });
 
-      return true;
+      return newID;
     }catch(e){
-      //print(e);
-      return false;
+      print(e);
+      return null;
     }
   }
 
@@ -144,9 +146,8 @@ class DatabaseServices {
     }
   }
 
-  ///ToDo
-  ///{
-  ///   UpdateUserData()
-  ///   UpdateEmployeeData()
-  ///}
+  Future getWarehouse(warehouseID) async {
+    QuerySnapshot querySnapshot = await WarehouseCollection.where("W-ID", isEqualTo: warehouseID).limit(1).get();
+    return querySnapshot.docs.first;
+  }
 }
