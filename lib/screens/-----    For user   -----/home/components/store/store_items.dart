@@ -145,6 +145,7 @@ class _StoreItemsState extends State<StoreItems> {
                     onPressed: () async {
                       if(formKey.currentState!.validate() == false){
                         print("Invalid Request");
+                        return;
                       }
                       bool? result = await Provider.of<StoreProvider>(context, listen: false).requestStoreItem(
                         userId: Provider.of<UserProvider>(context, listen: false).state.myUser.globalID,
