@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/homeprovider.dart';
+import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/store_provider.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/user_provider.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/forget%20pass/provider/forget_U_provider.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/user%20handle/login/provider/login_U_provider.dart';
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => UserProvider()),
           ChangeNotifierProvider(create: (context) => ScanProvider()),
           ChangeNotifierProvider(create: (context) => ModelProvider()),
+          ChangeNotifierProvider(create: (context) => StoreProvider()),
         ],
 
         child: MaterialApp(

@@ -5,7 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:project/core/assets.dart';
 import 'package:project/core/components.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/components/notifications/notifications.dart';
-import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/components/store/store.dart';
+import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/components/store/store_category.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/homeprovider.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -226,7 +226,7 @@ class _Home_U_MainState extends State<Home_U_Main> {
                           children: [
                             GestureDetector(
                               onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => Store()));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => StoreCategory()));
                               },
                               child: CircleAvatar(
                                 radius: 45,

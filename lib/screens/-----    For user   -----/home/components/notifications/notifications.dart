@@ -53,7 +53,7 @@ class _Notifications_UState extends State<Notifications_U> {
               child: ListView.separated(
                   itemBuilder: (context, index) => GestureDetector(
                       onTap: (){
-                        if(myNotifications[index].rated)return;
+                        if(myNotifications[index].rated == null || myNotifications[index].rated == true)return;
                         print("Dialog");
                         showRateDialog(context, myNotifications[index]);
                       },

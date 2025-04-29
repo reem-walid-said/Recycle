@@ -86,8 +86,9 @@ class NotificationService {
     required String recipientUserId,
     required String title,
     required String body,
-    required String warehouseId,
-    required String recycleProcessId,
+    String? warehouseId,
+    String? recycleProcessId,
+    bool? rated,
   }) async {
     final docRef = await FirebaseFirestore.instance
         .collection('Costumer')
@@ -98,7 +99,7 @@ class NotificationService {
       'body': body,
       'timestamp': FieldValue.serverTimestamp(),
       'read': false,
-      'rated': false,
+      'rated': rated,
       'W-ID': warehouseId,
       'RP-ID': recycleProcessId,
     });

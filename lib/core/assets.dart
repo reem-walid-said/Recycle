@@ -30,4 +30,9 @@ class Assets {
   static String qrCode = "assets/images/qr_code.png";
 
   static String homePanel1 = "assets/images/home_panel_1.png";
+
+  static String waterStoreIcon = "assets/images/water_store_icon.png";
+  static String electricityStoreIcon = "assets/images/electricity_store_icon.png";
+  static String gasStoreIcon = "assets/images/gas_store_icon.png";
+  static String voucherIcon = "assets/images/voucher_icon.png";
 }

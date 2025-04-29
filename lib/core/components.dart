@@ -7,6 +7,8 @@ import 'package:project/core/styles.dart';
 import 'package:project/models/notification.dart';
 import 'package:project/models/recycle_item.dart';
 import 'package:project/models/recycle_process_item.dart';
+import 'package:project/models/store_category.dart';
+import 'package:project/models/store_item.dart';
 import 'package:project/models/warehouse.dart';
 import 'package:project/screens/-----For%20employe-----/home/provider/scan_provider.dart';
 import 'package:provider/provider.dart';
@@ -378,51 +380,123 @@ void openMap(LatLng location) async {
 }
 
 
-Widget NotificationBuilder(NotificationModel notification) => Container(
+Widget NotificationBuilder(NotificationModel notification){
+  String mainIcon = notification.title.contains("Code") ? Assets.voucherIcon : notification.title.contains("Points") ? Assets.coins : Assets.logo;
+  Color backgroundColor = notification.title.contains("Code") ? AppColor.mainDisabled : Color.fromRGBO(255, 179, 0, 0.25);
+  Color iconColor = notification.title.contains("Code") ? AppColor.main : Color.fromRGBO(255, 179, 0, 1);
+  return Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(8),
+      color: Colors.grey[200],
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: backgroundColor
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset(mainIcon, width: 32, height: 32, color: iconColor,),
+              )
+          ),
+
+          SizedBox(width: 20,),
+
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(notification.title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                SizedBox(height: 5,),
+                Text(notification.body, style: TextStyle(color: Colors.grey[800])),
+                SizedBox(height: 15,),
+                Align(
+                    alignment: AlignmentDirectional.bottomEnd,
+                    child: Text(DateFormat.yMMMMd().add_jm().format(notification.timestamp.toDate()))),
+              ],
+            ),
+          ),
+
+          if(notification.rated == false)...[
+            CircleAvatar(
+              backgroundColor: Colors.orange,
+              radius: 5,
+            )
+          ]
+        ],
+      ),
+    ),
+  );
+
+}
+
+
+
+Widget StoreCategoryBuilder(StoreCategory category) => Row(
+  children: [
+    Container(
+        decoration: BoxDecoration(
+          color: AppColor.mainDisabled,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.asset(category.assetsIcon, scale: 1.5,),
+        )
+    ),
+
+    SizedBox(width: 10,),
+
+    Text("${category.name} Bills", style: TextStyle(fontSize: 18),),
+
+    Spacer(),
+
+    Icon(Icons.arrow_forward_ios_rounded),
+  ],
+);
+
+Widget StoreCategoryBuilder2(StoreCategory category, StoreCategory selectedCategory) => Container(
   decoration: BoxDecoration(
     borderRadius: BorderRadius.circular(8),
-    color: Colors.grey[200],
+    border: Border.all(color: Colors.grey),
+    color: category.name == selectedCategory.name ? AppColor.main : Colors.white,
   ),
   child: Padding(
-    padding: const EdgeInsets.all(8.0),
+    padding: const EdgeInsets.all(3.0),
     child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: Color.fromRGBO(255, 179, 0, 0.25)
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset(Assets.coins, width: 32, height: 32, color: Color.fromRGBO(255, 179, 0, 1),),
-            )
-        ),
+        Image.asset(category.assetsIcon, scale: 2, color: category.name == selectedCategory.name ? Colors.white : Colors.grey,),
 
-        SizedBox(width: 20,),
+        SizedBox(width: 5,),
 
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(notification.title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-              SizedBox(height: 5,),
-              Text(notification.body, style: TextStyle(color: Colors.grey[800])),
-              SizedBox(height: 15,),
-              Align(
-                  alignment: AlignmentDirectional.bottomEnd,
-                  child: Text(DateFormat.yMMMMd().add_jm().format(notification.timestamp.toDate()))),
-            ],
-          ),
-        ),
-
-        if(notification.rated == false)...[
-          CircleAvatar(
-            backgroundColor: Colors.orange,
-            radius: 5,
-          )
-        ]
+        Text("${category.name} Bills", style: TextStyle(fontSize: 14, color: category.name == selectedCategory.name ? Colors.white : Colors.grey),),
       ],
     ),
+  ),
+);
+
+Widget StoreItemBuilder(StoreItem item, StoreCategory category, String selectedItem) => Container(
+  width: 100,
+  child: Column(
+    children: [
+      Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.grey, width: 2),
+          color: item.name == selectedItem ? AppColor.main : Colors.white,
+        ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.asset(category.assetsIcon, color: item.name == selectedItem ? Colors.white : Colors.grey, ),
+          )
+      ),
+
+      Text(item.name, textAlign: TextAlign.center, maxLines: 2,),
+    ],
   ),
 );

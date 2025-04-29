@@ -5,10 +5,10 @@ class NotificationModel{
   String title;
   String body;
   bool read;
-  bool rated;
+  bool? rated;
   Timestamp timestamp;
-  String wid;
-  String recycleProcessId;
+  String? wid;
+  String? recycleProcessId;
 
   NotificationModel({
 
@@ -16,10 +16,10 @@ class NotificationModel{
     required this.timestamp,
     required this.body,
     required this.read,
-    required this.rated,
+    this.rated,
     required this.title,
-    required this.wid,
-    required this.recycleProcessId,
+    this.wid,
+    this.recycleProcessId,
 });
 
   static NotificationModel fromJson(DocumentSnapshot snapshot) => NotificationModel(

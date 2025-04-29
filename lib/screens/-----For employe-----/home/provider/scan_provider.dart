@@ -193,6 +193,7 @@ class ScanProvider extends ChangeNotifier{
           body: "you have received ${state.totalScannedItemsPoints} points",
           warehouseId: warehouseID,
           recycleProcessId: newProcessId!,
+          rated: false,
       );
 
 
