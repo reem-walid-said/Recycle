@@ -80,7 +80,7 @@ class ScanProvider extends ChangeNotifier{
     required String category,
     required int count,
 }){
-    if(category == "Unknown"){
+    if(category == "Unknown" || category.isEmpty){
       myToast(
         message: "Unknown Product Can't be Added",
       );
@@ -108,6 +108,10 @@ class ScanProvider extends ChangeNotifier{
         message: "Item Added Successfully",
         backgroundColor: Colors.green,
       );
+
+      ResetAfterAdd();
+
+      notifyListeners();
 
   }
 

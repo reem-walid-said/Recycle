@@ -6,6 +6,8 @@ import 'package:project/screens/-----For%20employe-----/home/provider/model_prov
 import 'package:project/screens/-----For%20employe-----/home/provider/scan_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../scan/scan_e.dart';
+
 class ScanWithModel extends StatelessWidget {
   const ScanWithModel({super.key});
 
@@ -13,9 +15,17 @@ class ScanWithModel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Item Scan"),
+        title: const Text("AI Scan"),
         centerTitle: true,
         actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Scan_E()));
+              },
+              icon: Icon(Icons.change_circle_outlined)),
+
+
           IconButton(
               onPressed: () {
                 Navigator.push(
@@ -23,7 +33,9 @@ class ScanWithModel extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => ScannedItemsScreen()));
               },
-              icon: Icon(Icons.shopping_cart))
+              icon: Icon(Icons.shopping_cart)),
+
+
         ],
       ),
       body: Center(

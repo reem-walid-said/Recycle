@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../../core/assets.dart';
+import '../scan_model/scan_model.dart';
 
 class Scan_E extends StatefulWidget {
   const Scan_E({super.key});
@@ -23,11 +24,16 @@ class _Scan_EState extends State<Scan_E> {
     return Scaffold(
       appBar: AppBar(
 
-        title: Text("Scan",
-            style: TextStyle(
-                fontWeight: FontWeight.w700, fontSize: 20.sp)),
+        title: Text("Manual Scan"),
         centerTitle: true,
         actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ScanWithModel()));
+              },
+              icon: Icon(Icons.change_circle_outlined)),
+
           IconButton(
               onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => ScannedItemsScreen()));
@@ -95,7 +101,10 @@ class _Scan_EState extends State<Scan_E> {
                     ),
                     SizedBox(height: 50,),
                     myElevatedButton(label: "Add", onPressed: (){
-                      //context.read<ScanProvider>().onAddingItem();
+                      Provider.of<ScanProvider>(context, listen: false).onAddingItemNew(
+                          category: Provider.of<ScanProvider>(context, listen: false).state.dropDownMenuController.text,
+                          count: Provider.of<ScanProvider>(context, listen: false).state.selectedNumber,
+                      );
                     }),
 
                   ],

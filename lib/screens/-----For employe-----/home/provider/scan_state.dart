@@ -7,7 +7,7 @@ import 'package:project/models/user.dart';
 class ScanStates{
 
   List<DropdownMenuEntry> myCategoriesDDM = [
-    DropdownMenuEntry(value: Category(points: 10, type: "Metal"), label: "Metal"),
+    DropdownMenuEntry(value: Category(points: 10, type: "Can"), label: "Can"),
     DropdownMenuEntry(value: Category(points: 20, type: "Plastic"), label: "Plastic"),
     DropdownMenuEntry(value: Category(points: 25, type: "Glass"), label: "Glass"),
   ];
