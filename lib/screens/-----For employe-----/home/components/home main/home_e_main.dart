@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:project/core/assets.dart';
 import 'package:project/screens/-----%20%20%20%20For%20user%20%20%20-----/home/provider/user_provider.dart';
+import 'package:project/services/local/notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -16,6 +19,87 @@ class Home_E_Main extends StatefulWidget {
 }
 
 class _Home_E_MainState extends State<Home_E_Main> {
+
+  Timer? _timer;
+  Duration remainingTime = Duration.zero;
+  Duration breakRemaining = Duration.zero;
+
+  final startTime = TimeOfDay(hour: 9, minute: 0);
+  final endTime = TimeOfDay(hour: 18, minute: 0); // 6 PM
+  final breakStart = TimeOfDay(hour: 13, minute: 0); // 1 PM
+  final breakEnd = TimeOfDay(hour: 13, minute: 30); // 1:30 PM
+  bool isBreakTime = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (_) => _updateTime());
+  }
+
+
+  void _updateTime() async {
+    final now = DateTime.now();
+
+    final start = DateTime(now.year, now.month, now.day, startTime.hour, startTime.minute);
+    final end = DateTime(now.year, now.month, now.day, endTime.hour, endTime.minute);
+    final breakStartTime = DateTime(now.year, now.month, now.day, breakStart.hour, breakStart.minute);
+    final breakEndTime = DateTime(now.year, now.month, now.day, breakEnd.hour, breakEnd.minute);
+
+    if (now.isBefore(start) || now.isAfter(end)) {
+      setState(() {
+        remainingTime = Duration.zero;
+        isBreakTime = false;
+      });
+      return;
+    }
+
+    if (now.isAfter(breakStartTime) && now.isBefore(breakEndTime)) {
+      // During break
+
+      if(isBreakTime == false){
+        await NotificationService().showNotification("Break Time Started 🍽️", "Take a well-deserved rest! Your break runs from 1:00 PM to 1:30 PM.");
+      }
+
+      setState(() {
+        remainingTime = end.difference(breakEndTime);
+        breakRemaining = breakEndTime.difference(now);
+        isBreakTime = true;
+      });
+    } else if (now.isBefore(breakStartTime)) {
+      // Before break
+      setState(() {
+        isBreakTime = false;
+        remainingTime = end.difference(now) - breakEndTime.difference(breakStartTime);
+      });
+    } else {
+      // After break
+      if(isBreakTime == true){
+        await NotificationService().showNotification("Break Time Over ⏰", "Hope you had a good break! Time to get back to work.");
+      }
+      setState(() {
+        remainingTime = end.difference(now);
+        isBreakTime = false;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+
+  String formatDuration(Duration d) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    return "${twoDigits(d.inHours)}:${twoDigits(d.inMinutes.remainder(60))}:${twoDigits(d.inSeconds.remainder(60))}";
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -54,21 +138,48 @@ class _Home_E_MainState extends State<Home_E_Main> {
                     color: Colors.transparent,
                   ),
                   Container(
-                      height: 20.h,
-                      width: 90.w,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(Assets.container_home),
-                          fit: BoxFit.cover,
-                        ),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
+                    height: 20.h,
+                    width: 90.w,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(Assets.container_home),
+                        fit: BoxFit.cover,
                       ),
-                      child: Center(
-                        child: Text("2:30:59",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w700, fontSize: 18.sp)),
-                      )),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if(isBreakTime)...[
+                          Container(
+                              decoration: BoxDecoration(
+                                color: Colors.yellow,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("Break Time", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),),
+                              )
+                          ),
+                          SizedBox(height: 20,),
+                        ],
+
+
+                        Text(
+                    isBreakTime
+                    ? "Break ends in: ${formatDuration(breakRemaining)}"
+                      : formatDuration(remainingTime),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18.sp,
+                          ),
+                        ),
+
+
+                      ],
+                    ),
+                  ),
                   Divider(
                     height: 2.h,
                     color: Colors.transparent,

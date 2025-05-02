@@ -18,6 +18,32 @@ class Home_E extends StatefulWidget {
 
 class _Home_EState extends State<Home_E> {
 
+  late final NotificationService _notificationService;
+  bool _notificationsInitialized = false;
+  late String _userId;
+
+  @override
+  void initState() {
+    super.initState();
+    _notificationService = NotificationService();
+    _initializeNotifications();
+  }
+
+  Future<void> _initializeNotifications() async {
+    // Get user ID from provider
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    _userId = userProvider.state.myUser.globalID;
+
+    // Initialize notification services
+    await _notificationService.initNotifications();
+    await _notificationService.requestNotificationPermissions(context);
+
+    // Start listening for notifications
+    _notificationService.listenForNotifications(_userId);
+    _notificationsInitialized = true;
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

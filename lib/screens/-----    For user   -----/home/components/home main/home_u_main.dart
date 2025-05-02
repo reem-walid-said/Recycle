@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:project/core/assets.dart';
@@ -24,11 +25,7 @@ class Home_U_Main extends StatefulWidget {
 class _Home_U_MainState extends State<Home_U_Main> {
 
   final PageController _pageController = PageController();
-  final List<String> _images = [ /// Read from FireStore
-    Assets.homePanel1,
-    Assets.homePanel1,
-    Assets.homePanel1,
-  ];
+  List<dynamic> bannersImages = [];
 
   int _currentPage = 0;
   Timer? _timer;
@@ -38,7 +35,7 @@ class _Home_U_MainState extends State<Home_U_Main> {
     super.initState();
 
     _timer = Timer.periodic(Duration(seconds: 4), (Timer timer) {
-      if (_currentPage < _images.length - 1) {
+      if (_currentPage < bannersImages.length - 1) {
         _currentPage++;
       } else {
         _currentPage = 0;
@@ -117,20 +114,47 @@ class _Home_U_MainState extends State<Home_U_Main> {
                   Divider(height: 3.h, color: Colors.transparent),
 
                   // Slider
-                  SizedBox(
-                    height: 20.h,
-                    child: PageView.builder(
-                      controller: _pageController,
-                      itemCount: _images.length,
-                      itemBuilder: (context, index) {
-                        return Image.asset(
-                          _images[index],
-                          fit: BoxFit.cover,
-                          width: double.infinity,
+                  StreamBuilder(
+                      stream: GetAppBanners(),
+                      builder: (context, snapshot){
+
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        }
+
+                        if (snapshot.hasError) {
+                          return Center(child: Text("Error: ${snapshot.error}"));
+                        }
+
+                        bannersImages = snapshot.data!.docs.map((e) => e.get("imageUrl")).toList();
+
+                        if(bannersImages.isEmpty){
+                          return SizedBox(
+                              height: 20.h,
+                              child: Image.asset(
+                                  Assets.homePanel1,
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                              )
+                          );
+                        }
+                        return SizedBox(
+                          height: 20.h,
+                          child: PageView.builder(
+                            controller: _pageController,
+                            itemCount: bannersImages.length,
+                            itemBuilder: (context, index) {
+                              return Image.network(
+                                bannersImages[index],
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                              );
+                            },
+                          ),
                         );
-                      },
-                    ),
+                      }
                   ),
+
 
                   Divider(
                     height: 2.h,
@@ -410,4 +434,10 @@ class _Home_U_MainState extends State<Home_U_Main> {
               ),
             )));
   }
+
+  Stream<QuerySnapshot> GetAppBanners(){
+    return FirebaseFirestore.instance.collection("app_banners").snapshots();
+  }
+
 }
+

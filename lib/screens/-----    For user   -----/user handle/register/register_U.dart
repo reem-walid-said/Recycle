@@ -477,69 +477,69 @@ class login_E extends State<Register_U> {
                 ),
               ),
 
-              SizedBox(height: 20),
-              // OR divider
-              Row(
-                children: [
-                  Expanded(
-                    child: Divider(
-                      color: Colors.white,
-                      thickness: 1,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(
-                      'OR',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Divider(
-                      color: Colors.white,
-                      thickness: 1,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              // Sign up with Google button
-              InkWell(
-                onTap: () {},
-                child: Container(
-                  width: 90.w,
-                  height: 5.h,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.green, width: 1),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      VerticalDivider(
-                        width: 25.w,
-                        color: Colors.transparent,
-                      ),
-                      Image.asset(
-                        Assets.google,
-                        scale: 1,
-                      ),
-                      VerticalDivider(
-                        width: 1.w,
-                        color: Colors.transparent,
-                      ),
-                      Text("Sign up with Google ")
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              // Already have an account?
+              // SizedBox(height: 20),
+              // // OR divider
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: Divider(
+              //         color: Colors.white,
+              //         thickness: 1,
+              //       ),
+              //     ),
+              //     Padding(
+              //       padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              //       child: Text(
+              //         'OR',
+              //         style: TextStyle(
+              //           fontSize: 18,
+              //           color: Colors.black,
+              //           fontWeight: FontWeight.bold,
+              //         ),
+              //       ),
+              //     ),
+              //     Expanded(
+              //       child: Divider(
+              //         color: Colors.white,
+              //         thickness: 1,
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // SizedBox(height: 20),
+              // // Sign up with Google button
+              // InkWell(
+              //   onTap: () {},
+              //   child: Container(
+              //     width: 90.w,
+              //     height: 5.h,
+              //     decoration: BoxDecoration(
+              //       color: Colors.white,
+              //       borderRadius: BorderRadius.circular(10),
+              //       border: Border.all(color: Colors.green, width: 1),
+              //     ),
+              //     child: Row(
+              //       crossAxisAlignment: CrossAxisAlignment.center,
+              //       children: [
+              //         VerticalDivider(
+              //           width: 25.w,
+              //           color: Colors.transparent,
+              //         ),
+              //         Image.asset(
+              //           Assets.google,
+              //           scale: 1,
+              //         ),
+              //         VerticalDivider(
+              //           width: 1.w,
+              //           color: Colors.transparent,
+              //         ),
+              //         Text("Sign up with Google ")
+              //       ],
+              //     ),
+              //   ),
+              // ),
+              // SizedBox(height: 20),
+              // // Already have an account?
             ],
           ),
         ),
