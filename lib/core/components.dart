@@ -365,7 +365,7 @@ required Warehouse warehouse,
 Widget _buildStarRating(dynamic rating) {
   return Row(
     children: [
-      Text(rating.toString()),
+      Text(rating.toStringAsFixed(1)),
       SizedBox(width: 5,),
       Icon(Icons.star, color: Colors.yellow[700],),
     ],
