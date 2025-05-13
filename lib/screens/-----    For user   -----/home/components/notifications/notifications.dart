@@ -171,6 +171,7 @@ class _Notifications_UState extends State<Notifications_U> {
                 "comment" : reviewController.text,
                 "datetime" : DateTime.now(),
                 "rate" : rating,
+                "U-ID": Provider.of<UserProvider>(context, listen: false).state.myUser.globalID,
               });
 
               myToast(

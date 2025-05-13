@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart' show DocumentReference, DocumentSnapshot, FirebaseFirestore, QuerySnapshot;
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart' show RatingBar;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
@@ -14,6 +16,8 @@ import 'package:project/screens/-----For%20employe-----/home/provider/scan_provi
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../screens/-----    For user   -----/home/provider/user_provider.dart' show UserProvider;
 // Here will be all the Shared Components like (Buttons, Item's Designs, etc...)
 
 Widget myElevatedButton({
@@ -284,7 +288,7 @@ Widget WarehouseItemBuilder({
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 12),
-          _buildStarRating(warehouse.rating),
+          buildStarRating(warehouse.rating),
           SizedBox(height: 12),
           InkWell(
             onTap: () => openMap(warehouse.location),
@@ -309,60 +313,10 @@ Widget WarehouseItemBuilder({
   ),
 );
 
-Widget WarehouseItemBuilderNew({
-required Warehouse warehouse,
-}) => Padding(
-  padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-  child: Card(
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-    elevation: 4,
-    child: Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
 
-          Image.asset(Assets.mapMarker),
 
-          SizedBox(width: 12),
 
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  warehouse.name,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 12),
-                _buildStarRating(warehouse.rating),
-              ],
-            ),
-          ),
-          InkWell(
-            onTap: () => openMap(warehouse.location),
-            child: Row(
-              children: [
-                Icon(Icons.map, color: Colors.blue),
-                SizedBox(width: 6),
-                Text(
-                  'View on Map',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.blue,
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ),
-  ),
-);
-
-Widget _buildStarRating(dynamic rating) {
+Widget buildStarRating(dynamic rating) {
   return Row(
     children: [
       Text(rating.toStringAsFixed(1)),
