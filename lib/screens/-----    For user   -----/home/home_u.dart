@@ -56,6 +56,6 @@ class _Home_UState extends State<Home_U> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: context.watch<HomeProvider_U>().chosenPage(),
-        bottomNavigationBar: const BottomNavBar_U());
+        bottomNavigationBar: BottomNavBar_U());
   }
 }

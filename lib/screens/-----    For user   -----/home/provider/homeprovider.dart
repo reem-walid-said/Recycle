@@ -20,13 +20,13 @@ class HomeProvider_U extends ChangeNotifier {
   final HomeState_U state = HomeState_U();
 
   void onNavigationTap(int value) {
+    state.navigationIndex = value;
     switch (value) {
       case 0:
         state.chosenNavigationItem = ParentsChosenNavigationItem.home;
         break;
       case 1:
-        state.chosenNavigationItem =
-            ParentsChosenNavigationItem.map;
+        state.chosenNavigationItem = ParentsChosenNavigationItem.map;
         break;
       case 2:
         state.chosenNavigationItem = ParentsChosenNavigationItem.recycling_process;
@@ -38,6 +38,7 @@ class HomeProvider_U extends ChangeNotifier {
         state.chosenNavigationItem = ParentsChosenNavigationItem.profile;
         break;
     }
+    print("Navigation Index = $value");
     notifyListeners();
   }
 

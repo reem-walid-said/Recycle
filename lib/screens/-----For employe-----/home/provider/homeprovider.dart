@@ -23,6 +23,7 @@ class HomeProvider_E extends ChangeNotifier {
   final HomeState_E state = HomeState_E();
 
   void onNavigationTap(int value) {
+    state.navigationIndex = value;
     switch (value) {
       case 0:
         state.chosenNavigationItem = ParentsChosenNavigationItem.home;

@@ -16,7 +16,6 @@ class BottomNavBar_E extends StatefulWidget {
 }
 
 class _BottomNavBar_E extends State<BottomNavBar_E> {
-  int _currIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +61,7 @@ class _BottomNavBar_E extends State<BottomNavBar_E> {
         unselectedItemColor: Colors.grey,
         enableFeedback: false,
         backgroundColor: Colors.white,
-        currentIndex: _currIndex,
+        currentIndex: context.watch<HomeProvider_E>().state.navigationIndex,
         items: const [
           BottomNavigationBarItem(
               icon: Icon(Iconsax.home4),
@@ -82,10 +81,7 @@ class _BottomNavBar_E extends State<BottomNavBar_E> {
               label: "Profile")
         ],
         onTap: (value) {
-          setState(() {
-            _currIndex = value;
-            context.read<HomeProvider_E>().onNavigationTap(value);
-          });
+          context.read<HomeProvider_E>().onNavigationTap(value);
         },
       ),
     );

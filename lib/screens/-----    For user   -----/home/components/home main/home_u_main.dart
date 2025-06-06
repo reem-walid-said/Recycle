@@ -272,9 +272,7 @@ class _Home_U_MainState extends State<Home_U_Main> {
                           children: [
                             GestureDetector(
                               onTap: (){
-                                setState(() {
-                                  context.read<HomeProvider_U>().onNavigationTap(1);
-                                });
+                                context.read<HomeProvider_U>().onNavigationTap(1);
                               },
                               child: CircleAvatar(
                                 radius: 45,
