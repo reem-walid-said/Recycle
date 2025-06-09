@@ -8,7 +8,7 @@ class Employee{
   String phone;
   String status;
   DateTime dateTime;
-  String address;
+  // String address;
 
   String? warehouseID;
   DateTime? departureTime;
@@ -21,7 +21,7 @@ class Employee{
     required this.username,
     required this.email,
     required this.phone,
-    required this.address,
+    // required this.address,
     required this.dateTime,
     required this.status,
 
@@ -36,7 +36,7 @@ class Employee{
     username: snapshot.get("name"),
     email: snapshot.get("email"),
     phone: snapshot.get("phone"),
-    address: snapshot.get("address"),
+    // address: snapshot.get("address"),
     dateTime: snapshot.get("date").toDate(),
     status: snapshot.get("status"),
     warehouseID: snapshot.get("wid"),
