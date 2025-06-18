@@ -24,35 +24,35 @@ class Home_U_Main extends StatefulWidget {
 
 class _Home_U_MainState extends State<Home_U_Main> {
 
-  final PageController _pageController = PageController();
+  // final PageController _pageController = PageController();
   List<dynamic> bannersImages = [];
 
-  int _currentPage = 0;
-  Timer? _timer;
+  // int _currentPage = 0;
+  // Timer? _timer;
 
   @override
   void initState() {
     super.initState();
 
-    _timer = Timer.periodic(Duration(seconds: 4), (Timer timer) {
-      if (_currentPage < bannersImages.length - 1) {
-        _currentPage++;
-      } else {
-        _currentPage = 0;
-      }
-
-      _pageController.animateToPage(
-        _currentPage,
-        duration: Duration(milliseconds: 500),
-        curve: Curves.easeInOut,
-      );
-    });
+    // _timer = Timer.periodic(Duration(seconds: 4), (Timer timer) {
+    //   if (_currentPage < bannersImages.length - 1) {
+    //     _currentPage++;
+    //   } else {
+    //     _currentPage = 0;
+    //   }
+    //
+    //   _pageController.animateToPage(
+    //     _currentPage,
+    //     duration: Duration(milliseconds: 500),
+    //     curve: Curves.easeInOut,
+    //   );
+    // });
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
-    _pageController.dispose();
+    // _timer?.cancel();
+    // _pageController.dispose();
     super.dispose();
   }
 
@@ -114,46 +114,46 @@ class _Home_U_MainState extends State<Home_U_Main> {
                   Divider(height: 3.h, color: Colors.transparent),
 
                   // Slider
-                  StreamBuilder(
-                      stream: GetAppBanners(),
-                      builder: (context, snapshot){
-
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
-                        }
-
-                        if (snapshot.hasError) {
-                          return Center(child: Text("Error: ${snapshot.error}"));
-                        }
-
-                        bannersImages = snapshot.data!.docs.map((e) => e.get("imageUrl")).toList();
-
-                        if(bannersImages.isEmpty){
-                          return SizedBox(
-                              height: 20.h,
-                              child: Image.asset(
-                                  Assets.homePanel1,
-                                  fit: BoxFit.cover,
-                                  width: double.infinity,
-                              )
-                          );
-                        }
-                        return SizedBox(
-                          height: 20.h,
-                          child: PageView.builder(
-                            controller: _pageController,
-                            itemCount: bannersImages.length,
-                            itemBuilder: (context, index) {
-                              return Image.network(
-                                bannersImages[index],
-                                fit: BoxFit.cover,
-                                width: double.infinity,
-                              );
-                            },
-                          ),
-                        );
-                      }
-                  ),
+                  // StreamBuilder(
+                  //     stream: GetAppBanners(),
+                  //     builder: (context, snapshot){
+                  //
+                  //       if (snapshot.connectionState == ConnectionState.waiting) {
+                  //         return Center(child: CircularProgressIndicator());
+                  //       }
+                  //
+                  //       if (snapshot.hasError) {
+                  //         return Center(child: Text("Error: ${snapshot.error}"));
+                  //       }
+                  //
+                  //       bannersImages = snapshot.data!.docs.map((e) => e.get("imageUrl")).toList();
+                  //
+                  //       if(bannersImages.isEmpty){
+                  //         return SizedBox(
+                  //             height: 20.h,
+                  //             child: Image.asset(
+                  //                 Assets.homePanel1,
+                  //                 fit: BoxFit.cover,
+                  //                 width: double.infinity,
+                  //             )
+                  //         );
+                  //       }
+                  //       return SizedBox(
+                  //         height: 20.h,
+                  //         child: PageView.builder(
+                  //           controller: _pageController,
+                  //           itemCount: bannersImages.length,
+                  //           itemBuilder: (context, index) {
+                  //             return Image.network(
+                  //               bannersImages[index],
+                  //               fit: BoxFit.cover,
+                  //               width: double.infinity,
+                  //             );
+                  //           },
+                  //         ),
+                  //       );
+                  //     }
+                  // ),
 
 
                   Divider(
