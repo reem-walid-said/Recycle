@@ -212,12 +212,12 @@ class Login_EState extends State<Login_E> {
                         Text('Remember Me'),
                       ],
                     ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, App_Routes.forget_E);
-                      },
-                      child: Text('Forget Password?'),
-                    ),
+                    // TextButton(
+                    //   onPressed: () {
+                    //     Navigator.pushNamed(context, App_Routes.forget_E);
+                    //   },
+                    //   child: Text('Forget Password?'),
+                    // ),
                   ],
                 ),
                 SizedBox(height: 20.sp),

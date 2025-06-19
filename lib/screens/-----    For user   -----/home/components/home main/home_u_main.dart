@@ -111,7 +111,7 @@ class _Home_U_MainState extends State<Home_U_Main> {
                   //                   .myUser
                   //                   .localID);
                   //     }),
-                  Divider(height: 3.h, color: Colors.transparent),
+                  // Divider(height: 3.h, color: Colors.transparent),
 
                   // Slider
                   // StreamBuilder(
@@ -155,6 +155,12 @@ class _Home_U_MainState extends State<Home_U_Main> {
                   //     }
                   // ),
 
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => StoreCategory()));
+                    },
+                      child: Image.asset(Assets.homePanel2)
+                  ),
 
                   Divider(
                     height: 2.h,
