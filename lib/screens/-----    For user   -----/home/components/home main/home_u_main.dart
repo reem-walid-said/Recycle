@@ -155,11 +155,13 @@ class _Home_U_MainState extends State<Home_U_Main> {
                   //     }
                   // ),
 
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => StoreCategory()));
-                    },
-                      child: Image.asset(Assets.homePanel2)
+                  Center(
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => StoreCategory()));
+                      },
+                        child: Image.asset(Assets.homePanel2)
+                    ),
                   ),
 
                   Divider(

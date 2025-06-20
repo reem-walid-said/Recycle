@@ -90,7 +90,7 @@ class _MapScreenState extends State<MapScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
 
-            Image.asset(Assets.mapMarker),
+            Image.asset(Assets.mapMarker, width: MediaQuery.of(context).size.width * 0.12,),
 
             SizedBox(width: 12),
 
@@ -105,22 +105,19 @@ class _MapScreenState extends State<MapScreen> {
                   SizedBox(height: 12),
                   buildStarRating(warehouse.rating),
                   SizedBox(height: 10),
-                  Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(20),
+                  TextButton(
+                      style: ButtonStyle(
+                        padding: WidgetStatePropertyAll(EdgeInsetsDirectional.zero),
                       ),
-                      child: TextButton(
-                          onPressed: (){
-                            RateWarehouseWithoutProcess(context, warehouse);
-                          }, child: Row(
-                        children: [
-                          Icon(Icons.reviews, color: Colors.orange[800],),
-                          SizedBox(width: 5,),
-                          Text("leave a review", style: TextStyle(color: Colors.orange[800]),),
-                        ],
-                      ))
-                  )
+                      onPressed: (){
+                        RateWarehouseWithoutProcess(context, warehouse);
+                      }, child: Row(
+                    children: [
+                      Icon(Icons.reviews, color: Colors.orange[800],),
+                      SizedBox(width: 3,),
+                      Text("Leave review", style: TextStyle(color: Colors.orange[800], fontSize: MediaQuery.of(context).size.width * 0.03),),
+                    ],
+                  ))
                 ],
               ),
             ),

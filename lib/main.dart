@@ -24,14 +24,16 @@ import 'screens/test_screen.dart';
 import 'services/local/cache_helper.dart';
 
 void main() async {
-  // runApp(DevicePreview(
-  //   builder: (context) => const MyApp(),
-  //   enabled: true,
-  // ));
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await CacheHelper.init();
   runApp(const MyApp());
+
+  // runApp(DevicePreview(
+  //   builder: (context) => const MyApp(),
+  //   enabled: true,
+  // ));
 }
 
 
